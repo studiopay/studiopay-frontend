@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --pink: #FF2ED1;
+  --pink-dark: #CC1FAA;
+  --pink-dim: rgba(255, 46, 209, 0.12);
+  --pink-glow: rgba(255, 46, 209, 0.25);
+
+  --black: #0B0B0E;
+  --gray: #191a1b;
+  --gray2: #222628;
+  --gray3: #2d3035;
+  --gray4: #3c3f46;
+
+  --text: #F8F9FB;
+  --text2: #A0A4B0;
+  --text3: #6B6F7A;
+
+  --green: #22C55E;
+  --green-dim: rgba(34, 197, 94, 0.12);
+  --red: #EF4444;
+  --red-dim: rgba(239, 68, 68, 0.12);
+  --yellow: #F59E0B;
+  --yellow-dim: rgba(245, 158, 11, 0.12);
+  --blue: #3B82F6;
+  --blue-dim: rgba(59, 130, 246, 0.12);
+
+  --radius-sm: 6px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --shadow: 0 4px 24px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.4);
+  --shadow-pink: 0 0 24px rgba(255,46,209,0.2);
+
+  --sidebar-width: 240px;
+  --topbar-height: 64px;
+
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --transition: 0.18s ease;
+}
+
+/* ══════════════════════════════════════════════
+   DARK THEME (padrão — aplicado no .landing.theme-dark e :root fallback)
+══════════════════════════════════════════════ */
+:root,
+.theme-dark {
+  --bg: #0B0B0E;
+  --bg-card: #191a1b;
+  --bg-card2: #222628;
+  --bg-nav: rgba(11,11,14,0.92);
+  --border: rgba(255,255,255,0.06);
+  --border-hover: rgba(255,255,255,0.12);
+  --text-primary: #F8F9FB;
+  --text-secondary: rgba(248,249,251,0.72);
+  --shadow-land: 0 8px 40px rgba(0,0,0,0.45);
+  --hero-glow-color: rgba(255,46,209,0.1);
+  --section-alt-bg: #131519;
+  --plan-card-bg: #191a1b;
+  --plan-highlight-bg: linear-gradient(145deg, #201828 0%, #1a1422 100%);
+  --faq-border: rgba(255,255,255,0.06);
+  --footer-bg: #0a0a0d;
+
+  /* App internal surface tokens */
+  --app-bg: #08090b;
+  --app-surface: #191a1b;
+  --app-surface-soft: #222628;
+  --app-surface-softer: #2d3035;
+  --app-border: rgba(255,255,255,0.08);
+  --app-text: #F8F9FB;
+  --app-text-muted: #A0A4B0;
+  --app-premium-dark: #16121f;
+}
+
+/* ══════════════════════════════════════════════
+   LIGHT THEME
+══════════════════════════════════════════════ */
+.theme-light {
+  --bg: #F4F5F8;
+  --bg-card: #FFFFFF;
+  --bg-card2: #ECEDF2;
+  --bg-nav: rgba(244,245,248,0.96);
+  --border: rgba(11,11,14,0.1);
+  --border-hover: rgba(11,11,14,0.22);
+  --text-primary: #0B0B0E;
+  --text-secondary: rgba(11,11,14,0.65);
+  --shadow-land: 0 4px 24px rgba(0,0,0,0.08);
+  --hero-glow-color: rgba(255,46,209,0.07);
+  --section-alt-bg: #E8E9EF;
+  --plan-card-bg: #FFFFFF;
+  --plan-highlight-bg: linear-gradient(145deg, #fdf0fc 0%, #fce6fb 100%);
+  --faq-border: rgba(11,11,14,0.1);
+  --footer-bg: #0B0B0E;
+
+  /* App internal surface tokens */
+  --app-bg: #faf8fc;
+  --app-surface: #ffffff;
+  --app-surface-soft: #f3f1f7;
+  --app-surface-softer: #ebe8f0;
+  --app-border: rgba(12,12,18,0.08);
+  --app-text: #08080d;
+  --app-text-muted: #5f5a66;
+  --app-premium-dark: #0d0b15;
+
+  /* Texto secundário legível no light mode */
+  --text2: #6b6572;
+  --text3: #8e8796;
+}

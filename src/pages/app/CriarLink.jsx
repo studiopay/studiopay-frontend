@@ -29,7 +29,7 @@ export default function CriarLink() {
           }}>
             <CheckCircle size={32} style={{ color: 'var(--green)' }} />
           </div>
-          <h2 style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 22, marginBottom: 8 }}>
+          <h2 style={{ fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: 22, marginBottom: 8 }}>
             Link gerado com sucesso!
           </h2>
           <p style={{ color: 'var(--app-text-muted)', fontSize: 14, marginBottom: 24 }}>
@@ -66,7 +66,7 @@ export default function CriarLink() {
         </button>
         <h1 style={{
           display: 'flex', alignItems: 'center', gap: 10,
-          fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 24, marginBottom: 6
+          fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: 24, marginBottom: 6
         }}>
           <Link2 size={22} style={{ color: 'var(--pink)' }} />
           Criar link de pagamento

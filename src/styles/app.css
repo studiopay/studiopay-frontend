@@ -159,7 +159,7 @@
   margin-bottom: 24px; gap: 16px; flex-wrap: wrap;
 }
 .dashboard-greeting h1 {
-  font-size: 24px; font-family: var(--font-display); font-weight: 700; margin-bottom: 4px;
+  font-size: 24px; font-family: var(--font-body); font-weight: 700; margin-bottom: 4px;
 }
 .greeting-badge {
   background: var(--app-surface); border: 1px solid var(--app-border);
@@ -934,7 +934,7 @@
 }
 
 .dash4-welcome-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 22px; font-weight: 700; margin-bottom: 4px;
   color: var(--app-text);
 }
@@ -998,7 +998,7 @@
 }
 
 .dash4-slide-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 21px; font-weight: 700;
   color: #fff; line-height: 1.25;
   max-width: 380px;
@@ -1564,7 +1564,7 @@
 }
 
 .shop-banner-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 22px; font-weight: 800;
   color: #fff; line-height: 1.2; margin-bottom: 10px;
 }
@@ -1610,7 +1610,7 @@
 
 .shop-deco-price {
   font-size: 13px; font-weight: 800; color: var(--pink);
-  font-family: var(--font-display);
+  font-family: var(--font-body);
 }
 
 .shop-deco-badge {
@@ -1666,7 +1666,7 @@
 .shop-produto-preco {
   font-size: 16px; font-weight: 800; margin-top: 6px;
   color: var(--app-text);
-  font-family: var(--font-display);
+  font-family: var(--font-body);
 }
 
 /* â”€â”€ RecomendaÃ§Ãµes â”€â”€ */
@@ -1780,7 +1780,7 @@
 }
 
 .shop2-hero-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 30px; font-weight: 800;
   color: #fff; line-height: 1.17; margin-bottom: 16px;
 }
@@ -1805,7 +1805,7 @@
 
 .shop2-hero-stat-val {
   font-size: 17px; font-weight: 800;
-  color: #fff; font-family: var(--font-display); line-height: 1;
+  color: #fff; font-family: var(--font-body); line-height: 1;
 }
 
 .shop2-hero-stat-label {
@@ -2191,7 +2191,7 @@
 }
 
 .shop2-pro-title {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 23px; font-weight: 800;
   color: #fff; line-height: 1.2; margin-bottom: 12px;
 }
@@ -2313,7 +2313,7 @@
 }
 
 .shop2-prod-nome {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 24px; font-weight: 800;
   color: var(--app-text); line-height: 1.2;
 }

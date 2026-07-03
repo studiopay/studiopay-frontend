@@ -4,6 +4,7 @@ import Reveal from './Reveal'
 
 const modules = [
   {
+    id: 'conta-digital',
     name: 'Conta Digital',
     role: 'Receber e controlar',
     text: 'Veja Pix, cobranças, entradas, saídas e quanto sobrou no mês.',
@@ -11,13 +12,35 @@ const modules = [
     label: 'Ver Conta Digital',
   },
   {
+    name: 'Cobranças',
+    role: 'Cobrar sem improviso',
+    text: 'Crie cobranças, acompanhe pagamentos e reduza esquecimentos na rotina.',
+    to: '/studio-core',
+    label: 'Ver Cobranças',
+  },
+  {
     name: 'Agenda',
     role: 'Organizar horários',
-    text: 'Confirmações, lembretes e atendimentos em uma rotina mais clara.',
+    text: 'Controle compromissos, lembretes e atendimentos em uma rotina mais clara.',
     to: '/studio-agenda',
     label: 'Ver Agenda',
   },
   {
+    name: 'Elison IA',
+    role: 'Atender no automático',
+    text: 'Confirma horários, envia lembretes e acompanha clientes pelo WhatsApp.',
+    to: '/elison-ia',
+    label: 'Ver Elison IA',
+  },
+  {
+    name: 'Studio Shop',
+    role: 'Comprar melhor',
+    text: 'Acesse produtos, kits e condições especiais para reduzir custos do estúdio.',
+    to: '/studio-shop',
+    label: 'Ver Studio Shop',
+  },
+  {
+    id: 'cursos',
     name: 'Cursos',
     role: 'Evoluir como profissional',
     text: 'Conteúdos para melhorar técnica, venda, gestão e posicionamento.',
@@ -25,19 +48,27 @@ const modules = [
     label: 'Ver Cursos',
   },
   {
+    id: 'trafego',
     name: 'Tráfego',
     role: 'Atrair mais clientes',
     text: 'Campanhas, criativos e relatórios para transformar agenda vazia em oportunidade.',
     to: '/studio-ads',
     label: 'Ver Tráfego',
   },
+  {
+    name: 'Relatórios',
+    role: 'Decidir com clareza',
+    text: 'Acompanhe números importantes da operação e entenda melhor o crescimento do estúdio.',
+    to: '/studio-core',
+    label: 'Ver Relatórios',
+  },
 ]
 
-const flowSteps = ['Receber', 'Organizar', 'Atender', 'Crescer']
+const flowSteps = ['Receber', 'Organizar', 'Atender', 'Comprar', 'Crescer']
 
 export default function StudioEcosystemPreview() {
   return (
-    <section className="ecosystem-section">
+    <section className="ecosystem-section" id="ecossistema">
       <div className="container">
         <Reveal>
           <div className="section-header-center ecosystem-header">
@@ -66,8 +97,8 @@ export default function StudioEcosystemPreview() {
 
         <div className="ecosystem-grid">
           {modules.map((mod, i) => (
-            <Reveal key={mod.name} delay={120 + i * 60}>
-              <div className="ecosystem-card">
+            <Reveal key={mod.name} delay={120 + i * 40}>
+              <div className="ecosystem-card" id={mod.id}>
                 <div className="ecosystem-card-head">
                   <p className="ecosystem-card-name">{mod.name}</p>
                   <p className="ecosystem-card-role">{mod.role}</p>

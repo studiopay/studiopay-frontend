@@ -1,15 +1,16 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Camera, Play, X as XIcon, Mail } from 'lucide-react'
 import Reveal from './Reveal'
 
 const productLinks = [
-  { label: 'Início', to: '/' },
-  { label: 'Studio Pro', to: '/#planos' },
-  { label: 'Elison IA', to: '/elison-ia' },
-  { label: 'Conta Digital', to: '/studio-core' },
-  { label: 'Shop', to: '/studio-shop' },
-  { label: 'Cursos', to: '/studio-learn' },
-  { label: 'Agenda', to: '/studio-agenda' },
+  { label: 'Início', anchor: 'inicio' },
+  { label: 'Conta Digital', anchor: 'conta-digital' },
+  { label: 'Studio Shop', anchor: 'studio-shop' },
+  { label: 'Elison IA', anchor: 'elison-ia' },
+  { label: 'Agenda', anchor: 'agenda' },
+  { label: 'Cursos', anchor: 'cursos' },
+  { label: 'Tráfego Pago', anchor: 'trafego' },
+  { label: 'Planos', anchor: 'planos' },
 ]
 
 const companyLinks = [
@@ -37,6 +38,10 @@ const socialLinks = [
 ]
 
 export default function Footer({ showCta = true }) {
+  const { pathname } = useLocation()
+  const isHome = pathname === '/'
+  const sectionHref = (anchor) => (isHome ? `#${anchor}` : `/#${anchor}`)
+
   return (
     <footer className="landing-footer">
       {showCta && (
@@ -45,7 +50,7 @@ export default function Footer({ showCta = true }) {
             <div className="container">
               <h2 className="footer-cta-title">
                 Você cria.<br />
-                <span className="text-pink">A gente organiza.</span>
+                A gente <span className="landing-accent">organiza.</span>
               </h2>
               <p className="footer-cta-sub">
                 Comece pela parte da rotina que mais pesa hoje.
@@ -91,11 +96,7 @@ export default function Footer({ showCta = true }) {
               <ul className="footer-nav-col-links">
                 {productLinks.map((link) => (
                   <li key={link.label}>
-                    {link.to.startsWith('/#') ? (
-                      <a href={link.to}>{link.label}</a>
-                    ) : (
-                      <Link to={link.to}>{link.label}</Link>
-                    )}
+                    <a href={sectionHref(link.anchor)}>{link.label}</a>
                   </li>
                 ))}
               </ul>

@@ -1,12 +1,11 @@
-﻿export const publicNavLinks = [
-  { label: 'Início', href: '/' },
-  { label: 'Conta Digital', href: '/studio-core' },
-  { label: 'Agenda', href: '/studio-agenda' },
-  { label: 'Elison IA', href: '/elison-ia' },
-  { label: 'Shop', href: '/studio-shop' },
-  { label: 'Cursos', href: '/studio-learn' },
-  { label: 'Tráfego', href: '/studio-ads' },
-  { label: 'Planos', href: '/#planos' },
+export const mainNavLinks = [
+  { label: 'Conta Digital', to: '/studio-core' },
+  { label: 'Studio Shop', to: '/studio-shop' },
+  { label: 'Elison IA', to: '/elison-ia' },
+  { label: 'Agenda', to: '/studio-agenda' },
 ]
 
-export const moduleNavLinks = publicNavLinks.filter((link) => link.label !== 'Planos')
+export const growthNavLinks = [
+  { label: 'Cursos', to: '/studio-learn' },
+  { label: 'Tráfego Pago', to: '/studio-ads' },
+]

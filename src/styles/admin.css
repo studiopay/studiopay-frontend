@@ -175,6 +175,11 @@
   font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.5;
 }
 
+.admin-hint-success {
+  font-size: 11px; color: #34D399; line-height: 1.5; font-weight: 600;
+  display: flex; align-items: center; gap: 5px;
+}
+
 .admin-color-row {
   display: flex; align-items: center; gap: 10px;
 }

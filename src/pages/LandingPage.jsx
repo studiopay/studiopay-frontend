@@ -1,7 +1,9 @@
 ﻿import Navbar from '@/components/landing/Navbar'
 import Hero from '@/components/landing/Hero'
+import WhyStudioPaySection from '@/components/landing/WhyStudioPaySection'
 import PainSection from '@/components/landing/PainSection'
 import ElisonPreviewSection from '@/components/landing/ElisonPreviewSection'
+import DemoGifSection from '@/components/landing/DemoGifSection'
 import StudioEcosystemPreview from '@/components/landing/StudioEcosystemPreview'
 import PlansSection from '@/components/landing/PlansSection'
 import Footer from '@/components/landing/Footer'
@@ -12,9 +14,11 @@ export default function LandingPage() {
     <PublicSiteShell>
       <Navbar />
       <Hero />
+      <WhyStudioPaySection />
+      <StudioEcosystemPreview />
       <PainSection />
       <ElisonPreviewSection />
-      <StudioEcosystemPreview />
+      <DemoGifSection />
       <PlansSection compact />
       <Footer />
     </PublicSiteShell>

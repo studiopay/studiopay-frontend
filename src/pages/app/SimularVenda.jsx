@@ -46,7 +46,7 @@ export default function SimularVenda() {
         </button>
         <h1 style={{
           display: 'flex', alignItems: 'center', gap: 10,
-          fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 24, marginBottom: 6
+          fontFamily: 'var(--font-body)', fontWeight: 700, fontSize: 24, marginBottom: 6
         }}>
           <TrendingUp size={22} style={{ color: 'var(--pink)' }} />
           Simular venda

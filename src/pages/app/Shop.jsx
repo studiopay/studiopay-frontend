@@ -210,7 +210,7 @@ export default function Shop() {
                   <div className="shop2-hero-card-line" style={{ width: '68%', background: 'rgba(255,255,255,0.2)' }} />
                   <div className="shop2-hero-card-line" style={{ width: '44%', background: 'rgba(255,255,255,0.1)', marginTop: 2 }} />
                   <div style={{ marginTop: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                    <span style={{ fontSize: 15, fontWeight: 800, color: '#FF2ED1', fontFamily: 'var(--font-display)' }}>R$ 524,90</span>
+                    <span style={{ fontSize: 15, fontWeight: 800, color: '#FF2ED1', fontFamily: 'var(--font-body)' }}>R$ 524,90</span>
                     <span style={{ fontSize: 10, fontWeight: 700, color: '#22C55E', background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.28)', borderRadius: 20, padding: '2px 9px' }}>30% OFF</span>
                   </div>
                 </div>
@@ -221,7 +221,7 @@ export default function Shop() {
                 </div>
                 <div className="shop2-hero-card-body" style={{ padding: '10px 13px', gap: 4 }}>
                   <div className="shop2-hero-card-line" style={{ width: '60%', background: 'rgba(255,255,255,0.16)', marginBottom: 6 }} />
-                  <span style={{ fontSize: 13, fontWeight: 800, color: '#60A5FA', fontFamily: 'var(--font-display)' }}>R$ 119,90</span>
+                  <span style={{ fontSize: 13, fontWeight: 800, color: '#60A5FA', fontFamily: 'var(--font-body)' }}>R$ 119,90</span>
                 </div>
               </div>
               <div className="shop2-hero-badge">⭐ Mais vendido</div>

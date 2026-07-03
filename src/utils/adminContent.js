@@ -5,6 +5,7 @@ export const ADMIN_KEYS = {
   shopHero:           'studioPayAdmin_shopHero',
   shopCategories:     'studioPayAdmin_shopCategories',
   shopProducts:       'studioPayAdmin_shopProducts',
+  studioCoreSection:  'studioPayAdmin_studioCoreSection',
   settings:           'studioPayAdmin_settings',
 }
 

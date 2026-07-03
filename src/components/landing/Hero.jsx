@@ -6,7 +6,7 @@ const YOUTUBE_EMBED = 'https://www.youtube.com/embed/YuBdxqRPylY?start=9'
 
 export default function Hero() {
   return (
-    <section className="hero-wrapper">
+    <section className="hero-wrapper" id="inicio">
       <div className="hero-bg-glow" aria-hidden />
       <div className="hero-lines-bg" aria-hidden>
         <svg
@@ -28,21 +28,21 @@ export default function Hero() {
           <p className="hero-eyebrow">Feito pra quem vive da tatuagem.</p>
 
           <h1 className="hero-title">
-            Aumente suas <span className="text-pink">vendas.</span><br />
-            Reduza seus custos.
+            Tatuador, seu estúdio<br className="hero-title-break" />{' '}
+            também é uma <span className="landing-accent">empresa.</span>
           </h1>
 
           <p className="hero-subtitle">
-            Organize agenda, cobranças, clientes e financeiro em um só lugar.
+            Com o Studio Pay, você organiza agenda, cobranças, clientes e financeiro em um só lugar — para vender mais e perder menos tempo.
           </p>
 
           <div className="hero-actions">
             <Link to="/cadastro" className="btn btn-primary btn-lg">
               Começar agora <ArrowRight size={18} />
             </Link>
-            <a href="#funcionalidades" className="btn btn-ghost btn-lg">
-              Ver funções
-            </a>
+            <Link to="/planos" className="btn btn-ghost btn-lg">
+              Ver planos
+            </Link>
           </div>
         </div>
 

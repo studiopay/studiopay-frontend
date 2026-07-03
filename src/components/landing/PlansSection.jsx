@@ -78,7 +78,7 @@ export default function PlansSection({ compact = false }) {
             <span className="section-label">Planos</span>
             <h2 className="section-title">
               Comece simples.<br />
-              <span className="text-pink">Cresça com automação.</span>
+              Cresça com <span className="landing-accent">automação.</span>
             </h2>
             <p className="section-sub">
               Do básico ao automatizado, escolha o plano que combina com a fase do seu estúdio.

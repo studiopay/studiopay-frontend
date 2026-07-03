@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
-  LayoutDashboard, ShoppingBag, Globe, Settings,
+  LayoutDashboard, ShoppingBag, Globe, Settings, Wallet,
   Save, Trash2, Plus, Copy, Check, RotateCcw,
   Upload, X, Package, Image as ImageIcon, ExternalLink,
 } from 'lucide-react'
@@ -49,6 +49,22 @@ const DEFAULT_LANDING_SHOP = {
   ],
 }
 
+const DEFAULT_STUDIO_CORE = {
+  heroLabel: 'Conta digital Studio Pay',
+  heroTitle: 'Pague, receba e acompanhe seu dinheiro em um só lugar.',
+  heroSub: 'Receba no Pix, gere boletos, envie links de pagamento e acompanhe a evolução financeira do seu estúdio sem depender de planilhas.',
+  heroBtnPrimario: 'Começar agora',
+  heroBtnSecundario: 'Ver planos',
+  heroImage: null,
+  heroImageMobile: null,
+  autoChargeBadge: 'Cobranças automáticas',
+  autoChargeTitle: 'Configure uma vez.\nO Studio Pay cobra por você.',
+  autoChargeSubtitle: 'Automatize lembretes e cobranças pelo WhatsApp e tenha mais tempo para o que realmente importa.',
+  autoChargeImage: null,
+  autoChargeImageMobile: null,
+  autoChargePillText: 'Automatize cobranças e mensagens no WhatsApp com lembretes enviados no momento certo.',
+}
+
 const DEFAULT_PRODUCTS = [
   { id: 1, nome: 'Pen Machine Pro X5',            cat: 'Máquinas',   marca: 'Studio Pro Series', precoAnt: 749.90, preco: 524.90, precoPro: 479.90, parcelas: 3, desconto: 30, badge: 'Mais vendido', badgeVariant: 'green', cor: '#8B5CF6', imagem: null, desc: 'Pen machine profissional para traço e pintura.', features: ['Motor rotativo silencioso', 'Tensão regulável 5–12V', 'Compatível com cartuchos RCA e Clip Cord', 'Peso: 130g', 'Garantia 12 meses'], ativo: true },
   { id: 2, nome: 'Kit Cartuchos RL — 25 un.',     cat: 'Cartuchos',  marca: 'CartPro',            precoAnt: null,   preco: 119.90, precoPro: 103.90, parcelas: null, desconto: null, badge: 'Reposição', badgeVariant: 'blue', cor: '#3B82F6', imagem: null, desc: 'Kit com 25 cartuchos RL de alta qualidade.', features: ['Ponta membranada anti-refluxo', 'Aço cirúrgico AISI 316L', 'Embalagem individual estéril'], ativo: true },
@@ -73,25 +89,59 @@ const CATS = ['Máquinas', 'Cartuchos', 'Tintas', 'Acessórios', 'Higiene', 'Out
 const BADGE_VARIANTS = ['green', 'blue', 'pink', 'yellow', 'gray', 'red']
 
 const TABS = [
-  { id: 'dashboard', label: 'Dashboard',   icon: LayoutDashboard },
-  { id: 'shop',      label: 'Studio Shop', icon: ShoppingBag },
-  { id: 'products',  label: 'Produtos',    icon: Package },
-  { id: 'landing',   label: 'Landing Page',icon: Globe },
-  { id: 'config',    label: 'Configurações',icon: Settings },
+  { id: 'dashboard',  label: 'Dashboard',     icon: LayoutDashboard },
+  { id: 'landing',    label: 'Landing Page',  icon: Globe },
+  { id: 'studiocore', label: 'Conta Digital', icon: Wallet },
+  { id: 'shop',       label: 'Studio Shop',   icon: ShoppingBag },
+  { id: 'products',   label: 'Produtos',      icon: Package },
+  { id: 'config',     label: 'Configurações', icon: Settings },
 ]
 
 // ─────────────────────────────────────
 // HELPERS
 // ─────────────────────────────────────
 
-function handleImageFile(file, callback) {
+// Redimensiona e comprime a imagem no navegador (canvas → WebP) antes de
+// salvar no localStorage, para caber no limite do protótipo sem exigir
+// compressão manual do usuário.
+function compressImage(file, { maxWidth = 1800, quality = 0.82 } = {}) {
+  return new Promise((resolve, reject) => {
+    const url = URL.createObjectURL(file)
+    const img = new Image()
+    img.onload = () => {
+      const scale = Math.min(1, maxWidth / img.width)
+      const w = Math.round(img.width * scale)
+      const h = Math.round(img.height * scale)
+      const canvas = document.createElement('canvas')
+      canvas.width = w
+      canvas.height = h
+      const ctx = canvas.getContext('2d')
+      ctx.drawImage(img, 0, 0, w, h)
+      URL.revokeObjectURL(url)
+      resolve(canvas.toDataURL('image/webp', quality))
+    }
+    img.onerror = (err) => { URL.revokeObjectURL(url); reject(err) }
+    img.src = url
+  })
+}
+
+// Tamanho seguro aproximado (base64) para não estourar o localStorage do protótipo.
+const MAX_OPTIMIZED_KB = 1500
+
+async function handleImageFile(file, callback, { maxWidth = 1800, onOptimized } = {}) {
   if (!file) return
-  if (file.size > 3 * 1024 * 1024) {
-    alert('Use imagens leves (máximo 3MB) para não ultrapassar o limite do navegador.')
+  try {
+    const optimized = await compressImage(file, { maxWidth, quality: 0.82 })
+    const approxKB = Math.round((optimized.length * 3) / 4 / 1024)
+    if (approxKB > MAX_OPTIMIZED_KB) {
+      alert('Mesmo após a otimização automática, essa imagem ainda ficou grande demais para o protótipo. Tente uma imagem menor ou com menos detalhes.')
+      return
+    }
+    callback(optimized)
+    onOptimized?.()
+  } catch {
+    alert('Não foi possível processar esta imagem. Tente novamente ou use outro arquivo.')
   }
-  const reader = new FileReader()
-  reader.onload = e => callback(e.target.result)
-  reader.readAsDataURL(file)
 }
 
 function newId(list) {
@@ -110,7 +160,22 @@ function Toast({ msg, onDone }) {
   return <div className="admin-toast"><Check size={14} /> {msg}</div>
 }
 
-function ImageUpload({ value, onChange, label, preview = true }) {
+function ImageUpload({ value, onChange, label, preview = true, maxWidth = 1800 }) {
+  const [optimized, setOptimized] = useState(false)
+  const [processing, setProcessing] = useState(false)
+
+  const notifyOptimized = () => {
+    setOptimized(true)
+    setTimeout(() => setOptimized(false), 3500)
+  }
+
+  const onFileSelected = async (file) => {
+    if (!file) return
+    setProcessing(true)
+    await handleImageFile(file, onChange, { maxWidth, onOptimized: notifyOptimized })
+    setProcessing(false)
+  }
+
   return (
     <div className="admin-img-field">
       {label && <p className="admin-label">{label}</p>}
@@ -123,12 +188,13 @@ function ImageUpload({ value, onChange, label, preview = true }) {
       {!value && (
         <label className="admin-img-upload">
           <Upload size={18} />
-          <span>Clique para selecionar imagem</span>
-          <span className="admin-img-hint">PNG, JPG ou WebP</span>
+          <span>{processing ? 'Otimizando imagem...' : 'Clique para selecionar imagem'}</span>
+          <span className="admin-img-hint">PNG, JPG ou WebP — redimensionada e comprimida automaticamente</span>
           <input
             type="file"
             accept="image/png,image/jpeg,image/jpg,image/webp"
-            onChange={e => handleImageFile(e.target.files?.[0], onChange)}
+            disabled={processing}
+            onChange={e => onFileSelected(e.target.files?.[0])}
             style={{ display: 'none' }}
           />
         </label>
@@ -141,6 +207,7 @@ function ImageUpload({ value, onChange, label, preview = true }) {
         onChange={e => onChange(e.target.value || null)}
         style={{ marginTop: value ? 8 : 0 }}
       />
+      {optimized && <p className="admin-hint admin-hint-success">Imagem otimizada automaticamente para o protótipo.</p>}
       <p className="admin-hint">Imagem salva apenas neste navegador. Para produção será necessário storage real.</p>
     </div>
   )
@@ -791,6 +858,132 @@ function LandingTab() {
 }
 
 // ─────────────────────────────────────
+// STUDIO CORE (CONTA DIGITAL) TAB
+// ─────────────────────────────────────
+
+function StudioCoreTab() {
+  const [hero, setHero] = useState(() => getAdminContent(ADMIN_KEYS.studioCoreSection, DEFAULT_STUDIO_CORE))
+  const [toast, setToast] = useState(null)
+
+  const upd = (field, val) => setHero(h => ({ ...h, [field]: val }))
+
+  const save = () => {
+    if (setAdminContent(ADMIN_KEYS.studioCoreSection, hero)) setToast('Conta Digital salva!')
+  }
+
+  const reset = () => {
+    setHero(DEFAULT_STUDIO_CORE)
+    localStorage.removeItem(ADMIN_KEYS.studioCoreSection)
+    setToast('Restaurado para o padrão!')
+  }
+
+  return (
+    <>
+      <div>
+        <p className="admin-page-title">Conta Digital / Studio Core</p>
+        <p className="admin-page-sub">Edite o hero principal da página pública /studio-core.</p>
+      </div>
+
+      <div className="admin-section">
+        <div className="admin-section-header">
+          <div>
+            <p className="admin-section-title">Hero principal</p>
+            <p className="admin-section-sub">Primeira seção visível ao acessar /studio-core</p>
+          </div>
+        </div>
+        <div className="admin-section-body">
+          <div className="admin-field">
+            <p className="admin-label">Label da seção</p>
+            <input className="admin-input" value={hero.heroLabel} onChange={e => upd('heroLabel', e.target.value)} />
+          </div>
+          <div className="admin-field">
+            <p className="admin-label">Título</p>
+            <textarea className="admin-textarea" rows={2} value={hero.heroTitle} onChange={e => upd('heroTitle', e.target.value)} />
+            <p className="admin-hint">A palavra "acompanhe" (se presente no título) aparece destacada em rosa automaticamente.</p>
+          </div>
+          <div className="admin-field">
+            <p className="admin-label">Subtítulo</p>
+            <textarea className="admin-textarea" rows={2} value={hero.heroSub} onChange={e => upd('heroSub', e.target.value)} />
+          </div>
+          <div className="admin-field-row" style={{ gridTemplateColumns: '1fr 1fr' }}>
+            <div className="admin-field">
+              <p className="admin-label">Botão primário</p>
+              <input className="admin-input" value={hero.heroBtnPrimario} onChange={e => upd('heroBtnPrimario', e.target.value)} />
+            </div>
+            <div className="admin-field">
+              <p className="admin-label">Botão secundário</p>
+              <input className="admin-input" value={hero.heroBtnSecundario} onChange={e => upd('heroBtnSecundario', e.target.value)} />
+            </div>
+          </div>
+          <ImageUpload
+            label="Imagem principal desktop (substitui o placeholder do painel quando definida)"
+            value={hero.heroImage}
+            onChange={v => upd('heroImage', v)}
+          />
+          <ImageUpload
+            label="Imagem mobile (opcional — usada apenas em telas ≤640px; se vazio, a imagem desktop é reaproveitada)"
+            value={hero.heroImageMobile}
+            onChange={v => upd('heroImageMobile', v)}
+            maxWidth={1080}
+          />
+          <div className="admin-actions-row">
+            <button className="admin-btn-primary" onClick={save}><Save size={14} /> Salvar Conta Digital</button>
+            <button className="admin-btn-ghost admin-btn-sm" onClick={reset}><RotateCcw size={12} /> Restaurar padrão</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="admin-section" style={{ marginTop: 28 }}>
+        <div className="admin-section-header">
+          <div>
+            <p className="admin-section-title">Cobranças automáticas</p>
+            <p className="admin-section-sub">Segunda seção de /studio-core — mockup de WhatsApp e cards de automação</p>
+          </div>
+        </div>
+        <div className="admin-section-body">
+          <div className="admin-field">
+            <p className="admin-label">Badge</p>
+            <input className="admin-input" value={hero.autoChargeBadge} onChange={e => upd('autoChargeBadge', e.target.value)} />
+          </div>
+          <div className="admin-field">
+            <p className="admin-label">Título</p>
+            <textarea className="admin-textarea" rows={2} value={hero.autoChargeTitle} onChange={e => upd('autoChargeTitle', e.target.value)} />
+            <p className="admin-hint">Use uma quebra de linha para separar as duas linhas do título. As palavras "Configure" e "cobra" aparecem destacadas em rosa automaticamente.</p>
+          </div>
+          <div className="admin-field">
+            <p className="admin-label">Subtítulo</p>
+            <textarea className="admin-textarea" rows={2} value={hero.autoChargeSubtitle} onChange={e => upd('autoChargeSubtitle', e.target.value)} />
+          </div>
+          <ImageUpload
+            label="Imagem desktop (substitui o placeholder quando definida)"
+            value={hero.autoChargeImage}
+            onChange={v => upd('autoChargeImage', v)}
+          />
+          <ImageUpload
+            label="Imagem mobile opcional (usada em telas ≤640px)"
+            value={hero.autoChargeImageMobile}
+            onChange={v => upd('autoChargeImageMobile', v)}
+            maxWidth={1080}
+          />
+          <p className="admin-hint">Se apenas uma imagem for enviada, ela será reutilizada nas demais versões.</p>
+          <div className="admin-field">
+            <p className="admin-label">Texto da pill/faixa inferior</p>
+            <textarea className="admin-textarea" rows={2} value={hero.autoChargePillText} onChange={e => upd('autoChargePillText', e.target.value)} />
+            <p className="admin-hint">A palavra "lembretes" (se presente) aparece destacada em rosa automaticamente.</p>
+          </div>
+          <div className="admin-actions-row">
+            <button className="admin-btn-primary" onClick={save}><Save size={14} /> Salvar Conta Digital</button>
+            <button className="admin-btn-ghost admin-btn-sm" onClick={reset}><RotateCcw size={12} /> Restaurar padrão</button>
+          </div>
+        </div>
+      </div>
+
+      {toast && <Toast msg={toast} onDone={() => setToast(null)} />}
+    </>
+  )
+}
+
+// ─────────────────────────────────────
 // CONFIG TAB
 // ─────────────────────────────────────
 
@@ -853,7 +1046,7 @@ function ConfigTab() {
         </div>
         <div className="admin-section-body">
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-            {[['/', 'Ver site'], ['/app/dashboard', 'Ver dashboard'], ['/app/shop', 'Ver Shop'], ['/app/shop/produto/1', 'Ver produto']].map(([to, label]) => (
+            {[['/', 'Ver site'], ['/studio-core', 'Ver Conta Digital'], ['/app/dashboard', 'Ver dashboard'], ['/app/shop', 'Ver Shop'], ['/app/shop/produto/1', 'Ver produto']].map(([to, label]) => (
               <button key={to} className="admin-btn-ghost" onClick={() => navigate(to)} style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
                 <ExternalLink size={12} /> {label}
               </button>
@@ -935,11 +1128,12 @@ export default function AdminPage() {
         </nav>
 
         <main className="admin-content">
-          {tab === 'dashboard' && <DashboardTab />}
-          {tab === 'shop'      && <ShopTab />}
-          {tab === 'products'  && <ProductsTab />}
-          {tab === 'landing'   && <LandingTab />}
-          {tab === 'config'    && <ConfigTab />}
+          {tab === 'dashboard'  && <DashboardTab />}
+          {tab === 'landing'    && <LandingTab />}
+          {tab === 'studiocore' && <StudioCoreTab />}
+          {tab === 'shop'       && <ShopTab />}
+          {tab === 'products'   && <ProductsTab />}
+          {tab === 'config'     && <ConfigTab />}
         </main>
       </div>
     </div>

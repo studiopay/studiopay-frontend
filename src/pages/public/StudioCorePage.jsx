@@ -1,126 +1,167 @@
-import { useState } from 'react'
+import { Fragment } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
   Wallet,
-  ShieldCheck,
-  ArrowUpRight,
-  ArrowDownRight,
+  QrCode,
+  ReceiptText,
+  Link2,
+  CreditCard,
   CheckCircle,
   Minus,
-  Check,
-  ReceiptText,
+  Sparkles,
+  Calendar,
+  MessageCircle,
+  RefreshCw,
+  ShieldCheck,
+  BarChart3,
+  PiggyBank,
 } from 'lucide-react'
 import Navbar from '@/components/landing/Navbar'
 import Footer from '@/components/landing/Footer'
 import PublicSiteShell from '@/components/landing/PublicSiteShell'
 import Reveal from '@/components/landing/Reveal'
+import { getAdminContent, ADMIN_KEYS } from '@/utils/adminContent'
+
+// ── Admin-swappable content (via /admin → Conta Digital) ────────
+// O hero (label, título, subtítulo, botões e imagem) é editável pelo
+// Admin Visual. Sem edição, os textos e o placeholder padrão abaixo
+// são usados.
+
+function readAdminCoreSection() {
+  return getAdminContent(ADMIN_KEYS.studioCoreSection, null)
+}
+
+// Destaca uma palavra específica do título (ex.: "acompanhe") em rosa,
+// mesmo quando o título vem editado pelo admin.
+function highlightWord(text, word) {
+  if (!text) return text
+  const idx = text.toLowerCase().indexOf(word.toLowerCase())
+  if (idx === -1) return text
+  return (
+    <>
+      {text.slice(0, idx)}
+      <span className="landing-accent">{text.slice(idx, idx + word.length)}</span>
+      {text.slice(idx + word.length)}
+    </>
+  )
+}
+
+// Destaca várias palavras/expressões dentro de um texto, preservando o
+// restante. Usado quando mais de uma palavra precisa ficar em rosa.
+function highlightWords(text, words) {
+  if (!text || !words?.length) return text
+  const pattern = new RegExp(`(${words.join('|')})`, 'gi')
+  return text.split(pattern).map((part, i) =>
+    words.some((w) => w.toLowerCase() === part.toLowerCase())
+      ? <span key={i} className="landing-accent">{part}</span>
+      : part
+  )
+}
 
 // ── Data ──────────────────────────────────────────────────────
 
-const heroTxns = [
-  { name: 'Sinal — Rafaela',    value: '+R$ 100,00', when: 'hoje',  type: 'in'  },
-  { name: 'Sessão — Mateus',    value: '+R$ 280,00', when: 'ontem', type: 'in'  },
-  { name: 'Material — Tintas',  value: '-R$ 89,90',  when: 'seg',   type: 'out' },
+const heroCards = [
+  { Icon: QrCode, title: 'Pix', text: 'Receba pagamentos instantâneos.' },
+  { Icon: ReceiptText, title: 'Boletos', text: 'Gere cobranças profissionais.' },
+  { Icon: Link2, title: 'Link de pagamento', text: 'Envie um link e facilite o pagamento.' },
+  { Icon: BarChart3, title: 'Financeiro', text: 'Acompanhe sua evolução financeira.' },
 ]
 
-const demoTabs = [
-  {
-    id: 'pix',
-    label: 'Pix',
-    title: 'Pix recebido, Pix registrado.',
-    text: 'O pagamento entra e já fica claro na rotina do estúdio.',
-    delivers: ['Sabe quem pagou', 'Sabe o valor', 'Sinal não se perde'],
-    ecosystem: 'Esse pagamento pode alimentar o financeiro, a agenda e os relatórios do Studio Pay.',
-  },
-  {
-    id: 'cobranças',
-    label: 'Cobranças',
-    title: 'Veja quem pagou e quem está pendente.',
-    text: 'Organize cobranças por status sem depender de conversa perdida.',
-    delivers: ['Menos cobrança esquecida', 'Status claro', 'Cliente acompanhado'],
-    ecosystem: 'As cobranças podem se conectar com agenda, lembretes e atendimento do Elison IA.',
-  },
-  {
-    id: 'extrato',
-    label: 'Extrato',
-    title: 'Tudo que entrou e saiu, no mesmo lugar.',
-    text: 'Acompanhe o movimento do estúdio sem depender de memória ou planilha.',
-    delivers: ['Entrada visível', 'Saída registrada', 'Menos mistura com dinheiro pessoal'],
-    ecosystem: 'O extrato ajuda o tatuador a entender a rotina financeira junto com agenda, shop e relatórios.',
-  },
-  {
-    id: 'relatorios',
-    label: 'Relatórios',
-    title: 'Entenda quanto sobrou no mês.',
-    text: 'Veja um resumo simples para saber como o estúdio está andando.',
-    delivers: ['Visão do mês', 'Mais clareza', 'Menos achismo'],
-    ecosystem: 'Os relatórios mostram o resultado da rotina: agenda, cobranças, entradas, saídas e clientes acompanhados.',
-  },
+const bankTxns = [
+  { name: 'Sessão — Camila',   value: '+R$ 420,00', when: 'hoje',  type: 'in'  },
+  { name: 'Pix — Fernando',    value: '+R$ 150,00', when: 'hoje',  type: 'in'  },
+  { name: 'Agulhas e tintas',  value: '-R$ 210,00',  when: 'ontem', type: 'out' },
+  { name: 'Aluguel do estúdio', value: '-R$ 900,00', when: '3 dias', type: 'out' },
 ]
 
-const beforeItems = [
-  'Pix no WhatsApp, sem registro',
-  'Sinal anotado de cabeça',
-  'Gasto com material esquecido',
-  'Fim do mês confuso',
+const bankChartValues = [38, 52, 44, 61, 58, 70, 66]
+
+const chargeToggles = [
+  { Icon: RefreshCw, title: 'Cobrança automática', text: 'Lembrete enviado no vencimento' },
+  { Icon: Sparkles, title: 'Robô pré-tattoo', text: 'Cuidados enviados antes da sessão' },
+  { Icon: ShieldCheck, title: 'Robô pós-tattoo', text: 'Cuidados enviados após a sessão' },
 ]
 
-const afterItems = [
-  'Pagamento registrado',
-  'Cobrança com status',
-  'Entrada e saída visíveis',
-  'Resumo do mês claro',
+const flowSteps = ['Agenda', 'Cobrança', 'WhatsApp', 'Pagamento', 'Relatório']
+
+const flowCards = [
+  { Icon: Calendar, title: 'Agenda', text: 'Sessão marcada, cobrança organizada.' },
+  { Icon: Sparkles, title: 'Elison IA', text: 'Cliente lembrado sem mensagem manual.' },
+  { Icon: Wallet, title: 'Conta Digital', text: 'Pagamento recebido e registrado.' },
+  { Icon: BarChart3, title: 'Relatórios', text: 'Você entende o resultado do mês.' },
 ]
 
-const steps = [
-  { n: '01', title: 'Gere a cobrança',   text: 'Para sinal, sessão ou pagamento pendente.' },
-  { n: '02', title: 'Cliente paga',       text: 'O pagamento fica registrado.' },
-  { n: '03', title: 'Você acompanha',     text: 'Saldo, extrato e resumo mostram o que aconteceu.' },
-]
+// ── Premium window frame ─────────────────────────────────────
+// Mostra a imagem administrável (se existir) ou o mockup em CSS.
 
-// ── Hero mockup ────────────────────────────────────────────────
+function CoreWindow({ label, image, alt, children, size = '' }) {
+  return (
+    <div className={`core-window ${size}`}>
+      <div className="core-window-bar">
+        <span className="core-window-dots"><span /><span /><span /></span>
+        <span className="core-window-label">{label}</span>
+      </div>
+      <div className="core-window-body">
+        {image ? <img src={image} alt={alt} className="core-window-img" /> : children}
+      </div>
+    </div>
+  )
+}
 
-function FinancialMockup() {
+// ── Placeholder da imagem grande (hero) ─────────────────────────
+// Sem imagem administrada ainda: mostra um container premium já no
+// tamanho/proporção certos, pronto para receber a imagem via /admin.
+
+function ImagePlaceholder({ label }) {
+  return (
+    <div className="core-image-placeholder">
+      <span className="core-image-placeholder-icon">
+        <Wallet size={26} strokeWidth={1.5} />
+      </span>
+      <p>{label}</p>
+    </div>
+  )
+}
+
+// ── Banco / controle financeiro mockup ──────────────────────────
+
+function BankMockup() {
   return (
     <div className="core-mockup" aria-hidden="true">
       <div className="core-mockup-header">
         <div className="core-mockup-brand">
           <Wallet size={13} strokeWidth={1.8} />
-          Conta Digital
+          Banco
         </div>
         <span className="core-mockup-status">
           <span className="core-mockup-dot" />
-          Ativo
+          Sincronizado
         </span>
       </div>
 
       <div className="core-mockup-balance-wrap">
         <p className="core-mockup-balance-label">Saldo disponível</p>
-        <p className="core-mockup-balance">R$ 4.280,00</p>
+        <p className="core-mockup-balance">R$ 6.240,00</p>
       </div>
 
-      <div className="core-mockup-stats">
-        <div className="core-mockup-stat">
-          <p className="core-mockup-stat-label"><ArrowUpRight size={12} />Recebido hoje</p>
-          <p className="core-mockup-stat-value">R$ 380,00</p>
-        </div>
-        <div className="core-mockup-stat-divider" />
-        <div className="core-mockup-stat">
-          <p className="core-mockup-stat-label"><ReceiptText size={12} />Cobranças</p>
-          <p className="core-mockup-stat-value">3 abertas</p>
-        </div>
-        <div className="core-mockup-stat-divider" />
-        <div className="core-mockup-stat">
-          <p className="core-mockup-stat-label"><ArrowDownRight size={12} />Saídas do mês</p>
-          <p className="core-mockup-stat-value core-mockup-stat-out">R$ 740,00</p>
-        </div>
+      <div className="core-bank-actions">
+        <div className="core-bank-action"><QrCode size={16} strokeWidth={1.8} />Pix</div>
+        <div className="core-bank-action"><ReceiptText size={16} strokeWidth={1.8} />Boleto</div>
+        <div className="core-bank-action"><Link2 size={16} strokeWidth={1.8} />Link</div>
+        <div className="core-bank-action"><CreditCard size={16} strokeWidth={1.8} />Pagar conta</div>
+      </div>
+
+      <div className="core-bank-chart">
+        {bankChartValues.map((v, i) => (
+          <div key={i} className="core-bank-bar" style={{ height: `${v}%` }} />
+        ))}
       </div>
 
       <div className="core-mockup-divider" />
-      <p className="core-mockup-txn-title">Últimos movimentos</p>
+      <p className="core-mockup-txn-title">Transações recentes</p>
       <div className="core-mockup-txns">
-        {heroTxns.map((t) => (
+        {bankTxns.map((t) => (
           <div key={t.name} className="core-mockup-txn">
             {t.type === 'in'
               ? <CheckCircle size={12} className="core-txn-icon" />
@@ -132,122 +173,104 @@ function FinancialMockup() {
           </div>
         ))}
       </div>
+    </div>
+  )
+}
 
-      <div className="core-mockup-tabs">
-        {['Pix', 'Cobranças', 'Extrato', 'Relatórios'].map((tab, i) => (
-          <div key={tab} className={`core-mockup-tab${i === 0 ? ' active' : ''}`}>{tab}</div>
-        ))}
+// ── Placeholder da imagem da seção "Cobranças automáticas" ──────
+// Sem imagem administrada ainda: mostra um container premium,
+// sem conversa/mensagem fake, pronto para receber a imagem via /admin.
+
+function AutoChargePlaceholder() {
+  return (
+    <div className="core-image-placeholder">
+      <span className="core-image-placeholder-icon">
+        <MessageCircle size={26} strokeWidth={1.5} />
+      </span>
+      <p>Adicione a imagem pelo admin</p>
+    </div>
+  )
+}
+
+// ── Criar cobrança mockup ──────────────────────────────────────
+
+function CreateChargeMockup() {
+  const fields = [
+    { label: 'Cliente', value: 'Mariana Alves' },
+    { label: 'WhatsApp', value: '(11) 9 8888-0000' },
+    { label: 'Tipo de cobrança', value: 'Sessão de tatuagem' },
+    { label: 'Valor', value: 'R$ 420,00' },
+    { label: 'Vencimento', value: 'Amanhã' },
+    { label: 'Forma de envio', value: 'WhatsApp + Pix' },
+    { label: 'Descrição', value: 'Sessão fechamento de braço', full: true },
+  ]
+
+  return (
+    <div className="core-charge-mockup" aria-hidden="true">
+      <div className="core-charge-form">
+        <p className="core-charge-form-title">Criar cobrança</p>
+        <div className="core-charge-fields-grid">
+          {fields.map((f) => (
+            <div key={f.label} className={`core-charge-field${f.full ? ' full' : ''}`}>
+              <span>{f.label}</span>
+              <strong>{f.value}</strong>
+            </div>
+          ))}
+        </div>
+        <div className="core-charge-submit">
+          <MessageCircle size={16} strokeWidth={2} />
+          Gerar e enviar cobrança
+        </div>
+      </div>
+
+      <div className="core-charge-side">
+        <div className="core-charge-summary">
+          <p className="core-charge-summary-title">Resumo da cobrança</p>
+          <div className="core-charge-summary-row"><span>Cliente</span><strong>Mariana</strong></div>
+          <div className="core-charge-summary-row"><span>Valor</span><strong className="core-demo-value-in">R$ 420,00</strong></div>
+          <div className="core-charge-summary-row"><span>Vencimento</span><strong>Amanhã</strong></div>
+          <div className="core-charge-summary-row"><span>Envio</span><strong>WhatsApp</strong></div>
+        </div>
+
+        <div className="core-charge-tip">
+          <Sparkles size={14} strokeWidth={2} />
+          <p>
+            <strong>Dica do Elison IA:</strong> clientes que recebem lembrete um dia antes pagam com mais frequência
+            no prazo.
+          </p>
+        </div>
       </div>
     </div>
   )
 }
 
-// ── Demo tab cards ─────────────────────────────────────────────
-
-function DemoCard({ tabId }) {
-  if (tabId === 'pix') {
-    return (
-      <div className="core-demo-card">
-        <div className="core-demo-card-head">
-          <CheckCircle size={15} className="core-demo-card-icon-ok" />
-          <span className="core-demo-card-head-label">Recebimento confirmado</span>
-        </div>
-        <div className="core-demo-receipt">
-          <div className="core-demo-receipt-row"><span>Cliente</span><strong>Rafaela</strong></div>
-          <div className="core-demo-receipt-row"><span>Tipo</span><strong>Sinal</strong></div>
-          <div className="core-demo-receipt-row">
-            <span>Valor</span><strong className="core-demo-value-in">R$ 100,00</strong>
-          </div>
-          <div className="core-demo-receipt-row">
-            <span>Status</span><span className="core-demo-badge-paid">Pago</span>
-          </div>
-          <div className="core-demo-receipt-row"><span>Horário</span><strong>Hoje, 14:22</strong></div>
-        </div>
-      </div>
-    )
-  }
-
-  if (tabId === 'cobranças') {
-    const charges = [
-      { name: 'João',   type: 'Sinal',   status: 'Pago',       cls: 'paid',    value: 'R$ 150,00' },
-      { name: 'Amanda', type: 'Sessão',  status: 'Pendente',   cls: 'pending', value: 'R$ 400,00' },
-      { name: 'Lucas',  type: 'Retoque', status: 'Aguardando', cls: 'waiting', value: 'R$ 120,00' },
-    ]
-    return (
-      <div className="core-demo-card">
-        <p className="core-demo-card-label">Cobranças — 3 abertas</p>
-        <div className="core-demo-charges">
-          {charges.map((c) => (
-            <div key={c.name} className="core-demo-charge-row">
-              <div className="core-demo-charge-info">
-                <span className="core-demo-charge-name">{c.name}</span>
-                <span className="core-demo-charge-type">{c.type}</span>
-              </div>
-              <span className={`core-demo-status core-demo-status-${c.cls}`}>{c.status}</span>
-              <span className="core-demo-charge-value">{c.value}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  if (tabId === 'extrato') {
-    const txns = [
-      { name: 'Sessão — Mateus',       value: '+R$ 280,00', type: 'in'  },
-      { name: 'Sinal — Rafaela',       value: '+R$ 100,00', type: 'in'  },
-      { name: 'Material — Tintas',     value: '-R$ 89,90',  type: 'out' },
-      { name: 'Luvas e descartáveis',  value: '-R$ 45,00',  type: 'out' },
-    ]
-    return (
-      <div className="core-demo-card">
-        <p className="core-demo-card-label">Extrato — este mês</p>
-        <div className="core-demo-txns">
-          {txns.map((t) => (
-            <div key={t.name} className="core-demo-txn-row">
-              <span className={t.type === 'in' ? 'core-demo-txn-dot-in' : 'core-demo-txn-dot-out'} />
-              <span className="core-demo-txn-name">{t.name}</span>
-              <span className={t.type === 'in' ? 'core-demo-txn-in' : 'core-demo-txn-out'}>{t.value}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-    )
-  }
-
-  if (tabId === 'relatorios') {
-    return (
-      <div className="core-demo-card">
-        <div className="core-demo-report-head">
-          <p className="core-demo-card-label" style={{ margin: 0 }}>Resumo do mês</p>
-          <span className="core-demo-report-period">Jun 2025</span>
-        </div>
-        <div className="core-demo-report-rows">
-          <div className="core-demo-report-row">
-            <span>Entradas</span><strong className="core-demo-value-in">R$ 8.420,00</strong>
-          </div>
-          <div className="core-demo-report-row">
-            <span>Saídas</span><strong className="core-demo-value-out">R$ 2.180,00</strong>
-          </div>
-          <div className="core-demo-report-row highlight">
-            <span>Saldo estimado</span><strong>R$ 6.240,00</strong>
-          </div>
-          <div className="core-demo-report-row pending">
-            <span>Pendências</span><strong>R$ 920,00</strong>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  return null
-}
-
 // ── Page ───────────────────────────────────────────────────────
 
+const DEFAULT_HERO_TITLE = 'Pague, receba e acompanhe seu dinheiro em um só lugar.'
+const DEFAULT_HERO_SUB = 'Receba no Pix, gere boletos, envie links de pagamento e acompanhe a evolução financeira do seu estúdio sem depender de planilhas.'
+
+const DEFAULT_AUTO_BADGE = 'Cobranças automáticas'
+const DEFAULT_AUTO_TITLE = 'Configure uma vez.\nO Studio Pay cobra por você.'
+const DEFAULT_AUTO_SUB = 'Automatize lembretes e cobranças pelo WhatsApp e tenha mais tempo para o que realmente importa.'
+const DEFAULT_AUTO_PILL = 'Automatize cobranças e mensagens no WhatsApp com lembretes enviados no momento certo.'
+
 export default function StudioCorePage() {
-  const [activeTab, setActiveTab] = useState('pix')
-  const tab = demoTabs.find((t) => t.id === activeTab)
+  const admin = readAdminCoreSection()
+
+  const heroLabel = admin?.heroLabel || 'Conta digital Studio Pay'
+  const heroTitle = admin?.heroTitle || DEFAULT_HERO_TITLE
+  const heroSub = admin?.heroSub || DEFAULT_HERO_SUB
+  const heroBtnPrimario = admin?.heroBtnPrimario || 'Começar agora'
+  const heroBtnSecundario = admin?.heroBtnSecundario || 'Ver planos'
+
+  const autoBadge = admin?.autoChargeBadge || DEFAULT_AUTO_BADGE
+  const autoTitleLines = (admin?.autoChargeTitle || DEFAULT_AUTO_TITLE).split('\n')
+  const autoSub = admin?.autoChargeSubtitle || DEFAULT_AUTO_SUB
+  const autoPillText = admin?.autoChargePillText || DEFAULT_AUTO_PILL
+  // Qualquer imagem enviada (desktop ou mobile) deve aparecer em algum lugar:
+  // cada versão cai de volta na outra quando a sua própria não existe.
+  const autoDesktopImage = admin?.autoChargeImage || admin?.autoChargeImageMobile || null
+  const autoMobileImage = admin?.autoChargeImageMobile || admin?.autoChargeImage || null
 
   return (
     <PublicSiteShell>
@@ -259,203 +282,249 @@ export default function StudioCorePage() {
           <div className="core-hero-glow" />
           <div className="container">
             <div className="core-hero-inner">
-              <Reveal>
+              <Reveal className="core-hero-copy-area">
                 <div className="core-hero-copy">
-                  <span className="section-label">Conta Digital</span>
+                  <span className="section-label">{heroLabel}</span>
                   <h1 className="core-hero-title">
-                    Controle o dinheiro do estúdio<br className="core-hero-br" />
-                    <span className="text-pink"> sem misturar tudo.</span>
+                    {highlightWord(heroTitle, 'acompanhe')}
                   </h1>
-                  <p className="core-hero-sub">
-                    Receba por Pix, organize cobranças, acompanhe entradas e saídas e veja quanto realmente sobrou no fim do mês.
-                  </p>
+                  <p className="core-hero-sub">{heroSub}</p>
                   <div className="core-hero-actions">
                     <Link to="/cadastro" className="btn btn-primary btn-lg">
-                      Começar agora <ArrowRight size={18} />
+                      {heroBtnPrimario} <ArrowRight size={18} />
                     </Link>
-                    <a href="/#planos" className="btn btn-outline btn-lg">Ver planos</a>
+                    <Link to="/planos" className="btn btn-outline btn-lg">{heroBtnSecundario}</Link>
                   </div>
                 </div>
               </Reveal>
-              <Reveal delay={120}>
-                <FinancialMockup />
+
+              <Reveal delay={100} className="core-hero-visual-area">
+                <div className={`core-hero-visual${admin?.heroImage ? '' : ' core-hero-visual-empty'}`}>
+                  {admin?.heroImage ? (
+                    <picture>
+                      {admin?.heroImageMobile && (
+                        <source media="(max-width: 640px)" srcSet={admin.heroImageMobile} />
+                      )}
+                      <img src={admin.heroImage} alt="Dashboard da Conta Digital" className="core-hero-visual-img" />
+                    </picture>
+                  ) : (
+                    <ImagePlaceholder label="Preview do painel" />
+                  )}
+                </div>
+              </Reveal>
+
+              <Reveal delay={160} className="core-hero-cards-area">
+                <div className="core-solution-grid core-hero-cards">
+                  {heroCards.map(({ Icon, title, text }, i) => (
+                    <Reveal key={title} delay={i * 50}>
+                      <div className="core-solution-card">
+                        <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
+                        <h3 className="core-solution-title">{title}</h3>
+                        <p className="core-solution-text">{text}</p>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
               </Reveal>
             </div>
+
+            <Reveal delay={180}>
+              <p className="core-pill">
+                Pix, boletos, links e visão financeira em uma experiência <span className="text-pink">feita para quem vive da tatuagem.</span>
+              </p>
+            </Reveal>
           </div>
         </section>
 
-        {/* 2 — Interactive demo */}
-        <section className="core-demo module-section">
+        {/* 2 — Cobranças automáticas */}
+        <section className="core-auto core-auto-v2 module-section">
+          <div className="core-auto-glow" />
+          <div className="container">
+            <div className="core-auto-grid">
+              <Reveal className="core-auto-text-area">
+                <span className="section-label">{autoBadge}</span>
+                <h2 className="section-title core-auto-title">
+                  {autoTitleLines.map((line, i) => (
+                    <Fragment key={i}>
+                      {highlightWords(line, ['Configure', 'cobra'])}
+                      {i < autoTitleLines.length - 1 && <br />}
+                    </Fragment>
+                  ))}
+                </h2>
+                <p className="section-sub core-auto-sub">{autoSub}</p>
+              </Reveal>
+
+              <Reveal delay={100} className="core-auto-visual-area">
+                <div className={`core-auto-visual${autoDesktopImage ? '' : ' core-auto-visual-empty'}`}>
+                  {autoDesktopImage ? (
+                    <picture>
+                      {autoMobileImage && autoMobileImage !== autoDesktopImage && (
+                        <source media="(max-width: 640px)" srcSet={autoMobileImage} />
+                      )}
+                      <img
+                        src={autoDesktopImage}
+                        alt="Cobrança automática no WhatsApp"
+                        className="core-auto-visual-img"
+                      />
+                    </picture>
+                  ) : (
+                    <AutoChargePlaceholder />
+                  )}
+                </div>
+              </Reveal>
+
+              <Reveal delay={160} className="core-auto-cards-area">
+                <div className="core-toggle-list">
+                  {chargeToggles.map(({ Icon, title, text }, i) => (
+                    <Reveal key={title} delay={i * 60}>
+                      <div className="core-toggle-card">
+                        <span className="core-toggle-switch" aria-hidden="true">
+                          <span className="core-toggle-knob" />
+                        </span>
+                        <span className="core-solution-icon"><Icon size={19} strokeWidth={1.8} /></span>
+                        <h3 className="core-solution-title">{title}</h3>
+                        <p className="core-solution-text">{text}</p>
+                        <span className="core-toggle-action">
+                          Configurar <ArrowRight size={12} strokeWidth={2.2} />
+                        </span>
+                      </div>
+                    </Reveal>
+                  ))}
+                </div>
+              </Reveal>
+            </div>
+
+            <Reveal delay={220}>
+              <div className="core-pill core-pill-icon">
+                <span className="core-pill-icon-mark" aria-hidden="true">
+                  <MessageCircle size={16} strokeWidth={2} />
+                </span>
+                <p>{highlightWords(autoPillText, ['lembretes'])}</p>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* 3 — Criar cobrança */}
+        <section className="core-create module-section">
           <div className="container">
             <Reveal>
               <div className="section-header-center">
-                <span className="section-label">Na prática</span>
+                <span className="section-label">Criar cobrança</span>
                 <h2 className="section-title">
-                  Veja na prática o que<br />
-                  <span className="text-pink">a Conta Digital organiza.</span>
+                  Receba sem precisar cobrar<br />
+                  <span className="landing-accent">seus clientes manualmente.</span>
                 </h2>
                 <p className="section-sub">
-                  Clique em uma função e veja como o Studio Pay ajuda a acompanhar pagamentos, cobranças, entradas e saídas.
+                  Crie uma cobrança em poucos segundos, defina vencimento, valor e forma de envio. O Studio Pay
+                  organiza o resto.
                 </p>
               </div>
             </Reveal>
 
-            <Reveal delay={60}>
-              <div className="core-demo-tabs" role="tablist">
-                {demoTabs.map((t) => (
-                  <button
-                    key={t.id}
-                    role="tab"
-                    aria-selected={activeTab === t.id}
-                    className={`core-demo-tab${activeTab === t.id ? ' active' : ''}`}
-                    onClick={() => setActiveTab(t.id)}
-                  >
-                    {t.label}
-                  </button>
+            <Reveal delay={100}>
+              <CoreWindow
+                label="app.studiopay.com.br/cobrancas/nova"
+                image={admin?.createChargeImage}
+                alt="Tela de criação de cobrança"
+                size="core-window-xl"
+              >
+                <CreateChargeMockup />
+              </CoreWindow>
+            </Reveal>
+
+            <Reveal delay={160}>
+              <p className="core-pill">
+                Automatize cobranças no WhatsApp com lembretes enviados no momento certo.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* 4 — Controle financeiro / Banco */}
+        <section className="core-money module-section">
+          <div className="container">
+            <Reveal>
+              <div className="section-header-center">
+                <span className="section-label">Controle do dinheiro</span>
+                <h2 className="section-title">
+                  Veja o dinheiro entrar,<br />
+                  <span className="landing-accent">sair e sobrar.</span>
+                </h2>
+                <p className="section-sub">
+                  Tenha clareza sobre recebimentos, materiais, sessões pagas, cobranças abertas e movimentações
+                  do estúdio.
+                </p>
+              </div>
+            </Reveal>
+
+            <div className="core-money-layout">
+              <Reveal>
+                <div className="core-money-copy">
+                  <div className="core-money-chip">
+                    <ReceiptText size={15} strokeWidth={1.8} />
+                    Cobranças abertas <strong>· 3</strong>
+                  </div>
+                  <div className="core-money-chip">
+                    <PiggyBank size={15} strokeWidth={1.8} />
+                    Saldo disponível <strong>· R$ 6.240,00</strong>
+                  </div>
+                  <p className="core-pill" style={{ margin: '8px 0 0', textAlign: 'left', maxWidth: 420 }}>
+                    Pare de trabalhar sem saber quanto realmente sobrou.
+                  </p>
+                </div>
+              </Reveal>
+
+              <Reveal delay={100}>
+                <CoreWindow label="app.studiopay.com.br/banco" image={admin?.bankImage} alt="Painel do Banco">
+                  <BankMockup />
+                </CoreWindow>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* 5 — Feito para a rotina do tatuador */}
+        <section className="core-routine module-section">
+          <div className="container">
+            <Reveal>
+              <div className="section-header-center">
+                <span className="section-label">Feito para o tatuador</span>
+                <h2 className="section-title">
+                  Seu financeiro conectado com<br />
+                  <span className="landing-accent">a rotina do estúdio.</span>
+                </h2>
+                <p className="section-sub">
+                  O dinheiro não fica separado da operação. Agenda, cobranças, clientes e relatórios trabalham
+                  juntos.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={80}>
+              <div className="ecosystem-flow" aria-hidden="true">
+                {flowSteps.map((step, i) => (
+                  <span key={step} className="ecosystem-flow-inner">
+                    <span className="ecosystem-flow-step">{step}</span>
+                    {i < flowSteps.length - 1 && (
+                      <span className="ecosystem-flow-arrow">→</span>
+                    )}
+                  </span>
                 ))}
               </div>
             </Reveal>
 
-            <div className="core-demo-body">
-              <Reveal key={activeTab}>
-                <div className="core-demo-copy">
-                  <h3 className="core-demo-feature-title">{tab.title}</h3>
-                  <p className="core-demo-feature-text">{tab.text}</p>
-
-                  <p className="core-demo-delivers-label">O que entrega</p>
-                  <ul className="core-demo-bullets">
-                    {tab.delivers.map((b) => (
-                      <li key={b} className="core-demo-bullet">
-                        <span className="core-demo-bullet-dot">
-                          <Check size={10} strokeWidth={2.5} />
-                        </span>
-                        {b}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="core-demo-ecosystem">
-                    <p className="core-demo-ecosystem-label">Conectado ao Studio Pay</p>
-                    {tab.ecosystem}
-                  </div>
-                </div>
-              </Reveal>
-
-              <Reveal key={activeTab + '-card'} delay={60}>
-                <DemoCard tabId={activeTab} />
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-        {/* 3 — Before / After */}
-        <section className="core-compare module-section">
-          <div className="container">
-            <Reveal>
-              <div className="section-header-center">
-                <span className="section-label">Antes e depois</span>
-                <h2 className="section-title">
-                  Antes era tudo espalhado.<br />
-                  <span className="text-pink">Agora fica no fluxo.</span>
-                </h2>
-              </div>
-            </Reveal>
-
-            <div className="core-compare-inner">
-              <Reveal>
-                <div className="core-compare-side before">
-                  <div className="core-compare-side-label">
-                    <span className="core-compare-dot-before" />
-                    Antes
-                  </div>
-                  <ul className="core-compare-items">
-                    {beforeItems.map((item) => (
-                      <li key={item} className="core-compare-item">
-                        <span className="core-compare-item-bullet-before" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-              <Reveal delay={80}>
-                <div className="core-compare-side after">
-                  <div className="core-compare-side-label">
-                    <span className="core-compare-dot-after" />
-                    Com Studio Pay
-                  </div>
-                  <ul className="core-compare-items">
-                    {afterItems.map((item) => (
-                      <li key={item} className="core-compare-item">
-                        <span className="core-compare-item-bullet-after">
-                          <Check size={8} strokeWidth={3} />
-                        </span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </Reveal>
-            </div>
-
-            <Reveal delay={100}>
-              <p className="core-section-note">
-                A Conta Digital organiza o financeiro para o resto do Studio Pay trabalhar melhor junto.
-              </p>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* 4 — How it works */}
-        <section className="core-how module-section">
-          <div className="container">
-            <Reveal>
-              <div className="section-header-center">
-                <span className="section-label">Como funciona</span>
-                <h2 className="section-title">
-                  Da cobrança ao controle<br />
-                  <span className="text-pink">em 3 passos.</span>
-                </h2>
-              </div>
-            </Reveal>
-            <div className="core-steps">
-              {steps.map((step, i) => (
-                <Reveal key={step.n} delay={i * 80}>
-                  <div className="core-step">
-                    <div className="core-step-num">{step.n}</div>
-                    <div className="core-step-body">
-                      <h3 className="core-step-title">{step.title}</h3>
-                      <p className="core-step-text">{step.text}</p>
-                    </div>
+            <div className="core-solution-grid">
+              {flowCards.map(({ Icon, title, text }, i) => (
+                <Reveal key={title} delay={140 + i * 50}>
+                  <div className="core-solution-card">
+                    <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
+                    <h3 className="core-solution-title">{title}</h3>
+                    <p className="core-solution-text">{text}</p>
                   </div>
                 </Reveal>
               ))}
             </div>
-            <Reveal delay={120}>
-              <p className="core-section-note">
-                A Conta Digital é a base financeira para agenda, relatórios e automações funcionarem com mais clareza.
-              </p>
-            </Reveal>
-          </div>
-        </section>
-
-        {/* 5 — Not a bank */}
-        <section className="core-legal module-section">
-          <div className="container">
-            <Reveal>
-              <div className="core-legal-inner">
-                <ShieldCheck size={32} strokeWidth={1.5} className="core-legal-icon" />
-                <div className="core-legal-copy">
-                  <h2 className="core-legal-title">Não é banco. É controle para sua rotina.</h2>
-                  <p className="core-legal-text">
-                    A Conta Digital do Studio Pay ajuda o tatuador a organizar cobranças, Pix, extrato e relatórios em uma experiência prática, conectada à rotina do estúdio.
-                  </p>
-                  <p className="core-legal-fine">
-                    Produtos financeiros podem ser oferecidos por parceiros autorizados, conforme disponibilidade e análise.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
           </div>
         </section>
 
@@ -464,17 +533,17 @@ export default function StudioCorePage() {
           <div className="container">
             <Reveal>
               <h2 className="footer-cta-title">
-                Organize o dinheiro do estúdio<br />
-                <span className="text-pink">antes que ele se perca na rotina.</span>
+                Controle o dinheiro do estúdio<br />
+                sem misturar tudo.
               </h2>
               <p className="footer-cta-sub">
-                Comece pela Conta Digital e acompanhe melhor cobranças, Pix e movimentações.
+                Comece simples: receba, cobre, acompanhe e entenda sua rotina financeira em um só lugar.
               </p>
               <div className="core-cta-actions">
                 <Link to="/cadastro" className="btn btn-primary btn-lg">
                   Começar agora <ArrowRight size={18} />
                 </Link>
-                <a href="/#planos" className="btn btn-outline btn-lg">Ver planos</a>
+                <Link to="/planos" className="btn btn-outline btn-lg">Ver planos</Link>
               </div>
             </Reveal>
           </div>

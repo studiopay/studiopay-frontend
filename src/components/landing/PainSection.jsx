@@ -18,13 +18,27 @@ function withCurrency(val) {
   return /^R\$/.test(s) ? s : `R$ ${s}`
 }
 
+const HIGHLIGHT_TERMS = ['Studio Pay']
+const HIGHLIGHT_PATTERN = new RegExp(`(${HIGHLIGHT_TERMS.join('|')})`, 'gi')
+
+function highlightText(text) {
+  if (!text) return text
+  return String(text)
+    .split(HIGHLIGHT_PATTERN)
+    .map((part, index) =>
+      HIGHLIGHT_TERMS.some((term) => term.toLowerCase() === part.toLowerCase())
+        ? <strong key={index} className="landing-accent">{part}</strong>
+        : part
+    )
+}
+
 export default function PainSection() {
   const admin = readAdminShopSection()
 
   const label          = admin?.label          || 'Studio Shop'
-  const title          = admin?.title          || 'Produtos que você já compra.'
-  const highlightTitle = admin?.highlightTitle || 'Com vantagem pra quem usa Studio Pay.'
-  const subtitle       = admin?.subtitle       || 'O Studio Shop conecta assinantes a produtos, kits e benefícios pensados para a rotina real do tatuador.'
+  const title          = admin?.title          || 'Seu lucro também começa na compra.'
+  const highlightTitle = admin?.highlightTitle || 'Produtos com vantagem para quem usa Studio Pay.'
+  const subtitle       = admin?.subtitle       || 'Com o Studio Shop, assinantes Studio Pay acessam produtos, kits e condições pensadas para reduzir custos na rotina do estúdio.'
 
   const items = admin?.cards
     ? admin.cards
@@ -40,14 +54,14 @@ export default function PainSection() {
     : FALLBACK_ITEMS
 
   return (
-    <section className="pain-section shop-benefits-section">
+    <section className="pain-section shop-benefits-section" id="studio-shop">
       <div className="container">
         <Reveal>
           <div className="shop-benefits-header">
             <span className="section-label">{label}</span>
-            <h2 className="section-title">
-              {title}<br />
-              <span className="text-pink">{highlightTitle}</span>
+            <h2 className="section-title shop-benefits-title">
+              {highlightText(title)}<br />
+              {highlightText(highlightTitle)}
             </h2>
             <p className="section-sub">{subtitle}</p>
           </div>
@@ -55,7 +69,7 @@ export default function PainSection() {
 
         <div className="shop-showcase">
           {items.map((item, index) => (
-            <Reveal key={item.title + index} delay={index * 55}>
+            <Reveal key={item.title + index} delay={index * 120}>
               <article className="shop-showcase-card">
                 <div className="shop-product-media" aria-hidden={!item.image}>
                   {item.image
@@ -83,8 +97,7 @@ export default function PainSection() {
                     <dd>{item.studioPrice}</dd>
                   </div>
                   <div className="shop-savings-price">
-                    <dt>Economia demonstrativa</dt>
-                    <dd>{item.savings}</dd>
+                    <dd>Economize <span className="shop-savings-value">{item.savings}</span></dd>
                   </div>
                 </dl>
               </article>

@@ -148,7 +148,7 @@ export default function Banco() {
       {/* ── 1. Cabeçalho ────────────────────────────── */}
       <div className="banco-header">
         <div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 24, fontWeight: 700, marginBottom: 6 }}>Banco</h1>
+          <h1 style={{ fontFamily: 'var(--font-body)', fontSize: 24, fontWeight: 700, marginBottom: 6 }}>Banco</h1>
           <p style={{ fontSize: 14, color: 'var(--app-text-muted)' }}>
             Sua conta digital Studio Pay para receber, pagar e acompanhar movimentações.
           </p>
@@ -272,7 +272,7 @@ export default function Banco() {
             </div>
           </div>
           <div className="banco-cartao-direita">
-            <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
+            <h2 style={{ fontFamily: 'var(--font-body)', fontSize: 20, fontWeight: 700, marginBottom: 8 }}>
               Cartão Studio Pay
             </h2>
             <p style={{ fontSize: 14, color: 'var(--app-text-muted)', marginBottom: 24, lineHeight: 1.6 }}>

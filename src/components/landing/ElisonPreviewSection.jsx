@@ -44,7 +44,7 @@ export default function ElisonPreviewSection() {
   const currentStep = elisonSteps[activeStep]
 
   return (
-    <section className="elison-preview-section">
+    <section className="elison-preview-section" id="elison-ia">
       <div className="container">
         <div className="elison-preview-layout">
           <Reveal>
@@ -52,10 +52,10 @@ export default function ElisonPreviewSection() {
               <span className="section-label">Elison IA</span>
               <h2 className="section-title">
                 Enquanto você tatua,<br />
-                <span className="text-pink">o Elison acompanha seus clientes.</span>
+                o <span className="landing-accent">Elison</span> acompanha seus clientes.
               </h2>
               <p className="section-sub">
-                Confirma horários, envia lembretes e continua o atendimento sem depender de você parar o trabalho.
+                Confirma horários, envia lembretes e mantém o cliente acompanhado sem você precisar parar o atendimento.
               </p>
             </div>
           </Reveal>

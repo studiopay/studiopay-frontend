@@ -63,6 +63,12 @@ const DEFAULT_STUDIO_CORE = {
   autoChargeImage: null,
   autoChargeImageMobile: null,
   autoChargePillText: 'Automatize cobranças e mensagens no WhatsApp com lembretes enviados no momento certo.',
+  createChargeBadge: 'Criar cobrança',
+  createChargeTitle: 'Receba sem precisar cobrar seus clientes manualmente.',
+  createChargeSubtitle: 'Crie uma cobrança em poucos segundos, defina vencimento, valor e forma de envio. O Studio Pay organiza o resto.',
+  createChargeImage: null,
+  createChargeImageMobile: null,
+  createChargePillText: 'Automatize cobranças no WhatsApp com lembretes enviados no momento certo.',
 }
 
 const DEFAULT_PRODUCTS = [
@@ -969,6 +975,51 @@ function StudioCoreTab() {
           <div className="admin-field">
             <p className="admin-label">Texto da pill/faixa inferior</p>
             <textarea className="admin-textarea" rows={2} value={hero.autoChargePillText} onChange={e => upd('autoChargePillText', e.target.value)} />
+            <p className="admin-hint">A palavra "lembretes" (se presente) aparece destacada em rosa automaticamente.</p>
+          </div>
+          <div className="admin-actions-row">
+            <button className="admin-btn-primary" onClick={save}><Save size={14} /> Salvar Conta Digital</button>
+            <button className="admin-btn-ghost admin-btn-sm" onClick={reset}><RotateCcw size={12} /> Restaurar padrão</button>
+          </div>
+        </div>
+      </div>
+
+      <div className="admin-section" style={{ marginTop: 28 }}>
+        <div className="admin-section-header">
+          <div>
+            <p className="admin-section-title">Criar cobrança</p>
+            <p className="admin-section-sub">Terceira seção de /studio-core — imagem grande da tela de criação de cobrança</p>
+          </div>
+        </div>
+        <div className="admin-section-body">
+          <div className="admin-field">
+            <p className="admin-label">Badge</p>
+            <input className="admin-input" value={hero.createChargeBadge} onChange={e => upd('createChargeBadge', e.target.value)} />
+          </div>
+          <div className="admin-field">
+            <p className="admin-label">Título</p>
+            <textarea className="admin-textarea" rows={2} value={hero.createChargeTitle} onChange={e => upd('createChargeTitle', e.target.value)} />
+            <p className="admin-hint">O trecho "seus clientes manualmente." (se presente) aparece destacado em rosa automaticamente.</p>
+          </div>
+          <div className="admin-field">
+            <p className="admin-label">Subtítulo</p>
+            <textarea className="admin-textarea" rows={2} value={hero.createChargeSubtitle} onChange={e => upd('createChargeSubtitle', e.target.value)} />
+          </div>
+          <ImageUpload
+            label="Imagem desktop (substitui o placeholder quando definida)"
+            value={hero.createChargeImage}
+            onChange={v => upd('createChargeImage', v)}
+          />
+          <ImageUpload
+            label="Imagem mobile opcional (usada em telas ≤640px)"
+            value={hero.createChargeImageMobile}
+            onChange={v => upd('createChargeImageMobile', v)}
+            maxWidth={1080}
+          />
+          <p className="admin-hint">Se apenas uma imagem for enviada, ela será reutilizada nas demais versões.</p>
+          <div className="admin-field">
+            <p className="admin-label">Texto da pill/faixa inferior</p>
+            <textarea className="admin-textarea" rows={2} value={hero.createChargePillText} onChange={e => upd('createChargePillText', e.target.value)} />
             <p className="admin-hint">A palavra "lembretes" (se presente) aparece destacada em rosa automaticamente.</p>
           </div>
           <div className="admin-actions-row">

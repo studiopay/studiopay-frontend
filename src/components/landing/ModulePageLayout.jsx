@@ -16,23 +16,25 @@ function LineList({ items }) {
   )
 }
 
-export default function ModulePageLayout({ page }) {
+export default function ModulePageLayout({ page, heroContent }) {
   return (
     <PublicSiteShell>
       <Navbar />
       <main className="module-page">
-        <section className="module-hero">
-          <div className="container module-hero-inner">
-            <Reveal>
-              <span className="section-label">{page.eyebrow}</span>
-              <h1 className="module-title">{page.headline}</h1>
-              <p className="module-subtitle">{page.subheadline}</p>
-              <Link to="/cadastro" className="btn btn-primary btn-lg">
-                {page.cta}
-              </Link>
-            </Reveal>
-          </div>
-        </section>
+        {heroContent || (
+          <section className="module-hero">
+            <div className="container module-hero-inner">
+              <Reveal>
+                <span className="section-label">{page.eyebrow}</span>
+                <h1 className="module-title">{page.headline}</h1>
+                <p className="module-subtitle">{page.subheadline}</p>
+                <Link to="/cadastro" className="btn btn-primary btn-lg">
+                  {page.cta}
+                </Link>
+              </Reveal>
+            </div>
+          </section>
+        )}
 
         <section className="module-section">
           <div className="container module-two-col">

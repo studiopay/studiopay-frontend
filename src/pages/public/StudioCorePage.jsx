@@ -37,6 +37,7 @@ function readAdminCoreSection() {
 // Prioridade: imagem do admin (teste local) > imagem fixa em /public > placeholder.
 const HERO_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-hero.webp'
 const AUTO_CHARGE_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-cobrancas.webp'
+const CREATE_CHARGE_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-criar-cobranca.webp'
 
 // Exibe a imagem (admin ou fallback fixo); só cai para o placeholder se
 // nenhuma imagem existir ou se a imagem informada falhar ao carregar.
@@ -194,58 +195,6 @@ function BankMockup() {
   )
 }
 
-// ── Criar cobrança mockup ──────────────────────────────────────
-
-function CreateChargeMockup() {
-  const fields = [
-    { label: 'Cliente', value: 'Mariana Alves' },
-    { label: 'WhatsApp', value: '(11) 9 8888-0000' },
-    { label: 'Tipo de cobrança', value: 'Sessão de tatuagem' },
-    { label: 'Valor', value: 'R$ 420,00' },
-    { label: 'Vencimento', value: 'Amanhã' },
-    { label: 'Forma de envio', value: 'WhatsApp + Pix' },
-    { label: 'Descrição', value: 'Sessão fechamento de braço', full: true },
-  ]
-
-  return (
-    <div className="core-charge-mockup" aria-hidden="true">
-      <div className="core-charge-form">
-        <p className="core-charge-form-title">Criar cobrança</p>
-        <div className="core-charge-fields-grid">
-          {fields.map((f) => (
-            <div key={f.label} className={`core-charge-field${f.full ? ' full' : ''}`}>
-              <span>{f.label}</span>
-              <strong>{f.value}</strong>
-            </div>
-          ))}
-        </div>
-        <div className="core-charge-submit">
-          <MessageCircle size={16} strokeWidth={2} />
-          Gerar e enviar cobrança
-        </div>
-      </div>
-
-      <div className="core-charge-side">
-        <div className="core-charge-summary">
-          <p className="core-charge-summary-title">Resumo da cobrança</p>
-          <div className="core-charge-summary-row"><span>Cliente</span><strong>Mariana</strong></div>
-          <div className="core-charge-summary-row"><span>Valor</span><strong className="core-demo-value-in">R$ 420,00</strong></div>
-          <div className="core-charge-summary-row"><span>Vencimento</span><strong>Amanhã</strong></div>
-          <div className="core-charge-summary-row"><span>Envio</span><strong>WhatsApp</strong></div>
-        </div>
-
-        <div className="core-charge-tip">
-          <Sparkles size={14} strokeWidth={2} />
-          <p>
-            <strong>Dica do Elison IA:</strong> clientes que recebem lembrete um dia antes pagam com mais frequência
-            no prazo.
-          </p>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 // ── Page ───────────────────────────────────────────────────────
 
 const DEFAULT_HERO_TITLE = 'Pague, receba e acompanhe seu dinheiro em um só lugar.'
@@ -255,6 +204,11 @@ const DEFAULT_AUTO_BADGE = 'Cobranças automáticas'
 const DEFAULT_AUTO_TITLE = 'Configure uma vez.\nO Studio Pay cobra por você.'
 const DEFAULT_AUTO_SUB = 'Automatize lembretes e cobranças pelo WhatsApp e tenha mais tempo para o que realmente importa.'
 const DEFAULT_AUTO_PILL = 'Automatize cobranças e mensagens no WhatsApp com lembretes enviados no momento certo.'
+
+const DEFAULT_CREATE_BADGE = 'Criar cobrança'
+const DEFAULT_CREATE_TITLE = 'Receba sem precisar cobrar\nseus clientes manualmente.'
+const DEFAULT_CREATE_SUB = 'Crie uma cobrança em poucos segundos, defina vencimento, valor e forma de envio. O Studio Pay organiza o resto.'
+const DEFAULT_CREATE_PILL = 'Automatize cobranças no WhatsApp com lembretes enviados no momento certo.'
 
 export default function StudioCorePage() {
   const admin = readAdminCoreSection()
@@ -276,6 +230,13 @@ export default function StudioCorePage() {
   const autoPillText = admin?.autoChargePillText || DEFAULT_AUTO_PILL
   const autoDesktopImage = admin?.autoChargeImage || admin?.autoChargeImageMobile || AUTO_CHARGE_IMAGE_FALLBACK
   const autoMobileImage = admin?.autoChargeImageMobile || admin?.autoChargeImage || AUTO_CHARGE_IMAGE_FALLBACK
+
+  const createBadge = admin?.createChargeBadge || DEFAULT_CREATE_BADGE
+  const createTitleLines = (admin?.createChargeTitle || DEFAULT_CREATE_TITLE).split('\n')
+  const createSub = admin?.createChargeSubtitle || DEFAULT_CREATE_SUB
+  const createPillText = admin?.createChargePillText || DEFAULT_CREATE_PILL
+  const createDesktopImage = admin?.createChargeImage || admin?.createChargeImageMobile || CREATE_CHARGE_IMAGE_FALLBACK
+  const createMobileImage = admin?.createChargeImageMobile || admin?.createChargeImage || CREATE_CHARGE_IMAGE_FALLBACK
 
   return (
     <PublicSiteShell>
@@ -403,151 +364,58 @@ export default function StudioCorePage() {
         </section>
 
         {/* 3 — Criar cobrança */}
-        <section className="core-create module-section">
+        <section className="core-create core-create-v2 module-section">
+          <div className="core-create-glow" />
           <div className="container">
             <Reveal>
               <div className="section-header-center">
-                <span className="section-label">Criar cobrança</span>
-                <h2 className="section-title">
-                  Receba sem precisar cobrar<br />
-                  <span className="landing-accent">seus clientes manualmente.</span>
+                <span className="section-label">{createBadge}</span>
+                <h2 className="section-title core-create-title">
+                  {createTitleLines.map((line, i) => (
+                    <Fragment key={i}>
+                      {highlightWords(line, ['seus clientes manualmente.'])}
+                      {i < createTitleLines.length - 1 && <br />}
+                    </Fragment>
+                  ))}
                 </h2>
-                <p className="section-sub">
-                  Crie uma cobrança em poucos segundos, defina vencimento, valor e forma de envio. O Studio Pay
-                  organiza o resto.
-                </p>
+                <p className="section-sub">{createSub}</p>
               </div>
             </Reveal>
 
             <Reveal delay={100}>
-              <CoreWindow
-                label="app.studiopay.com.br/cobrancas/nova"
-                image={admin?.createChargeImage}
-                alt="Tela de criação de cobrança"
-                size="core-window-xl"
-              >
-                <CreateChargeMockup />
-              </CoreWindow>
+              <div className="core-create-visual">
+                <FallbackImage
+                  src={createDesktopImage}
+                  mobileSrc={createMobileImage}
+                  alt="Tela de criação de cobrança"
+                  className="core-create-visual-img"
+                  placeholderIcon={MessageCircle}
+                  placeholderLabel="Imagem da criação de cobrança"
+                />
+              </div>
             </Reveal>
 
             <Reveal delay={160}>
               <p className="core-pill">
-                Automatize cobranças no WhatsApp com lembretes enviados no momento certo.
+                {highlightWords(createPillText, ['lembretes'])}
               </p>
             </Reveal>
           </div>
         </section>
 
-        {/* 4 — Controle financeiro / Banco */}
-        <section className="core-money module-section">
-          <div className="container">
-            <Reveal>
-              <div className="section-header-center">
-                <span className="section-label">Controle do dinheiro</span>
-                <h2 className="section-title">
-                  Veja o dinheiro entrar,<br />
-                  <span className="landing-accent">sair e sobrar.</span>
-                </h2>
-                <p className="section-sub">
-                  Tenha clareza sobre recebimentos, materiais, sessões pagas, cobranças abertas e movimentações
-                  do estúdio.
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="core-money-layout">
-              <Reveal>
-                <div className="core-money-copy">
-                  <div className="core-money-chip">
-                    <ReceiptText size={15} strokeWidth={1.8} />
-                    Cobranças abertas <strong>· 3</strong>
-                  </div>
-                  <div className="core-money-chip">
-                    <PiggyBank size={15} strokeWidth={1.8} />
-                    Saldo disponível <strong>· R$ 6.240,00</strong>
-                  </div>
-                  <p className="core-pill" style={{ margin: '8px 0 0', textAlign: 'left', maxWidth: 420 }}>
-                    Pare de trabalhar sem saber quanto realmente sobrou.
-                  </p>
-                </div>
-              </Reveal>
-
-              <Reveal delay={100}>
-                <CoreWindow label="app.studiopay.com.br/banco" image={admin?.bankImage} alt="Painel do Banco">
-                  <BankMockup />
-                </CoreWindow>
-              </Reveal>
-            </div>
-          </div>
-        </section>
-
-        {/* 5 — Feito para a rotina do tatuador */}
-        <section className="core-routine module-section">
-          <div className="container">
-            <Reveal>
-              <div className="section-header-center">
-                <span className="section-label">Feito para o tatuador</span>
-                <h2 className="section-title">
-                  Seu financeiro conectado com<br />
-                  <span className="landing-accent">a rotina do estúdio.</span>
-                </h2>
-                <p className="section-sub">
-                  O dinheiro não fica separado da operação. Agenda, cobranças, clientes e relatórios trabalham
-                  juntos.
-                </p>
-              </div>
-            </Reveal>
-
-            <Reveal delay={80}>
-              <div className="ecosystem-flow" aria-hidden="true">
-                {flowSteps.map((step, i) => (
-                  <span key={step} className="ecosystem-flow-inner">
-                    <span className="ecosystem-flow-step">{step}</span>
-                    {i < flowSteps.length - 1 && (
-                      <span className="ecosystem-flow-arrow">→</span>
-                    )}
-                  </span>
-                ))}
-              </div>
-            </Reveal>
-
-            <div className="core-solution-grid">
-              {flowCards.map(({ Icon, title, text }, i) => (
-                <Reveal key={title} delay={140 + i * 50}>
-                  <div className="core-solution-card">
-                    <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
-                    <h3 className="core-solution-title">{title}</h3>
-                    <p className="core-solution-text">{text}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 6 — CTA final */}
-        <section className="module-final-cta">
-          <div className="container">
-            <Reveal>
-              <h2 className="footer-cta-title">
-                Controle o dinheiro do estúdio<br />
-                sem misturar tudo.
-              </h2>
-              <p className="footer-cta-sub">
-                Comece simples: receba, cobre, acompanhe e entenda sua rotina financeira em um só lugar.
-              </p>
-              <div className="core-cta-actions">
-                <Link to="/cadastro" className="btn btn-primary btn-lg">
-                  Começar agora <ArrowRight size={18} />
-                </Link>
-                <Link to="/planos" className="btn btn-outline btn-lg">Ver planos</Link>
-              </div>
-            </Reveal>
-          </div>
-        </section>
+        {/*
+          Seções 4 ("Controle do dinheiro"), 5 ("Feito para o tatuador") e o
+          CTA final específico foram removidas temporariamente da renderização
+          a pedido — a página termina após a seção 3 ("Criar cobrança") e usa
+          o footer global padrão (com seu próprio CTA) na sequência.
+          Os componentes/dados que essas seções usavam (BankMockup, CoreWindow,
+          flowSteps, flowCards, bankTxns, bankChartValues) foram mantidos no
+          arquivo, só não são mais renderizados, para facilitar reintroduzir a
+          seção depois sem precisar recriar tudo.
+        */}
 
       </main>
-      <Footer showCta={false} />
+      <Footer />
     </PublicSiteShell>
   )
 }

@@ -16,7 +16,7 @@ function LineList({ items }) {
   )
 }
 
-export default function ModulePageLayout({ page, heroContent }) {
+export default function ModulePageLayout({ page, heroContent, sectionTwoContent }) {
   return (
     <PublicSiteShell>
       <Navbar />
@@ -36,19 +36,21 @@ export default function ModulePageLayout({ page, heroContent }) {
           </section>
         )}
 
-        <section className="module-section">
-          <div className="container module-two-col">
-            <Reveal>
-              <div>
-                <span className="section-label">O problema</span>
-                <h2 className="section-title">O caos parece pequeno, até virar rotina.</h2>
-              </div>
-            </Reveal>
-            <Reveal delay={80}>
-              <p className="module-large-text">{page.problem}</p>
-            </Reveal>
-          </div>
-        </section>
+        {sectionTwoContent || (
+          <section className="module-section">
+            <div className="container module-two-col">
+              <Reveal>
+                <div>
+                  <span className="section-label">O problema</span>
+                  <h2 className="section-title">O caos parece pequeno, até virar rotina.</h2>
+                </div>
+              </Reveal>
+              <Reveal delay={80}>
+                <p className="module-large-text">{page.problem}</p>
+              </Reveal>
+            </div>
+          </section>
+        )}
 
         <section className="module-section">
           <div className="container">

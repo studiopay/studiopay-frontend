@@ -2,7 +2,10 @@ import { useState } from 'react'
 import ModulePageLayout from '@/components/landing/ModulePageLayout'
 import Reveal from '@/components/landing/Reveal'
 import { modulePages } from '@/data/publicModules'
-import { CalendarCheck, CalendarClock, BellRing, LayoutGrid, Calendar } from 'lucide-react'
+import {
+  CalendarCheck, CalendarClock, BellRing, LayoutGrid, Calendar,
+  Bell, MessageCircle, ShieldCheck, CalendarX2, MessageCircleOff, HeartHandshake,
+} from 'lucide-react'
 
 // Imagem oficial de produção — fica em /public, então sobe junto com o
 // deploy independente do que estiver salvo no localStorage do Admin Visual.
@@ -99,6 +102,111 @@ function AgendaHero() {
   )
 }
 
+// ── Seção 2 — Lembretes automáticos ─────────────────────────────
+// Mockup em HTML/CSS inspirado no bloco "Lembretes automáticos" do
+// painel interno da Agenda — sem depender de imagem.
+
+const reminderItems = [
+  { Icon: Bell, title: 'Confirmação automática', text: 'Elison confirma 24h antes', on: true },
+  { Icon: MessageCircle, title: 'Robô pré-tattoo', text: 'Cuidados enviados 2h antes', on: true },
+  { Icon: ShieldCheck, title: 'Robô pós-tattoo', text: 'Cicatrização enviada após sessão', on: true },
+  { Icon: CalendarClock, title: 'Lembretes ativos', text: '3 lembretes configurados', on: false },
+]
+
+const reminderBenefits = [
+  { Icon: CalendarX2, title: 'Menos faltas', text: 'O cliente recebe aviso antes da sessão.' },
+  { Icon: MessageCircleOff, title: 'Menos mensagem manual', text: 'O sistema envia os lembretes por você.' },
+  { Icon: HeartHandshake, title: 'Mais acompanhamento', text: 'Antes e depois da tattoo, o cliente continua sendo cuidado.' },
+]
+
+function RemindersPanel() {
+  return (
+    <div className="agenda-reminders-panel" aria-hidden="true">
+      <p className="agenda-reminders-panel-title">Lembretes automáticos</p>
+      <div className="agenda-reminders-list">
+        {reminderItems.map(({ Icon, title, text, on }) => (
+          <div key={title} className="agenda-reminder-row">
+            <span className="agenda-reminder-icon"><Icon size={17} strokeWidth={1.8} /></span>
+            <div className="agenda-reminder-copy">
+              <h3 className="agenda-reminder-title">{title}</h3>
+              <p className="agenda-reminder-text">{text}</p>
+              <span className="agenda-reminder-action">Configurar</span>
+            </div>
+            <span className={`agenda-reminder-toggle${on ? '' : ' off'}`}>
+              <span className="agenda-reminder-knob" />
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function AgendaRemindersSection() {
+  return (
+    <section className="agenda-reminders module-section">
+      <div className="agenda-reminders-glow" />
+      <div className="container">
+        <div className="agenda-reminders-grid">
+          <Reveal className="agenda-reminders-visual-area">
+            <RemindersPanel />
+          </Reveal>
+
+          <Reveal delay={100} className="agenda-reminders-text-area">
+            <span className="section-label">Lembretes automáticos</span>
+            <h2 className="section-title agenda-reminders-title">
+              Lembretes automáticos<br />
+              para o cliente{' '}
+              <span className="landing-accent agenda-reminders-accent">
+                não{' '}esquecer<br />
+                da sessão.
+              </span>
+            </h2>
+            <p className="section-sub agenda-reminders-sub">
+              Configure confirmações, avisos pré-tattoo e mensagens pós-sessão para acompanhar o cliente sem
+              depender do WhatsApp manual.
+            </p>
+          </Reveal>
+
+          <Reveal delay={160} className="agenda-reminders-benefits-area">
+            <div className="agenda-reminders-benefits">
+              {reminderBenefits.map(({ Icon, title, text }, i) => (
+                <Reveal key={title} delay={i * 50}>
+                  <div className="core-solution-card agenda-reminders-benefit-card">
+                    <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
+                    <div className="agenda-reminders-benefit-copy">
+                      <h3 className="core-solution-title">{title}</h3>
+                      <p className="core-solution-text">{text}</p>
+                    </div>
+                  </div>
+                </Reveal>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        <Reveal delay={220}>
+          <div className="core-pill core-pill-icon agenda-reminders-pill">
+            <span className="core-pill-icon-mark" aria-hidden="true">
+              <Bell size={16} strokeWidth={2} />
+            </span>
+            <p>
+              Menos esquecimento, menos atraso e{' '}
+              <span className="text-pink">mais cliente acompanhado</span> sem depender do WhatsApp manual.
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
 export default function StudioAgendaPage() {
-  return <ModulePageLayout page={modulePages.agenda} heroContent={<AgendaHero />} />
+  return (
+    <ModulePageLayout
+      page={modulePages.agenda}
+      heroContent={<AgendaHero />}
+      sectionTwoContent={<AgendaRemindersSection />}
+    />
+  )
 }

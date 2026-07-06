@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   ArrowRight,
@@ -30,6 +30,38 @@ import { getAdminContent, ADMIN_KEYS } from '@/utils/adminContent'
 
 function readAdminCoreSection() {
   return getAdminContent(ADMIN_KEYS.studioCoreSection, null)
+}
+
+// Imagens oficiais de produção — ficam em /public, então sobem junto com o
+// deploy independente do que estiver salvo no localStorage do Admin Visual.
+// Prioridade: imagem do admin (teste local) > imagem fixa em /public > placeholder.
+const HERO_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-hero.webp'
+const AUTO_CHARGE_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-cobrancas.webp'
+
+// Exibe a imagem (admin ou fallback fixo); só cai para o placeholder se
+// nenhuma imagem existir ou se a imagem informada falhar ao carregar.
+function FallbackImage({ src, mobileSrc, alt, className, placeholderIcon: PlaceholderIcon, placeholderLabel }) {
+  const [failed, setFailed] = useState(false)
+
+  if (!src || failed) {
+    return (
+      <div className="core-image-placeholder">
+        <span className="core-image-placeholder-icon">
+          <PlaceholderIcon size={26} strokeWidth={1.5} />
+        </span>
+        <p>{placeholderLabel}</p>
+      </div>
+    )
+  }
+
+  return (
+    <picture>
+      {mobileSrc && mobileSrc !== src && (
+        <source media="(max-width: 640px)" srcSet={mobileSrc} />
+      )}
+      <img src={src} alt={alt} className={className} onError={() => setFailed(true)} />
+    </picture>
+  )
 }
 
 // Destaca uma palavra específica do título (ex.: "acompanhe") em rosa,
@@ -109,21 +141,6 @@ function CoreWindow({ label, image, alt, children, size = '' }) {
   )
 }
 
-// ── Placeholder da imagem grande (hero) ─────────────────────────
-// Sem imagem administrada ainda: mostra um container premium já no
-// tamanho/proporção certos, pronto para receber a imagem via /admin.
-
-function ImagePlaceholder({ label }) {
-  return (
-    <div className="core-image-placeholder">
-      <span className="core-image-placeholder-icon">
-        <Wallet size={26} strokeWidth={1.5} />
-      </span>
-      <p>{label}</p>
-    </div>
-  )
-}
-
 // ── Banco / controle financeiro mockup ──────────────────────────
 
 function BankMockup() {
@@ -173,21 +190,6 @@ function BankMockup() {
           </div>
         ))}
       </div>
-    </div>
-  )
-}
-
-// ── Placeholder da imagem da seção "Cobranças automáticas" ──────
-// Sem imagem administrada ainda: mostra um container premium,
-// sem conversa/mensagem fake, pronto para receber a imagem via /admin.
-
-function AutoChargePlaceholder() {
-  return (
-    <div className="core-image-placeholder">
-      <span className="core-image-placeholder-icon">
-        <MessageCircle size={26} strokeWidth={1.5} />
-      </span>
-      <p>Adicione a imagem pelo admin</p>
     </div>
   )
 }
@@ -262,15 +264,18 @@ export default function StudioCorePage() {
   const heroSub = admin?.heroSub || DEFAULT_HERO_SUB
   const heroBtnPrimario = admin?.heroBtnPrimario || 'Começar agora'
   const heroBtnSecundario = admin?.heroBtnSecundario || 'Ver planos'
+  // Prioridade: imagem do admin (teste local) > imagem fixa em /public (oficial
+  // de produção) > placeholder. Cada versão (desktop/mobile) cai de volta na
+  // outra quando a sua própria não existe, antes de cair no fallback fixo.
+  const heroImage = admin?.heroImage || admin?.heroImageMobile || HERO_IMAGE_FALLBACK
+  const heroImageMobile = admin?.heroImageMobile || admin?.heroImage || HERO_IMAGE_FALLBACK
 
   const autoBadge = admin?.autoChargeBadge || DEFAULT_AUTO_BADGE
   const autoTitleLines = (admin?.autoChargeTitle || DEFAULT_AUTO_TITLE).split('\n')
   const autoSub = admin?.autoChargeSubtitle || DEFAULT_AUTO_SUB
   const autoPillText = admin?.autoChargePillText || DEFAULT_AUTO_PILL
-  // Qualquer imagem enviada (desktop ou mobile) deve aparecer em algum lugar:
-  // cada versão cai de volta na outra quando a sua própria não existe.
-  const autoDesktopImage = admin?.autoChargeImage || admin?.autoChargeImageMobile || null
-  const autoMobileImage = admin?.autoChargeImageMobile || admin?.autoChargeImage || null
+  const autoDesktopImage = admin?.autoChargeImage || admin?.autoChargeImageMobile || AUTO_CHARGE_IMAGE_FALLBACK
+  const autoMobileImage = admin?.autoChargeImageMobile || admin?.autoChargeImage || AUTO_CHARGE_IMAGE_FALLBACK
 
   return (
     <PublicSiteShell>
@@ -299,17 +304,15 @@ export default function StudioCorePage() {
               </Reveal>
 
               <Reveal delay={100} className="core-hero-visual-area">
-                <div className={`core-hero-visual${admin?.heroImage ? '' : ' core-hero-visual-empty'}`}>
-                  {admin?.heroImage ? (
-                    <picture>
-                      {admin?.heroImageMobile && (
-                        <source media="(max-width: 640px)" srcSet={admin.heroImageMobile} />
-                      )}
-                      <img src={admin.heroImage} alt="Dashboard da Conta Digital" className="core-hero-visual-img" />
-                    </picture>
-                  ) : (
-                    <ImagePlaceholder label="Preview do painel" />
-                  )}
+                <div className="core-hero-visual">
+                  <FallbackImage
+                    src={heroImage}
+                    mobileSrc={heroImageMobile}
+                    alt="Dashboard da Conta Digital"
+                    className="core-hero-visual-img"
+                    placeholderIcon={Wallet}
+                    placeholderLabel="Preview do painel"
+                  />
                 </div>
               </Reveal>
 
@@ -355,21 +358,15 @@ export default function StudioCorePage() {
               </Reveal>
 
               <Reveal delay={100} className="core-auto-visual-area">
-                <div className={`core-auto-visual${autoDesktopImage ? '' : ' core-auto-visual-empty'}`}>
-                  {autoDesktopImage ? (
-                    <picture>
-                      {autoMobileImage && autoMobileImage !== autoDesktopImage && (
-                        <source media="(max-width: 640px)" srcSet={autoMobileImage} />
-                      )}
-                      <img
-                        src={autoDesktopImage}
-                        alt="Cobrança automática no WhatsApp"
-                        className="core-auto-visual-img"
-                      />
-                    </picture>
-                  ) : (
-                    <AutoChargePlaceholder />
-                  )}
+                <div className="core-auto-visual">
+                  <FallbackImage
+                    src={autoDesktopImage}
+                    mobileSrc={autoMobileImage}
+                    alt="Cobrança automática no WhatsApp"
+                    className="core-auto-visual-img"
+                    placeholderIcon={MessageCircle}
+                    placeholderLabel="Adicione a imagem pelo admin"
+                  />
                 </div>
               </Reveal>
 

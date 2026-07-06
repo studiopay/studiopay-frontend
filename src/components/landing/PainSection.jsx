@@ -1,12 +1,29 @@
-﻿import { Link } from 'react-router-dom'
+﻿import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { ArrowRight, Tags } from 'lucide-react'
 import Reveal from './Reveal'
 
+// Imagens oficiais de produção — ficam em /public, então sobem junto com o
+// deploy independente do que estiver salvo no localStorage do Admin Visual.
 const FALLBACK_ITEMS = [
-  { title: 'Tintas selecionadas', badge: 'Condição exclusiva', regularPrice: 'R$ 89,90', studioPrice: 'R$ 79,90', savings: 'R$ 10,00' },
-  { title: 'Cartuchos',           badge: 'Benefício Pro',       regularPrice: 'R$ 120,00', studioPrice: 'R$ 105,00', savings: 'R$ 15,00' },
-  { title: 'Luvas e descartáveis', badge: 'Benefício por plano', regularPrice: 'R$ 44,90', studioPrice: 'R$ 39,90', savings: 'R$ 5,00' },
+  { title: 'Tintas selecionadas', badge: 'Condição exclusiva', regularPrice: 'R$ 89,90', studioPrice: 'R$ 79,90', savings: 'R$ 10,00', image: '/images/studio-pay/shop/shop-tintas.webp' },
+  { title: 'Cartuchos',           badge: 'Benefício Pro',       regularPrice: 'R$ 120,00', studioPrice: 'R$ 105,00', savings: 'R$ 15,00', image: '/images/studio-pay/shop/shop-cartuchos.webp' },
+  { title: 'Luvas e descartáveis', badge: 'Benefício por plano', regularPrice: 'R$ 44,90', studioPrice: 'R$ 39,90', savings: 'R$ 5,00', image: '/images/studio-pay/shop/shop-luvas.webp' },
 ]
+
+// Mostra a imagem do produto (admin ou fallback fixo em /public); só cai
+// para o placeholder circular se nenhuma das duas existir/carregar.
+function ShopProductImage({ src, alt }) {
+  const [failed, setFailed] = useState(false)
+  if (!src || failed) {
+    return (
+      <span className="shop-product-fallback">
+        <span className="shop-product-fallback-mark" />
+      </span>
+    )
+  }
+  return <img src={src} alt={alt} className="shop-product-img" onError={() => setFailed(true)} />
+}
 
 function readAdminShopSection() {
   try { return JSON.parse(localStorage.getItem('studioPayAdmin_landingShopSection') || 'null') } catch { return null }
@@ -49,7 +66,7 @@ export default function PainSection() {
           regularPrice: c.normalPrice ? withCurrency(c.normalPrice) : (FALLBACK_ITEMS[i]?.regularPrice || ''),
           studioPrice:  c.proPrice    ? withCurrency(c.proPrice)    : (FALLBACK_ITEMS[i]?.studioPrice  || ''),
           savings:      c.savingText  ? withCurrency(c.savingText)  : (FALLBACK_ITEMS[i]?.savings      || ''),
-          image:        c.image        || null,
+          image:        c.image        || FALLBACK_ITEMS[i]?.image || null,
         }))
     : FALLBACK_ITEMS
 
@@ -72,12 +89,7 @@ export default function PainSection() {
             <Reveal key={item.title + index} delay={index * 120}>
               <article className="shop-showcase-card">
                 <div className="shop-product-media" aria-hidden={!item.image}>
-                  {item.image
-                    ? <img src={item.image} alt={item.title} className="shop-product-img" />
-                    : <span className="shop-product-fallback">
-                        <span className="shop-product-fallback-mark" />
-                      </span>
-                  }
+                  <ShopProductImage src={item.image} alt={item.title} />
                 </div>
 
                 <h3>{item.title}</h3>

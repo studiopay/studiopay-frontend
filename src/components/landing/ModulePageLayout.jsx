@@ -16,7 +16,16 @@ function LineList({ items }) {
   )
 }
 
-export default function ModulePageLayout({ page, heroContent, sectionTwoContent }) {
+export default function ModulePageLayout({
+  page,
+  heroContent,
+  sectionTwoContent,
+  sectionThreeContent,
+  solutionContent,
+  practicalContent,
+  benefitsContent,
+  finalCtaContent,
+}) {
   return (
     <PublicSiteShell>
       <Navbar />
@@ -52,19 +61,23 @@ export default function ModulePageLayout({ page, heroContent, sectionTwoContent 
           </section>
         )}
 
-        <section className="module-section">
-          <div className="container">
-            <Reveal>
-              <div className="section-header-center">
-                <span className="section-label">O que resolve</span>
-                <h2 className="section-title">A função certa para tirar isso da cabeça.</h2>
-              </div>
-            </Reveal>
-            <LineList items={page.solution} />
-          </div>
-        </section>
+        {sectionThreeContent}
 
-        {(page.examples || page.servicePlans || page.note || page.practical) && (
+        {solutionContent || (
+          <section className="module-section">
+            <div className="container">
+              <Reveal>
+                <div className="section-header-center">
+                  <span className="section-label">O que resolve</span>
+                  <h2 className="section-title">A função certa para tirar isso da cabeça.</h2>
+                </div>
+              </Reveal>
+              <LineList items={page.solution} />
+            </div>
+          </section>
+        )}
+
+        {practicalContent || ((page.examples || page.servicePlans || page.note || page.practical) && (
           <section className="module-section module-practical-section">
             <div className="container module-two-col">
               <Reveal>
@@ -83,29 +96,33 @@ export default function ModulePageLayout({ page, heroContent, sectionTwoContent 
               </Reveal>
             </div>
           </section>
+        ))}
+
+        {benefitsContent || (
+          <section className="module-section">
+            <div className="container">
+              <Reveal>
+                <div className="section-header-center">
+                  <span className="section-label">Benefícios</span>
+                  <h2 className="section-title">Menos improviso. Mais operação.</h2>
+                </div>
+              </Reveal>
+              <LineList items={page.benefits} />
+            </div>
+          </section>
         )}
 
-        <section className="module-section">
-          <div className="container">
-            <Reveal>
-              <div className="section-header-center">
-                <span className="section-label">Benefícios</span>
-                <h2 className="section-title">Menos improviso. Mais operação.</h2>
-              </div>
-            </Reveal>
-            <LineList items={page.benefits} />
-          </div>
-        </section>
-
-        <section className="module-final-cta">
-          <div className="container">
-            <Reveal>
-              <h2 className="footer-cta-title">Você cria. <span className="text-pink">A gente organiza.</span></h2>
-              <p className="footer-cta-sub">Comece pela parte da rotina que mais pesa hoje.</p>
-              <Link to="/cadastro" className="btn btn-primary btn-lg">{page.cta}</Link>
-            </Reveal>
-          </div>
-        </section>
+        {finalCtaContent || (
+          <section className="module-final-cta">
+            <div className="container">
+              <Reveal>
+                <h2 className="footer-cta-title">Você cria. <span className="text-pink">A gente organiza.</span></h2>
+                <p className="footer-cta-sub">Comece pela parte da rotina que mais pesa hoje.</p>
+                <Link to="/cadastro" className="btn btn-primary btn-lg">{page.cta}</Link>
+              </Reveal>
+            </div>
+          </section>
+        )}
       </main>
       <Footer showCta={false} />
     </PublicSiteShell>

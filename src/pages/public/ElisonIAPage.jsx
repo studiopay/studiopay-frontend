@@ -1,8 +1,13 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import ModulePageLayout from '@/components/landing/ModulePageLayout'
 import Reveal from '@/components/landing/Reveal'
 import { modulePages } from '@/data/publicModules'
-import { Bot, MessageCircle, HelpCircle, UserCheck, Sparkles, Send, Check, BookOpen } from 'lucide-react'
+import {
+  Bot, MessageCircle, HelpCircle, UserCheck, Sparkles, Send, Check, BookOpen,
+  Calculator, Calendar, ShieldCheck, HeartPulse, CreditCard, ClipboardList,
+  ArrowRight,
+} from 'lucide-react'
 
 // ── Data ──────────────────────────────────────────────────────
 
@@ -327,12 +332,189 @@ function ElisonHowSection() {
   )
 }
 
+// ── Seção 3 — O que o Elison pode responder por você ─────────
+
+const deskCategories = [
+  {
+    Icon: Calculator,
+    title: 'Orçamentos',
+    text: 'Coleta referência da arte, tamanho, local do corpo, estilo e informações para avaliação.',
+  },
+  {
+    Icon: Calendar,
+    title: 'Agenda e horários',
+    text: 'Responde sobre disponibilidade, confirma sessões, lembra horários e ajuda no reagendamento.',
+  },
+  {
+    Icon: ShieldCheck,
+    title: 'Cuidados pré-tattoo',
+    text: 'Envia orientações antes da sessão para preparar melhor o cliente.',
+  },
+  {
+    Icon: HeartPulse,
+    title: 'Cuidados pós-tattoo',
+    text: 'Orienta sobre cicatrização, higiene, pomada e acompanhamento depois da tattoo.',
+  },
+  {
+    Icon: CreditCard,
+    title: 'Pagamentos e sinal',
+    text: 'Explica regras de sinal, formas de pagamento, cobranças e próximos passos.',
+  },
+  {
+    Icon: HelpCircle,
+    title: 'Dúvidas frequentes',
+    text: 'Responde sobre endereço, estilos atendidos, tempo de sessão, política do estúdio e atendimento.',
+  },
+]
+
+const desksSummaryItems = [
+  'Cliente quer orçamento',
+  'Estilo: realismo preto e cinza',
+  'Região: antebraço',
+  'Falta enviar referência',
+  'Próximo passo: solicitar imagem e tamanho aproximado',
+]
+
+const deskChips = [
+  'Referência', 'Tamanho', 'Região do corpo', 'Horário', 'Sinal', 'Cuidados', 'Cicatrização', 'Reagendamento', 'Próximo passo',
+]
+
+function ElisonDeskSection() {
+  return (
+    <section className="elison-desk module-section">
+      <div className="elison-desk-glow" />
+      <div className="container">
+        <Reveal>
+          <div className="section-header-center elison-desk-header">
+            <span className="section-label">Atendimento na prática</span>
+            <h2 className="section-title elison-desk-title">
+              O Elison ajuda nas mensagens que <span className="landing-accent">mais tomam seu tempo.</span>
+            </h2>
+            <p className="section-sub elison-desk-sub">
+              Orçamentos, horários, cuidados, dúvidas frequentes e acompanhamento do cliente podem ser respondidos
+              com base nas informações do seu estúdio.
+            </p>
+          </div>
+        </Reveal>
+
+        <Reveal delay={100}>
+          <div className="elison-desk-panel">
+            <div className="elison-desk-categories">
+              {deskCategories.map(({ Icon, title, text }) => (
+                <div key={title} className="elison-desk-cat-row">
+                  <span className="elison-desk-cat-icon"><Icon size={18} strokeWidth={1.8} /></span>
+                  <div className="elison-desk-cat-copy">
+                    <h3 className="elison-desk-cat-title">{title}</h3>
+                    <p className="elison-desk-cat-text">{text}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="elison-desk-summary">
+              <p className="elison-desk-summary-title">
+                <ClipboardList size={15} strokeWidth={1.8} /> Resumo do atendimento
+              </p>
+              <ul className="elison-desk-summary-list">
+                {desksSummaryItems.map((item) => (
+                  <li key={item}>
+                    <Check size={13} strokeWidth={2.4} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={160}>
+          <div className="elison-how-chips elison-desk-chips">
+            {deskChips.map((chip) => (
+              <span key={chip} className="elison-how-chip">{chip}</span>
+            ))}
+          </div>
+        </Reveal>
+
+        <Reveal delay={200}>
+          <div className="core-pill core-pill-icon elison-pill elison-desk-pill">
+            <span className="core-pill-icon-mark" aria-hidden="true">
+              <MessageCircle size={16} strokeWidth={2} />
+            </span>
+            <p>
+              Menos WhatsApp repetitivo, mais atendimento organizado e{' '}
+              <span className="text-pink">mais tempo para tatuar.</span>
+            </p>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+// ── Seção final — fechamento comercial de impacto, no lugar da antiga
+// composição de listas ("O que resolve" / "Exemplo prático" /
+// "Benefícios"). Substitui também o CTA final genérico do
+// ModulePageLayout (finalCtaContent), já que esta seção já traz seus
+// próprios botões. ──
+
+const finalBenefits = ['Menos resposta repetida', 'Mais cliente acompanhado', 'Mais foco na sessão']
+
+function ElisonFinalSection() {
+  return (
+    <section className="elison-final module-section">
+      <div className="elison-final-glow" />
+      <div className="container">
+        <Reveal>
+          <div className="elison-final-panel">
+            <span className="section-label">Menos WhatsApp manual</span>
+            <h2 className="section-title elison-final-title">
+              <span className="landing-accent">Mais tempo tatuando.</span> Menos tempo repetindo resposta.
+            </h2>
+            <p className="section-sub elison-final-sub">
+              Deixe o Elison cuidar das mensagens repetitivas, organizar informações dos clientes e manter o
+              atendimento ativo enquanto você foca na arte e no estúdio.
+            </p>
+
+            <div className="elison-final-benefits">
+              {finalBenefits.map((label) => (
+                <span key={label} className="elison-final-benefit">{label}</span>
+              ))}
+            </div>
+
+            <div className="elison-final-actions">
+              <Link to="/cadastro" className="btn btn-primary btn-lg">
+                Começar agora <ArrowRight size={18} />
+              </Link>
+              <Link to="/planos" className="btn btn-ghost btn-lg">Ver planos</Link>
+            </div>
+
+            <div className="core-pill core-pill-icon elison-final-pill">
+              <span className="core-pill-icon-mark" aria-hidden="true">
+                <MessageCircle size={16} strokeWidth={2} />
+              </span>
+              <p>
+                O cliente continua sendo atendido,{' '}
+                <span className="text-pink">mesmo quando você está tatuando.</span>
+              </p>
+            </div>
+          </div>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
 export default function ElisonIAPage() {
   return (
     <ModulePageLayout
       page={modulePages.elison}
       heroContent={<ElisonHero />}
       sectionTwoContent={<ElisonHowSection />}
+      sectionThreeContent={<ElisonDeskSection />}
+      solutionContent={<ElisonFinalSection />}
+      practicalContent={<></>}
+      benefitsContent={<></>}
+      finalCtaContent={<></>}
     />
   )
 }

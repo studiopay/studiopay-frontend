@@ -5315,6 +5315,224 @@
   .elison-how-pill { margin-top: 24px; padding: 12px 20px; font-size: 13px; }
 }
 
+/* ─── Elison IA — seção 3 "O que o Elison pode responder por você"
+   (painel único tipo central de atendimento: lista de categorias +
+   resumo de exemplo, em vez de 6 cards pequenos repetidos). Classes
+   próprias (elison-desk-*), não afeta outras páginas. ── */
+.elison-desk { position: relative; overflow: hidden; }
+.elison-desk-glow {
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,46,209,0.08) 0%, transparent 58%);
+  pointer-events: none;
+}
+.landing.theme-light .elison-desk-glow { opacity: 0.55; }
+.elison-desk .container { position: relative; z-index: 1; }
+.elison-desk-header { max-width: 760px; margin: 0 auto; }
+
+/* Painel único — lista de categorias à esquerda, resumo de exemplo à
+   direita, divididos por uma linha interna sutil (não são cards soltos) */
+.elison-desk-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  max-width: 1040px;
+  margin: 52px auto 0;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: linear-gradient(160deg, #0d1117, #101822);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(255,46,209,0.08),
+    0 32px 90px rgba(0,0,0,0.45),
+    0 0 70px rgba(255,46,209,0.1);
+  overflow: hidden;
+}
+.elison-desk-categories { padding: 6px 30px; }
+.elison-desk-cat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 19px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.elison-desk-cat-row:last-child { border-bottom: none; }
+.elison-desk-cat-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,46,209,0.22);
+  background: rgba(255,46,209,0.07);
+  color: var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.elison-desk-cat-title { font-size: 15px; font-weight: 800; color: #F8F9FB; margin-bottom: 4px; }
+.elison-desk-cat-text { font-size: 13px; color: rgba(248,249,251,0.55); line-height: 1.55; }
+
+.elison-desk-summary {
+  padding: 30px 28px;
+  background: rgba(255,46,209,0.035);
+  border-left: 1px solid rgba(255,255,255,0.08);
+}
+.elison-desk-summary-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 14.5px;
+  font-weight: 800;
+  color: #F8F9FB;
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.elison-desk-summary-title svg { color: var(--pink); flex-shrink: 0; }
+.elison-desk-summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+.elison-desk-summary-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: rgba(248,249,251,0.8);
+  line-height: 1.5;
+}
+.elison-desk-summary-list svg {
+  color: var(--pink);
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,46,209,0.22);
+  background: rgba(255,46,209,0.08);
+  padding: 3px;
+  box-sizing: border-box;
+}
+
+.elison-desk-chips { margin-top: 40px; }
+.elison-desk-pill { margin-top: 32px; }
+
+@media (max-width: 860px) {
+  .elison-desk-panel { grid-template-columns: 1fr; margin-top: 40px; }
+  .elison-desk-categories { padding: 26px 24px 6px; }
+  .elison-desk-summary { border-left: none; border-top: 1px solid rgba(255,255,255,0.08); padding: 26px 24px 28px; }
+}
+@media (max-width: 640px) {
+  .elison-desk-header { max-width: 100%; }
+  .elison-desk-title { font-size: clamp(24px, 6.4vw, 32px); }
+  .elison-desk-panel { margin-top: 32px; border-radius: 20px; }
+  .elison-desk-categories { padding: 22px 18px 4px; }
+  .elison-desk-cat-row { padding: 16px 0; gap: 14px; }
+  .elison-desk-summary { padding: 22px 18px 24px; }
+  .elison-desk-chips { margin-top: 32px; }
+  .elison-desk-pill { margin-top: 24px; padding: 12px 20px; font-size: 13px; }
+}
+
+/* ─── Elison IA — seção final de impacto/CTA, no lugar da antiga
+   composição de listas ("O que resolve" / "Exemplo prático" /
+   "Benefícios"). Painel único centralizado, adapta cor de fundo por
+   tema (ao contrário dos mockups da página, que ficam sempre escuros).
+   Classes próprias (elison-final-*), não afeta Agenda/Tráfego (que
+   ainda usam o layout genérico) nem nenhuma outra página. ── */
+.elison-final { position: relative; overflow: hidden; }
+.elison-final-glow {
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 940px;
+  height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,46,209,0.1) 0%, transparent 58%);
+  pointer-events: none;
+}
+.landing.theme-light .elison-final-glow { opacity: 0.5; }
+.elison-final .container { position: relative; z-index: 1; }
+
+.elison-final-panel {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 56px 48px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: linear-gradient(160deg, #0d1117, #101822);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(255,46,209,0.08),
+    0 40px 100px rgba(0,0,0,0.5),
+    0 0 90px rgba(255,46,209,0.1);
+}
+.landing.theme-light .elison-final-panel {
+  background: linear-gradient(160deg, #ffffff, #fbfbfd);
+  border-color: rgba(11,11,14,0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 30px 70px rgba(11,11,14,0.08),
+    0 0 60px rgba(255,46,209,0.06);
+}
+.elison-final-panel .section-label { margin-left: auto; margin-right: auto; }
+.elison-final-title { margin: 16px 0 14px; }
+.elison-final-sub {
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.elison-final-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 28px;
+}
+.elison-final-benefit {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  padding: 8px 16px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,46,209,0.18);
+  background: rgba(255,46,209,0.05);
+}
+.landing.theme-light .elison-final-benefit {
+  background: rgba(255,46,209,0.06);
+  border-color: rgba(255,46,209,0.18);
+}
+
+.elison-final-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
+.elison-final-pill { margin: 30px auto 0; }
+
+@media (max-width: 640px) {
+  .elison-final-panel { padding: 40px 24px; border-radius: 22px; }
+  .elison-final-benefits { gap: 8px; margin-top: 22px; }
+  .elison-final-benefit { font-size: 11.5px; padding: 7px 14px; }
+  .elison-final-actions { flex-direction: column; align-items: center; margin-top: 26px; }
+  .elison-final-actions .btn-lg { width: 100%; max-width: 300px; justify-content: center; }
+  .elison-final-pill { margin-top: 24px; padding: 12px 20px; font-size: 13px; }
+}
+
 /* ─── New Footer ─────────────────────────────────────────── */
 .footer-main {
   background: #0B0B0E;

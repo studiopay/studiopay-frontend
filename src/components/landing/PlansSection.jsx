@@ -21,7 +21,7 @@ const plans = [
       'Cobranças manuais',
       'Agenda básica',
       'Relatórios básicos',
-      'Elison IA limitado',
+      'Elisson.IA contratado à parte',
     ],
   },
   {
@@ -40,7 +40,7 @@ const plans = [
     items: [
       'Tudo do Starter',
       'Cobranças automáticas',
-      'Elison IA completo',
+      'Elisson.IA por 3 meses',
       'Agenda avançada',
       'Relatórios avançados',
       'Benefícios no Studio Shop',
@@ -64,7 +64,7 @@ const plans = [
       'Configuração assistida',
       'Prioridade no atendimento',
       'Condições comerciais personalizadas',
-      'Recursos avançados sob análise',
+      'Benefício premium no Elisson.IA',
     ],
   },
 ]

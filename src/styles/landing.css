@@ -5533,6 +5533,197 @@
   .elison-final-pill { margin-top: 24px; padding: 12px 20px; font-size: 13px; }
 }
 
+/* ─── Planos (/planos) — página pública revisada com base na tabela
+   oficial de funcionalidades por plano. Reaproveita ".plans-grid" /
+   ".plan-card" (sem alterá-las) para os 3 cards principais — essas
+   classes são compartilhadas com o teaser de planos da home, então
+   ficam intocadas para não afetar a home. Classes novas e exclusivas
+   desta página: ".planos-*". ── */
+.planos-hero { padding-top: 118px; }
+
+/* Elison IA como add-on */
+.planos-addon { position: relative; overflow: hidden; }
+.planos-addon-glow {
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 900px;
+  height: 620px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,46,209,0.08) 0%, transparent 58%);
+  pointer-events: none;
+}
+.landing.theme-light .planos-addon-glow { opacity: 0.55; }
+.planos-addon .container { position: relative; z-index: 1; }
+.planos-addon-panel {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 48px 44px;
+  border-radius: 26px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: linear-gradient(160deg, #0d1117, #101822);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(255,46,209,0.08),
+    0 32px 90px rgba(0,0,0,0.45),
+    0 0 70px rgba(255,46,209,0.09);
+}
+.landing.theme-light .planos-addon-panel {
+  background: linear-gradient(160deg, #ffffff, #fbfbfd);
+  border-color: rgba(11,11,14,0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 26px 64px rgba(11,11,14,0.07),
+    0 0 50px rgba(255,46,209,0.05);
+}
+.planos-addon-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,46,209,0.3);
+  background: rgba(255,46,209,0.1);
+  color: var(--pink);
+  margin-bottom: 16px;
+}
+.planos-addon-title { margin-bottom: 12px; }
+.planos-addon-sub { max-width: 640px; margin: 0 auto; }
+
+.planos-addon-summary {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 28px 0 36px;
+}
+.planos-addon-summary-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,46,209,0.16);
+  background: rgba(255,46,209,0.04);
+}
+.landing.theme-light .planos-addon-summary-row { background: rgba(255,46,209,0.06); }
+.planos-addon-summary-plan { font-size: 12.5px; font-weight: 800; color: var(--pink); }
+.planos-addon-summary-note { font-size: 12.5px; color: var(--text-secondary); }
+
+.planos-addon-disclaimer {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  opacity: 0.75;
+  max-width: 520px;
+  margin: 4px auto 0;
+}
+
+/* Tabela premium reutilizável (comparação por módulo) */
+.planos-compare-table {
+  max-width: 960px;
+  margin: 44px auto 0;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.018);
+  overflow: hidden;
+}
+.landing.theme-light .planos-compare-table { background: rgba(255,255,255,0.7); }
+.planos-addon-panel .planos-compare-table { margin-top: 0; text-align: left; }
+.planos-compare-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
+  border-bottom: 1px solid var(--border);
+}
+.planos-compare-row:last-child { border-bottom: none; }
+.planos-compare-head {
+  background: rgba(255,255,255,0.03);
+}
+.landing.theme-light .planos-compare-head { background: rgba(11,11,14,0.03); }
+.planos-compare-head .planos-compare-cell {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--text-primary);
+}
+.planos-compare-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 14px 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+.planos-compare-module {
+  justify-content: flex-start;
+  text-align: left;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.planos-compare-pro-col {
+  background: rgba(255,46,209,0.05);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.landing.theme-light .planos-compare-pro-col { background: rgba(255,46,209,0.055); }
+
+.planos-compare-note {
+  max-width: 640px;
+  margin: 28px auto 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+@media (max-width: 920px) {
+  .planos-addon-panel { padding: 40px 28px; }
+  .planos-compare-table { max-width: 100%; }
+}
+@media (max-width: 768px) {
+  .planos-compare-head { display: none; }
+  .planos-compare-row {
+    display: block;
+    padding: 16px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .planos-compare-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    text-align: right;
+    padding: 6px 0;
+  }
+  .planos-compare-module {
+    justify-content: flex-start;
+    text-align: left;
+    font-size: 14.5px;
+    margin-bottom: 4px;
+  }
+  .planos-compare-cell:not(.planos-compare-module)::before {
+    content: attr(data-label);
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+  .planos-compare-pro-col { background: transparent; border-radius: 8px; padding: 6px 8px; }
+}
+@media (max-width: 640px) {
+  .planos-hero { padding-top: 88px; }
+  .planos-addon-panel { padding: 32px 20px; border-radius: 22px; }
+  .planos-addon-summary { gap: 8px; margin: 22px 0 28px; }
+  .planos-addon-summary-row { padding: 9px 14px; }
+  .planos-compare-table { margin-top: 32px; }
+}
+
 /* ─── New Footer ─────────────────────────────────────────── */
 .footer-main {
   background: #0B0B0E;

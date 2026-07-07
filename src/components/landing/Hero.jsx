@@ -8,20 +8,8 @@ export default function Hero() {
   return (
     <section className="hero-wrapper" id="inicio">
       <div className="hero-bg-glow" aria-hidden />
-      <div className="hero-lines-bg" aria-hidden>
-        <svg
-          className="hero-svg-lines"
-          viewBox="0 0 1200 700"
-          fill="none"
-          preserveAspectRatio="xMidYMid slice"
-        >
-          <ellipse cx="600" cy="200" rx="720" ry="560" stroke="rgba(255,46,209,0.035)" strokeWidth="1" />
-          <ellipse cx="600" cy="200" rx="500" ry="360" stroke="rgba(255,46,209,0.022)" strokeWidth="1" />
-          <path d="M0 380 Q300 160 600 320 T1200 240" stroke="rgba(255,46,209,0.04)" strokeWidth="1" fill="none" />
-          <path d="M0 540 Q400 340 700 490 T1200 420" stroke="rgba(255,46,209,0.02)" strokeWidth="1" fill="none" />
-          <path d="M-80 80 Q220 320 560 170 T1280 280" stroke="rgba(255,46,209,0.015)" strokeWidth="1" fill="none" />
-        </svg>
-      </div>
+      <div className="hero-bg-glow-secondary" aria-hidden />
+      <div className="hero-particles" aria-hidden />
 
       <div className="container">
         <div className="hero-content">

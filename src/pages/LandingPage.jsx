@@ -1,5 +1,6 @@
 ﻿import Navbar from '@/components/landing/Navbar'
 import Hero from '@/components/landing/Hero'
+import PillsMarquee from '@/components/landing/PillsMarquee'
 import WhyStudioPaySection from '@/components/landing/WhyStudioPaySection'
 import PainSection from '@/components/landing/PainSection'
 import ElisonPreviewSection from '@/components/landing/ElisonPreviewSection'
@@ -13,13 +14,17 @@ export default function LandingPage() {
   return (
     <PublicSiteShell>
       <Navbar />
-      <Hero />
-      <WhyStudioPaySection />
-      <StudioEcosystemPreview />
-      <PainSection />
-      <ElisonPreviewSection />
-      <DemoGifSection />
-      <PlansSection compact />
+      <div className="home-page">
+        <div className="home-atmosphere" aria-hidden="true" />
+        <Hero />
+        <PillsMarquee />
+        <WhyStudioPaySection />
+        <StudioEcosystemPreview />
+        <PainSection />
+        <ElisonPreviewSection />
+        <DemoGifSection />
+        <PlansSection compact />
+      </div>
       <Footer />
     </PublicSiteShell>
   )

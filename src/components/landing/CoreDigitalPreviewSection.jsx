@@ -65,8 +65,10 @@ export default function CoreDigitalPreviewSection() {
                 <div className="core-preview-flow-item" key={title}>
                   <div className="core-preview-flow-card">
                     <span className="core-preview-flow-icon"><Icon size={17} strokeWidth={1.8} /></span>
-                    <p className="core-preview-flow-title">{title}</p>
-                    <p className="core-preview-flow-value">{value}</p>
+                    <div className="core-preview-flow-copy">
+                      <p className="core-preview-flow-title">{title}</p>
+                      <p className="core-preview-flow-value">{value}</p>
+                    </div>
                   </div>
                   {i < sessionFlow.length - 1 && (
                     <span className="core-preview-flow-arrow"><ArrowRight size={15} strokeWidth={2} /></span>

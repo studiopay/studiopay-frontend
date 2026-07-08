@@ -6287,6 +6287,7 @@
   background: rgba(255,46,209,0.08);
   color: var(--pink);
 }
+.core-preview-flow-copy { min-width: 0; }
 .core-preview-flow-title { font-size: 11.5px; font-weight: 700; color: rgba(248,249,251,0.65); margin-bottom: 4px; line-height: 1.3; }
 .core-preview-flow-value { font-size: 13.5px; font-weight: 800; color: #F8F9FB; }
 .core-preview-flow-arrow {
@@ -6361,15 +6362,35 @@
 .core-preview-pill { margin-top: 36px; }
 
 @media (max-width: 920px) {
+  .core-preview-section { padding-bottom: 64px; }
   .core-preview-panel { margin-top: 40px; padding: 26px; }
-  .core-preview-flow { flex-direction: column; gap: 10px; }
+  /* Fluxo da sessão vira timeline compacta: rows com ícone + texto à
+     esquerda e valor/status à direita, em vez de cards grandes
+     centralizados — só neste breakpoint, desktop não é afetado. */
+  .core-preview-flow { flex-direction: column; gap: 6px; margin-bottom: 20px; }
   .core-preview-flow-item { flex-direction: column; }
-  .core-preview-flow-arrow { transform: rotate(90deg); padding: 4px 0; }
+  .core-preview-flow-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-align: left;
+    padding: 10px 14px;
+  }
+  .core-preview-flow-icon { margin-bottom: 0; width: 30px; height: 30px; flex-shrink: 0; }
+  .core-preview-flow-copy {
+    flex: 1;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .core-preview-flow-title { margin-bottom: 0; }
+  .core-preview-flow-arrow { transform: rotate(90deg); padding: 2px 0; }
   .core-preview-rows { grid-template-columns: 1fr; }
   .core-preview-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
-  .core-preview-section { padding: 64px 0 78px; }
+  .core-preview-section { padding: 64px 0 40px; }
   .core-preview-panel { padding: 20px; border-radius: 20px; margin-top: 32px; }
   .core-preview-panel-head { flex-direction: column; gap: 2px; margin-bottom: 20px; padding-bottom: 16px; }
   .core-preview-row { padding: 10px 12px; gap: 10px; }

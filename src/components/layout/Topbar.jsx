@@ -1,4 +1,4 @@
-import { Bell, Menu, Sun, Moon } from 'lucide-react'
+import { Bell, Sun, Moon } from 'lucide-react'
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 
@@ -20,7 +20,7 @@ const PAGE_TITLES = {
   '/app/configuracoes':    'Configurações',
 }
 
-export default function Topbar({ onMenuClick, theme, onToggleTheme }) {
+export default function Topbar({ theme, onToggleTheme, hideOnMobile = false }) {
   const location = useLocation()
   const pageTitle = PAGE_TITLES[location.pathname]
     || (location.pathname.startsWith('/app/shop/') ? 'Studio Shop' : 'Studio Pay')
@@ -34,11 +34,7 @@ export default function Topbar({ onMenuClick, theme, onToggleTheme }) {
   ]
 
   return (
-    <header className="topbar">
-      <button className="topbar-menu-btn hide-desktop" onClick={onMenuClick}>
-        <Menu size={22} />
-      </button>
-
+    <header className={`topbar${hideOnMobile ? ' topbar-hide-mobile' : ''}`}>
       <div className="topbar-left hide-mobile">
         <p className="topbar-greeting">{pageTitle}</p>
       </div>

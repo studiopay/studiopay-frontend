@@ -86,9 +86,15 @@
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 24px; position: sticky; top: 0; z-index: 100;
 }
+/* Em telas que já têm header próprio no mobile (ex.: dashboard com
+   MobileDashboardHome), a Topbar padrão fica redundante nesse
+   breakpoint. No desktop ela continua sempre visível, sem exceção. */
+@media (max-width: 768px) {
+  .topbar.topbar-hide-mobile { display: none; }
+}
 .topbar-left { min-width: 0; }
 .topbar-greeting { font-size: 13px; color: var(--text2); font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.topbar-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; margin-left: auto; }
 
 .topbar-icon-btn {
   background: none; border: none; color: var(--text2); cursor: pointer;
@@ -3832,5 +3838,240 @@
 @media (max-width: 480px) {
   .el-hdr-right { display: none; }
   .el-sidenav { width: 52px; }
+}
+
+/* ══════════════════════════════════════════════
+   BOTTOM NAVIGATION — apenas mobile (<768px).
+   Reaproveita a mesma classe global "hide-desktop"
+   já usada em Sidebar/Topbar (globals.css, 768/769px).
+   No desktop a navegação continua só pela Sidebar/Topbar,
+   sem nenhuma alteração. Dock flutuante com margem lateral,
+   cantos arredondados e sombra — inspirado em apps bancários,
+   sem copiar marca/layout de nenhum app específico. ══════ */
+.bottom-nav {
+  position: fixed;
+  left: 14px; right: 14px;
+  bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+  z-index: 150;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+  height: 68px;
+  border-radius: 26px;
+  background: rgba(18,19,23,0.9);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 22px rgba(0,0,0,0.32), 0 0 0 1px rgba(0,0,0,0.08);
+}
+.bottom-nav-link {
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 3px;
+  color: var(--app-text-muted);
+  text-decoration: none;
+  font-size: 10.5px; font-weight: 600;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--font-body);
+  padding: 6px 4px;
+  transition: color 0.15s;
+}
+.bottom-nav-link.active,
+.bottom-nav-link:hover { color: var(--pink); }
+.bottom-nav-link.active svg {
+  filter: drop-shadow(0 0 5px rgba(255,46,209,0.5));
+}
+.theme-light .bottom-nav {
+  background: rgba(255,255,255,0.9);
+  border-color: rgba(12,12,18,0.07);
+  box-shadow: 0 8px 22px rgba(12,12,18,0.1), 0 0 0 1px rgba(12,12,18,0.03);
+}
+
+@media (max-width: 768px) {
+  .app-content { padding-bottom: 128px; }
+}
+
+/* ══════════════════════════════════════════════
+   MOBILE DASHBOARD HOME — redesenho estilo app
+   financeiro, visível apenas <768px (wrapper usa
+   "hide-desktop"). Classes próprias (mob-dash-*),
+   não afeta o dashboard desktop/tablet (dash4-*),
+   escondido no mesmo breakpoint via "hide-mobile"
+   no componente. ══════════════════════════════ */
+.mob-dash {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Topo: perfil/saudação */
+.mob-dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+.mob-dash-header-user { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+.mob-dash-avatar {
+  width: 42px; height: 42px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--pink) 0%, #7a1870 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 700; color: #fff; flex-shrink: 0;
+  border: 2px solid rgba(255,46,209,0.3);
+}
+.mob-dash-header-text { min-width: 0; }
+.mob-dash-greeting {
+  font-size: 15px; font-weight: 700; color: var(--app-text); line-height: 1.25;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mob-dash-plan { font-size: 12px; color: var(--pink); font-weight: 600; margin-top: 1px; }
+.mob-dash-header-icons { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.mob-dash-icon-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--app-surface); border: 1px solid var(--app-border);
+  color: var(--app-text-muted); cursor: pointer;
+}
+.mob-dash-icon-btn:hover { color: var(--app-text); background: var(--app-surface-soft); }
+
+/* Card principal financeiro */
+.mob-dash-balance-card {
+  position: relative;
+  border-radius: var(--radius-xl);
+  padding: 22px 22px 20px;
+  background: linear-gradient(150deg, #1a0620 0%, #2b0a30 45%, #0e0518 100%);
+  border: 1px solid rgba(255,46,209,0.22);
+  box-shadow: 0 16px 44px rgba(255,46,209,0.14), inset 0 1px 0 rgba(255,255,255,0.05);
+  overflow: hidden;
+}
+.mob-dash-balance-card::before {
+  content: '';
+  position: absolute; top: -80px; right: -60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,46,209,0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+.mob-dash-balance-top {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 8px;
+}
+.mob-dash-balance-label {
+  font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+  color: rgba(255,255,255,0.55);
+}
+.mob-dash-balance-toggle {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.75); width: 30px; height: 30px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.mob-dash-balance-value {
+  position: relative; z-index: 1;
+  font-size: 30px; font-weight: 800; color: #fff;
+  letter-spacing: -0.5px; line-height: 1; margin-bottom: 14px;
+}
+.mob-dash-balance-cta {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.16);
+  color: #fff; font-size: 12.5px; font-weight: 700;
+  padding: 9px 16px; border-radius: var(--radius-full); cursor: pointer;
+  margin-bottom: 18px;
+}
+.mob-dash-balance-cta:hover { background: rgba(255,255,255,0.16); }
+.mob-dash-balance-mini {
+  position: relative; z-index: 1;
+  display: flex; justify-content: space-between; gap: 8px;
+  padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.12);
+}
+.mob-dash-balance-mini-item { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.mob-dash-balance-mini-label { font-size: 10.5px; color: rgba(255,255,255,0.5); white-space: nowrap; }
+.mob-dash-balance-mini-value { font-size: 13px; font-weight: 700; color: #fff; white-space: nowrap; }
+
+/* Atalhos rápidos */
+.mob-dash-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.mob-dash-shortcut {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 14px 6px;
+  background: var(--app-surface); border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+  color: var(--app-text); cursor: pointer;
+  font-family: var(--font-body);
+}
+.mob-dash-shortcut:active { background: var(--app-surface-soft); }
+.mob-dash-shortcut-icon {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--pink-dim); color: var(--pink);
+}
+.mob-dash-shortcut-label { font-size: 11.5px; font-weight: 600; text-align: center; line-height: 1.2; }
+
+/* Blocos com título de seção */
+.mob-dash-section { display: flex; flex-direction: column; gap: 12px; }
+.mob-dash-section-title { font-size: 15px; font-weight: 700; color: var(--app-text); }
+
+/* Hoje no estúdio */
+.mob-dash-today-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+.mob-dash-today-card {
+  display: flex; flex-direction: column; gap: 6px;
+  padding: 14px;
+  background: var(--app-surface); border: 1px solid var(--app-border);
+  border-radius: var(--radius);
+}
+.mob-dash-today-icon {
+  width: 30px; height: 30px; border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--app-surface-soft); color: var(--pink);
+}
+.mob-dash-today-value { font-size: 18px; font-weight: 800; color: var(--app-text); line-height: 1; }
+.mob-dash-today-label { font-size: 11.5px; color: var(--app-text-muted); line-height: 1.3; }
+
+/* Ações rápidas */
+.mob-dash-actions-list {
+  display: flex; flex-direction: column;
+  background: var(--app-surface); border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg); overflow: hidden;
+}
+.mob-dash-action-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px;
+  background: none; border: none; border-bottom: 1px solid var(--app-border);
+  color: var(--app-text); font-size: 13.5px; font-weight: 600;
+  cursor: pointer; font-family: var(--font-body); text-align: left;
+  width: 100%;
+}
+.mob-dash-action-row:last-child { border-bottom: none; }
+.mob-dash-action-row:active { background: var(--app-surface-soft); }
+.mob-dash-action-icon {
+  width: 32px; height: 32px; border-radius: 9px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--pink-dim); color: var(--pink);
+}
+.mob-dash-action-label { flex: 1; }
+.mob-dash-action-chevron { color: var(--app-text-muted); flex-shrink: 0; }
+
+/* Light theme */
+.theme-light .mob-dash-greeting { color: #08080d; }
+.theme-light .mob-dash-icon-btn { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-dash-shortcut { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-dash-today-card { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-dash-today-icon { background: rgba(255,46,209,0.08); }
+.theme-light .mob-dash-actions-list { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-dash-section-title { color: #08080d; }
+
+/* Telas bem pequenas */
+@media (max-width: 380px) {
+  .mob-dash-balance-value { font-size: 26px; }
+  .mob-dash-shortcuts { gap: 8px; }
+  .mob-dash-shortcut-icon { width: 40px; height: 40px; }
 }
 

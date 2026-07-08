@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useOutletContext } from 'react-router-dom'
 import {
   Eye, EyeOff, RefreshCw,
   ChevronLeft, ChevronRight, Plus, QrCode,
@@ -7,6 +7,7 @@ import {
   Wallet, ArrowRight, ShoppingBag,
 } from 'lucide-react'
 import Badge from '@/components/ui/Badge'
+import MobileDashboardHome from '@/components/dashboard/MobileDashboardHome'
 
 // ── Mock data ──────────────────────────────────────
 const SALDO = 9067.94
@@ -192,6 +193,7 @@ function ElisonMockup() {
 // ── Main component ─────────────────────────────────
 export default function Dashboard() {
   const navigate = useNavigate()
+  const { theme, toggleTheme } = useOutletContext() || {}
   const [showSaldo, setShowSaldo] = useState(true)
   const [slide, setSlide] = useState(0)
 
@@ -207,7 +209,34 @@ export default function Dashboard() {
   const nextSlide = () => setSlide(s => (s + 1) % BANNERS.length)
 
   return (
-    <div className="animate-fade-in dash4-root">
+    <div className="animate-fade-in">
+
+      {/* ── Dashboard mobile (estilo app financeiro) ─
+          Visível apenas abaixo de 768px. O bloco desktop/tablet
+          abaixo permanece 100% intocado, apenas oculto nesse
+          mesmo breakpoint. ── */}
+      <div className="hide-desktop">
+        <MobileDashboardHome
+          estudio={estudio}
+          plano={user.plano || 'Pro'}
+          avatarLetter={user.avatar || estudio?.charAt(0) || 'S'}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          saldo={SALDO}
+          showSaldo={showSaldo}
+          onToggleSaldo={() => setShowSaldo(v => !v)}
+          recebidoHoje={1450}
+          aReceber={2980}
+          pendente={3}
+          sessoesHoje={PROXIMOS.length}
+          cobrancasVencendo={3}
+          sinaisPendentes={2}
+          clientesParaConfirmar={PROXIMOS.filter((a) => a.status === 'pendente').length}
+        />
+      </div>
+
+      {/* ── Dashboard desktop/tablet (layout atual) ── */}
+      <div className="dash4-root hide-mobile">
 
       {/* ── BLOCO 1: SALDO ─────────────────────────── */}
       <div className="dash4-saldo-card">
@@ -484,6 +513,7 @@ export default function Dashboard() {
           </div>
         </div>
 
+      </div>
       </div>
     </div>
   )

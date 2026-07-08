@@ -4075,3 +4075,135 @@
   .mob-dash-shortcut-icon { width: 40px; height: 40px; }
 }
 
+/* ══════════════════════════════════════════════
+   MOBILE CHARGES PAGE (Cobranças) — mesmo padrão
+   visual do MobileDashboardHome, visível apenas
+   <768px (wrapper usa "hide-desktop"). Reaproveita
+   classes já existentes (mob-dash-balance-card,
+   mob-dash-balance-mini, mob-dash-shortcuts, etc.)
+   sem alterá-las. Classes próprias novas: mob-charges-*.
+   Não afeta a tela desktop de Cobrancas.jsx, escondida
+   no mesmo breakpoint via "hide-mobile" no componente. */
+.mob-charges {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 16px;
+}
+
+/* Ações rápidas desta tela têm 4 itens — 2 colunas fica mais
+   equilibrado que 3 (que deixaria o 4º item sozinho na linha).
+   Modificador aplicado só aqui; a grid de 3 colunas do Home
+   mobile (mob-dash-shortcuts) continua intocada. */
+.mob-charges-shortcuts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+/* Header */
+.mob-charges-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mob-charges-title { font-size: 20px; font-weight: 800; color: var(--app-text); line-height: 1.2; }
+.mob-charges-sub { font-size: 12.5px; color: var(--app-text-muted); margin-top: 4px; line-height: 1.4; max-width: 280px; }
+
+/* CTA sólido (reaproveitado no card financeiro e no estado vazio) */
+.mob-charges-cta {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  background: var(--pink);
+  border: none;
+  color: #fff; font-size: 13px; font-weight: 700;
+  padding: 12px 20px; border-radius: var(--radius-full); cursor: pointer;
+  margin-bottom: 18px;
+  box-shadow: 0 6px 18px rgba(255,46,209,0.32);
+  transition: background 0.15s, transform 0.15s;
+}
+.mob-charges-cta:hover { background: var(--pink-dark); }
+.mob-charges-cta:active { transform: translateY(1px); }
+
+/* Filtros */
+.mob-charges-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.mob-charges-filter-chip {
+  font-family: var(--font-body);
+  font-size: 12.5px; font-weight: 600;
+  color: var(--app-text-muted);
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-full);
+  padding: 8px 15px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.mob-charges-filter-chip:hover { color: var(--app-text); }
+.mob-charges-filter-chip.active {
+  color: #fff;
+  background: var(--pink);
+  border-color: var(--pink);
+}
+.theme-light .mob-charges-filter-chip { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-charges-filter-chip.active { color: #fff; background: var(--pink); }
+
+/* Lista de cobranças */
+.mob-charges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mob-charges-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+}
+.mob-charges-item-icon {
+  width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--app-surface-soft); color: var(--app-text-muted);
+}
+.mob-charges-item-icon.green { background: var(--green-dim); color: var(--green); }
+.mob-charges-item-icon.yellow { background: var(--yellow-dim); color: var(--yellow); }
+.mob-charges-item-icon.red { background: var(--red-dim); color: var(--red); }
+.mob-charges-item-icon.blue { background: var(--blue-dim); color: var(--blue); }
+.mob-charges-item-body { flex: 1; min-width: 0; }
+.mob-charges-item-client { font-size: 13.5px; font-weight: 700; color: var(--app-text); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mob-charges-item-desc { font-size: 12px; color: var(--app-text-muted); margin-top: 2px; line-height: 1.35; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mob-charges-item-meta { font-size: 11px; color: var(--app-text-muted); opacity: 0.75; margin-top: 4px; }
+.mob-charges-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; flex-shrink: 0; }
+.mob-charges-item-value { font-size: 13.5px; font-weight: 800; color: var(--app-text); white-space: nowrap; }
+.mob-charges-status {
+  font-size: 10px; font-weight: 700;
+  padding: 3px 9px; border-radius: var(--radius-full);
+  white-space: nowrap;
+  background: var(--app-surface-soft); color: var(--app-text-muted);
+}
+.mob-charges-status.green { background: var(--green-dim); color: var(--green); }
+.mob-charges-status.yellow { background: var(--yellow-dim); color: var(--yellow); }
+.mob-charges-status.red { background: var(--red-dim); color: var(--red); }
+.mob-charges-status.blue { background: var(--blue-dim); color: var(--blue); }
+
+/* Estado vazio */
+.mob-charges-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+}
+.mob-charges-empty-title { font-size: 15px; font-weight: 700; color: var(--app-text); margin-bottom: 6px; }
+.mob-charges-empty-text { font-size: 12.5px; color: var(--app-text-muted); max-width: 260px; margin-bottom: 18px; line-height: 1.5; }
+.mob-charges-empty .mob-charges-cta { margin-bottom: 0; }
+
+.theme-light .mob-charges-item { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-charges-empty { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+

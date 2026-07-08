@@ -3,6 +3,7 @@ import { Plus, Copy, Check } from 'lucide-react'
 import Badge from '@/components/ui/Badge'
 import Modal from '@/components/ui/Modal'
 import { cobracas } from '@/data/mockData'
+import MobileChargesPage from '@/components/dashboard/MobileChargesPage'
 
 const STATUS_VARIANT = { aberto: 'yellow', pago: 'green', vencido: 'red', cancelado: 'gray' }
 
@@ -28,6 +29,17 @@ export default function Cobracas() {
 
   return (
     <div className="animate-fade-in">
+
+      {/* ── Cobranças mobile (estilo app financeiro) ─
+          Visível apenas abaixo de 768px. O bloco desktop/tablet
+          abaixo permanece 100% intocado, apenas oculto nesse
+          mesmo breakpoint. ── */}
+      <div className="hide-desktop">
+        <MobileChargesPage />
+      </div>
+
+      {/* ── Cobranças desktop/tablet (layout atual) ── */}
+      <div className="hide-mobile">
       <div className="page-header">
         <h1>Cobranças</h1>
         <p>Controle de pagamentos e recebimentos do estúdio.</p>
@@ -87,6 +99,7 @@ export default function Cobracas() {
             <div className="pix-box">{filtradas[0].pixCopiaECola}</div>
           </div>
         )}
+      </div>
       </div>
 
       <Modal title="Nova cobrança" open={showModal} onClose={() => setShowModal(false)}

@@ -4207,3 +4207,272 @@
 .theme-light .mob-charges-item { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
 .theme-light .mob-charges-empty { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
 
+/* ══════════════════════════════════════════════
+   MOBILE AGENDA PAGE — versão "agenda limpa", mais
+   próxima da grade desktop (horários/sessões do dia)
+   do que de uma home financeira. Visível apenas <768px
+   (wrapper usa "hide-desktop"). Reaproveita apenas
+   utilitários genéricos já existentes (mob-charges-filters,
+   mob-charges-filter-chip, mob-charges-status, mob-charges-empty,
+   mob-charges-cta, mob-dash-actions-list, mob-dash-action-row/icon/label)
+   sem alterá-los. Classes próprias novas: mob-agenda-*.
+   Não afeta a tela desktop de Agenda.jsx (grade ag-*),
+   escondida no mesmo breakpoint via "hide-mobile". ══ */
+.mob-agenda {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 76px;
+}
+
+/* Header compacto */
+.mob-agenda-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mob-agenda-title { font-size: 20px; font-weight: 800; color: var(--app-text); line-height: 1.2; }
+.mob-agenda-sub { font-size: 12.5px; color: var(--app-text-muted); margin-top: 4px; line-height: 1.4; max-width: 240px; }
+.mob-agenda-new-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  flex-shrink: 0;
+  background: var(--pink);
+  border: none;
+  color: #fff; font-size: 12.5px; font-weight: 700;
+  padding: 9px 14px; border-radius: var(--radius-full); cursor: pointer;
+  font-family: var(--font-body);
+  box-shadow: 0 4px 14px rgba(255,46,209,0.28);
+}
+.mob-agenda-new-btn:hover { background: var(--pink-dark); }
+
+/* Resumo compacto — faixa única com 3 métricas, sem gradiente */
+.mob-agenda-summary {
+  display: flex;
+  align-items: center;
+  padding: 14px 12px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+}
+.mob-agenda-summary-item {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center;
+  gap: 3px;
+  text-align: center;
+  min-width: 0;
+}
+.mob-agenda-summary-value { font-size: 15px; font-weight: 800; color: var(--pink); white-space: nowrap; }
+.mob-agenda-summary-label { font-size: 10px; color: var(--app-text-muted); line-height: 1.3; }
+.mob-agenda-summary-divider { width: 1px; align-self: stretch; background: var(--app-border); flex-shrink: 0; }
+.theme-light .mob-agenda-summary { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+
+/* Calendário semanal compacto — faixa de dias, não é o calendário
+   desktop espremido. Puramente visual/decorativo (mock local).
+   Estado ativo discreto (sem "blocão" sólido). */
+.mob-agenda-week { display: flex; flex-direction: column; gap: 8px; }
+.mob-agenda-week-title {
+  font-size: 11.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--app-text-muted);
+}
+.mob-agenda-week-strip {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.mob-agenda-week-strip::-webkit-scrollbar { display: none; }
+.mob-agenda-week-day {
+  position: relative;
+  flex: 1;
+  min-width: 42px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2px;
+  padding: 7px 4px 10px;
+  background: none;
+  border: 1px solid var(--app-border);
+  border-radius: 12px;
+  color: var(--app-text-muted);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.mob-agenda-week-day:hover { border-color: var(--border-hover); }
+.mob-agenda-week-day.active {
+  background: var(--pink-dim);
+  border-color: var(--pink);
+  color: var(--pink);
+}
+.mob-agenda-week-day-label { font-size: 10px; font-weight: 600; text-transform: uppercase; opacity: 0.75; }
+.mob-agenda-week-day-num { font-size: 13.5px; font-weight: 800; line-height: 1; color: inherit; }
+.mob-agenda-week-day-dot {
+  position: absolute;
+  bottom: 5px;
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--pink);
+}
+
+@media (max-width: 360px) {
+  .mob-agenda-week-day { min-width: 38px; padding: 6px 3px 9px; }
+}
+
+/* Timeline de sessões — horário à esquerda com marcador/linha,
+   conteúdo à direita. Mais parecido com uma agenda do que com
+   cards financeiros soltos. */
+.mob-agenda-timeline { display: flex; flex-direction: column; gap: 18px; }
+.mob-agenda-day-group { display: flex; flex-direction: column; gap: 10px; }
+.mob-agenda-day-label {
+  font-size: 11.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--app-text-muted);
+}
+.mob-agenda-day-items { display: flex; flex-direction: column; }
+.mob-agenda-tl-row { display: flex; gap: 12px; }
+.mob-agenda-tl-row-clickable {
+  cursor: pointer;
+  border-radius: var(--radius);
+  transition: background 0.12s;
+}
+.mob-agenda-tl-row-clickable:active { background: var(--app-surface-soft); }
+.mob-agenda-tl-row-clickable:hover .mob-agenda-tl-client { color: var(--pink); }
+.mob-agenda-tl-time-col {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  width: 44px; flex-shrink: 0;
+  padding-top: 2px;
+}
+.mob-agenda-tl-time { font-size: 12px; font-weight: 800; color: var(--pink); white-space: nowrap; }
+.mob-agenda-tl-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--pink);
+  margin-top: 6px; flex-shrink: 0;
+}
+.mob-agenda-tl-line {
+  width: 1px;
+  flex: 1;
+  background: var(--app-border);
+  margin-top: 4px;
+}
+.mob-agenda-tl-content {
+  flex: 1; min-width: 0;
+  padding-bottom: 16px;
+}
+.mob-agenda-tl-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.mob-agenda-tl-client { font-size: 13.5px; font-weight: 700; color: var(--app-text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mob-agenda-tl-desc { font-size: 12px; color: var(--app-text-muted); margin-top: 2px; }
+.mob-agenda-tl-meta { font-size: 11.5px; color: var(--app-text-muted); opacity: 0.85; margin-top: 5px; }
+
+/* Lembretes automáticos — bloco discreto no final, reaproveita
+   mob-dash-actions-list/action-row. Cada linha é clicável e abre a
+   mesma configuração de lembrete (Modal) já usada pelo desktop. */
+.mob-agenda-reminders-block { display: flex; flex-direction: column; gap: 10px; }
+.mob-agenda-reminders-title { font-size: 13px; font-weight: 700; color: var(--app-text); }
+.mob-agenda-reminder-row-clickable:active { background: var(--app-surface-soft); }
+
+/* ══════════════════════════════════════════════
+   MOBILE AGENDA — visão Mês. Reaproveita as classes
+   ag-month-* já usadas pela grade desktop (ag-month-wrap,
+   ag-month-hdr-row, ag-month-hdr-cell, ag-month-grid,
+   ag-month-cell, ag-month-cell-num, ag-month-appts,
+   ag-month-appt, ag-month-more) sem alterar seus valores
+   base — só adiciona overrides dentro do breakpoint mobile
+   (<=768px), onde a página desktop já fica oculta via
+   "hide-mobile", então não há conflito visual com o desktop.
+   Classes próprias novas: mob-agenda-month-*, mob-agenda-day-panel*. */
+.mob-agenda-month-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.mob-agenda-month-nav {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  color: var(--app-text-muted);
+  cursor: pointer;
+}
+.mob-agenda-month-nav:hover { color: var(--app-text); background: var(--app-surface-soft); }
+.mob-agenda-month-label-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.mob-agenda-month-label {
+  font-size: 13.5px; font-weight: 700; color: var(--app-text);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.mob-agenda-month-today {
+  font-size: 10.5px; font-weight: 700;
+  color: var(--pink);
+  background: var(--pink-dim);
+  border: none;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.mob-agenda-month-wrap { margin-top: 2px; }
+
+@media (max-width: 768px) {
+  .mob-agenda-month-hdr .ag-month-hdr-cell { padding: 7px 0; font-size: 9.5px; }
+  .mob-agenda-month-grid .ag-month-cell { min-height: 54px; padding: 4px; }
+  .mob-agenda-month-grid .ag-month-cell-num { width: 20px; height: 20px; font-size: 10.5px; margin-bottom: 2px; }
+  .mob-agenda-month-grid .ag-month-appt { font-size: 8.5px; padding: 1px 4px; gap: 2px; }
+  .mob-agenda-month-grid .ag-month-cell.selected { box-shadow: inset 0 0 0 2px var(--pink); }
+  .mob-agenda-month-grid .mob-agenda-month-more {
+    font-size: 9px; font-weight: 700;
+    color: var(--pink);
+    padding: 1px 4px;
+    cursor: pointer;
+  }
+}
+@media (max-width: 360px) {
+  .mob-agenda-month-grid .ag-month-cell { min-height: 48px; }
+}
+
+/* Painel do dia selecionado (visão Mês) */
+.mob-agenda-day-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+}
+.mob-agenda-day-panel-title {
+  font-size: 14px; font-weight: 800;
+  color: var(--app-text);
+}
+.mob-agenda-day-panel-date {
+  font-size: 12px;
+  color: var(--app-text-muted);
+  margin-top: -6px;
+}
+.mob-agenda-day-panel-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 12px;
+  padding: 10px 0 4px;
+}
+.mob-agenda-day-panel-empty p { font-size: 12.5px; color: var(--app-text-muted); }
+.mob-agenda-day-panel-empty .mob-charges-cta { margin-bottom: 0; }
+
+.theme-light .mob-agenda-month-nav { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-agenda-day-panel { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+

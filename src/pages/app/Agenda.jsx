@@ -4,6 +4,7 @@ import {
   Clock, ChevronLeft, ChevronRight, X,
 } from 'lucide-react'
 import Modal from '@/components/ui/Modal'
+import MobileAgendaPage from '@/components/dashboard/MobileAgendaPage'
 
 // ── Dados iniciais ────────────────────────────────────────────────────────────
 const AGENDA_INICIAL = [
@@ -391,7 +392,33 @@ export default function Agenda() {
 
   // ── Render ────────────────────────────────────────────────────────────────
   return (
-    <div className="ag-page animate-fade-in">
+    <div className="animate-fade-in">
+
+      {/* ── Agenda mobile (agenda limpa, com visão Mês) ─
+          Visível apenas abaixo de 768px. O bloco desktop/tablet
+          abaixo permanece 100% intocado, apenas oculto nesse
+          mesmo breakpoint. Reaproveita os mesmos dados (agenda,
+          todayISO, automations) e os mesmos handlers de edição/
+          criação/configuração (openEdit, openNewApptWithDate,
+          openAutoConfig) já usados pelo desktop — o Drawer de
+          edição, o Modal "Novo agendamento" e o Modal de
+          configuração de lembrete (mais abaixo) são únicos e
+          compartilhados entre as duas experiências, sem nenhuma
+          lógica nova. ── */}
+      <div className="hide-desktop">
+        <MobileAgendaPage
+          agenda={agenda}
+          todayISO={todayISO}
+          automations={automations}
+          onOpenAppt={openEdit}
+          onNewAppointment={() => setShowModal(true)}
+          onNewAppointmentForDate={openNewApptWithDate}
+          onConfigureReminder={openAutoConfig}
+        />
+      </div>
+
+      {/* ── Agenda desktop/tablet (layout atual) ──── */}
+      <div className="ag-page hide-mobile">
 
       {/* Header */}
       <div className="ag-header">
@@ -670,6 +697,7 @@ export default function Agenda() {
           </div>
         </div>
       </div>{/* /ag-body */}
+      </div>{/* /hide-mobile (Agenda desktop/tablet) */}
 
       {/* ── Edit Drawer ──────────────────────────────────────────────────────── */}
       {selectedAppt && (

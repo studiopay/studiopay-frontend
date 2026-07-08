@@ -16,6 +16,7 @@ import {
   ShieldCheck,
   BarChart3,
   PiggyBank,
+  Clock,
 } from 'lucide-react'
 import Navbar from '@/components/landing/Navbar'
 import Footer from '@/components/landing/Footer'
@@ -404,18 +405,127 @@ export default function StudioCorePage() {
         </section>
 
         {/*
-          Seções 4 ("Controle do dinheiro"), 5 ("Feito para o tatuador") e o
-          CTA final específico foram removidas temporariamente da renderização
-          a pedido — a página termina após a seção 3 ("Criar cobrança") e usa
-          o footer global padrão (com seu próprio CTA) na sequência.
-          Os componentes/dados que essas seções usavam (BankMockup, CoreWindow,
-          flowSteps, flowCards, bankTxns, bankChartValues) foram mantidos no
-          arquivo, só não são mais renderizados, para facilitar reintroduzir a
-          seção depois sem precisar recriar tudo.
+          Seções antigas 4 ("Controle do dinheiro") e 5 ("Feito para o
+          tatuador") continuam fora da renderização. Os componentes/dados
+          que elas usavam (BankMockup, CoreWindow, flowSteps, flowCards,
+          bankTxns, bankChartValues) foram mantidos no arquivo, só não são
+          mais renderizados, para facilitar reintroduzir depois sem
+          precisar recriar tudo.
         */}
 
+        {/* 4 — Financeiro do estúdio (sinal → recebimento) */}
+        <section className="core-finance module-section">
+          <div className="core-finance-glow" />
+          <div className="container">
+            <Reveal>
+              <div className="section-header-center">
+                <span className="section-label">Financeiro do estúdio</span>
+                <h2 className="section-title core-finance-title">
+                  Do sinal ao recebimento final, <span className="landing-accent">tudo fica mais claro.</span>
+                </h2>
+                <p className="section-sub core-finance-sub">
+                  Organize sinais, cobranças e recebimentos em uma visão financeira pensada para a rotina real do
+                  tatuador.
+                </p>
+              </div>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <div className="core-finance-panel" aria-hidden="true">
+                <div className="core-finance-rows">
+                  <div className="core-finance-row">
+                    <span className="core-finance-row-icon pending"><Clock size={18} strokeWidth={1.8} /></span>
+                    <div className="core-finance-row-copy">
+                      <h3 className="core-finance-row-title">Sinal pendente</h3>
+                      <p className="core-finance-row-meta">Rafael · Realismo antebraço</p>
+                    </div>
+                    <div className="core-finance-row-value">
+                      <span className="core-finance-row-amount">R$ 150,00</span>
+                      <span className="core-finance-row-status pending">Pendente</span>
+                    </div>
+                  </div>
+
+                  <div className="core-finance-row">
+                    <span className="core-finance-row-icon"><CheckCircle size={18} strokeWidth={1.8} /></span>
+                    <div className="core-finance-row-copy">
+                      <h3 className="core-finance-row-title">Sinal pago</h3>
+                      <p className="core-finance-row-meta">Marina · Fechamento de braço</p>
+                    </div>
+                    <div className="core-finance-row-value">
+                      <span className="core-finance-row-amount">R$ 300,00</span>
+                      <span className="core-finance-row-status">Pago</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="core-finance-revenue">
+                  <span className="core-finance-revenue-icon"><Wallet size={17} strokeWidth={1.8} /></span>
+                  <div className="core-finance-revenue-copy">
+                    <p className="core-finance-revenue-label">Receita prevista</p>
+                    <p className="core-finance-revenue-value">Hoje: R$ 1.070,00 · Semana: R$ 4.820,00</p>
+                  </div>
+                </div>
+
+                <div className="core-finance-summary">
+                  <div className="core-finance-summary-item">
+                    <p className="core-finance-summary-label">A receber</p>
+                    <p className="core-finance-summary-value">R$ 1.570,00</p>
+                  </div>
+                  <div className="core-finance-summary-item">
+                    <p className="core-finance-summary-label">Recebido</p>
+                    <p className="core-finance-summary-value received">R$ 980,00</p>
+                  </div>
+                  <div className="core-finance-summary-item">
+                    <p className="core-finance-summary-label">Pendente</p>
+                    <p className="core-finance-summary-value pending">R$ 450,00</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            <Reveal delay={160}>
+              <p className="core-pill core-finance-pill">
+                Menos cobrança perdida, <span className="text-pink">mais controle</span> sobre o dinheiro que
+                entra no estúdio.
+              </p>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* 5 — CTA final específico da Conta Digital */}
+        <section className="core-final module-section">
+          <div className="core-final-glow" />
+          <div className="container">
+            <Reveal>
+              <div className="core-final-panel">
+                <span className="section-label">Conta Digital Studio Pay</span>
+                <h2 className="section-title core-final-title">
+                  Receba, cobre e acompanhe o dinheiro do seu estúdio<br />
+                  <span className="landing-accent">em um só lugar.</span>
+                </h2>
+                <p className="section-sub core-final-sub">
+                  Controle cobranças, sinais e recebimentos sem depender de planilhas ou conversas perdidas.
+                </p>
+
+                <div className="core-final-benefits">
+                  {['Pix e boleto', 'Sinais organizados', 'Cobranças no lugar', 'Financeiro claro'].map((label) => (
+                    <span key={label} className="core-final-benefit">{label}</span>
+                  ))}
+                </div>
+
+                <div className="core-final-actions">
+                  <Link to="/cadastro" className="btn btn-primary btn-lg">
+                    Começar agora <ArrowRight size={18} />
+                  </Link>
+                  <Link to="/planos" className="btn btn-ghost btn-lg">Ver planos</Link>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
       </main>
-      <Footer />
+      <Footer showCta={false} />
     </PublicSiteShell>
   )
 }

@@ -107,8 +107,10 @@ export default function Navbar() {
           >
             {isDark ? <Sun size={16} /> : <Moon size={16} />}
           </button>
-          <Link to="/login" className="btn btn-ghost btn-sm">Entrar</Link>
-          <Link to="/cadastro" className="btn btn-primary btn-sm">Começar agora</Link>
+          <Link to="/login" className="btn btn-ghost btn-sm nav-cta-entrar">Entrar</Link>
+          <Link to="/cadastro" className="btn btn-primary btn-sm nav-cta-comecar">
+            Começar<span className="nav-cta-optional"> agora</span>
+          </Link>
         </div>
 
         <button className="nav-hamburger" onClick={toggleMobileMenu} aria-label="Menu">
@@ -157,7 +159,11 @@ export default function Navbar() {
           )}
 
           <Link to="/planos" className={linkClass('/planos')} onClick={closeMobileMenu}>Planos</Link>
-          <Link to="/login" className="nav-mobile-entrar" onClick={closeMobileMenu}>Entrar</Link>
+
+          <button type="button" className="nav-mobile-theme-btn" onClick={toggleTheme}>
+            {isDark ? <Sun size={16} /> : <Moon size={16} />}
+            {isDark ? 'Modo claro' : 'Modo escuro'}
+          </button>
         </div>
       </div>
     </nav>

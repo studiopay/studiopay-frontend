@@ -6,6 +6,7 @@ import PainSection from '@/components/landing/PainSection'
 import ElisonPreviewSection from '@/components/landing/ElisonPreviewSection'
 import DemoGifSection from '@/components/landing/DemoGifSection'
 import StudioEcosystemPreview from '@/components/landing/StudioEcosystemPreview'
+import CoreDigitalPreviewSection from '@/components/landing/CoreDigitalPreviewSection'
 import PlansSection from '@/components/landing/PlansSection'
 import Footer from '@/components/landing/Footer'
 import PublicSiteShell from '@/components/landing/PublicSiteShell'
@@ -20,6 +21,7 @@ export default function LandingPage() {
         <PillsMarquee />
         <WhyStudioPaySection />
         <StudioEcosystemPreview />
+        <CoreDigitalPreviewSection />
         <PainSection />
         <ElisonPreviewSection />
         <DemoGifSection />

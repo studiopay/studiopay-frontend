@@ -65,15 +65,15 @@
   ads: {
     eyebrow: 'Studio Ads',
     title: 'Studio Ads',
-    headline: 'Mais visibilidade para transformar agenda vazia em oportunidade.',
-    subheadline: 'Campanhas, criativos, relatórios e tráfego pago para ajudar tatuadores a atrair mais clientes.',
+    headline: 'Mais clientes para sua agenda com tráfego pago profissional.',
+    subheadline: 'Uma parceria Studio Pay x Digital Mix para ajudar tatuadores a divulgar o trabalho, preencher horários e acompanhar campanhas com mais clareza.',
     problem: 'Agenda vazia, Instagram sem resultado e anúncio mal feito deixam o crescimento sem direção.',
-    solution: ['Campanhas', 'Criativos', 'Relatórios', 'Otimização', 'Tráfego pago'],
-    servicePlans: ['Básico: campanhas simples e suporte básico', 'Profissional: gestão avançada e suporte prioritário'],
-    benefits: ['Mais alcance', 'Mais clientes potenciais', 'Mais previsibilidade', 'Mais crescimento'],
+    solution: ['Google Ads', 'Meta Ads', 'Criativos', 'Relatórios', 'Gestão pela Digital Mix'],
+    servicePlans: ['Básico: campanhas simples e suporte básico', 'Profissional: otimizações semanais e suporte prioritário'],
+    benefits: ['Ajuda a atrair mais clientes', 'Ajuda a preencher horários', 'Acompanhamento de performance', 'Operação profissional de mídia paga'],
     practicalTitle: 'Na prática',
-    practical: 'Você ganha uma frente de crescimento conectada à operação, sem tratar anúncio como aposta solta.',
-    cta: 'Quero crescer meu estúdio',
+    practical: 'A gestão das campanhas é feita pela Digital Mix. O Studio Pay conecta o tatuador à solução e organiza a jornada.',
+    cta: 'Quero atrair mais clientes',
   },
 }
 

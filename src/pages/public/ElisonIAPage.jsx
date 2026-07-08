@@ -13,7 +13,7 @@ import {
 
 const heroBenefits = [
   { Icon: MessageCircle, title: 'Atende leads novos', text: 'Responde interessados mesmo quando você está tatuando.' },
-  { Icon: Sparkles, title: 'Fala no seu tom', text: 'O Elison aprende seu jeito de atender e mantém a linguagem do estúdio.' },
+  { Icon: Sparkles, title: 'Fala no seu tom', text: 'O Elisson.IA aprende seu jeito de atender e mantém a linguagem do estúdio.' },
   { Icon: HelpCircle, title: 'Tira dúvidas frequentes', text: 'Orçamento, disponibilidade, estilos, cuidados e informações da sessão.' },
   { Icon: UserCheck, title: 'Evita cliente perdido', text: 'Menos demora no WhatsApp e mais conversas acompanhadas.' },
 ]
@@ -106,7 +106,7 @@ function WhatsAppMockup() {
       <div className="elison-wa-header">
         <span className="elison-wa-avatar"><Bot size={18} strokeWidth={1.8} /></span>
         <div className="elison-wa-header-text">
-          <p className="elison-wa-name">Elison IA</p>
+          <p className="elison-wa-name">Elisson.IA</p>
           <p className="elison-wa-status">
             <span className="elison-wa-dot" /> online agora · Atendimento do estúdio
           </p>
@@ -177,9 +177,9 @@ function ElisonHero() {
         <div className="elison-hero-inner">
           <Reveal className="elison-hero-copy-area">
             <div className="elison-hero-copy">
-              <span className="section-label">Elison IA</span>
+              <span className="section-label">Elisson.IA</span>
               <h1 className="elison-hero-title">
-                Enquanto você tatua, o Elison atende{' '}
+                Enquanto você tatua, o Elisson.IA atende{' '}
                 <span className="landing-accent">como se fosse você.</span>
               </h1>
               <p className="elison-hero-sub">
@@ -228,7 +228,7 @@ function ElisonHero() {
 
 const howSteps = [
   {
-    title: 'Treine o Elison',
+    title: 'Treine o Elisson.IA',
     text: 'Você adiciona respostas, linguagem, horários, regras do estúdio, cuidados e informações importantes.',
   },
   {
@@ -236,7 +236,7 @@ const howSteps = [
     text: 'O lead entra em contato, tira dúvidas, pede orçamento ou pergunta sobre horários.',
   },
   {
-    title: 'Elison atende no seu tom',
+    title: 'Elisson.IA atende no seu tom',
     text: 'Ele responde com base no que aprendeu, mantendo a conversa ativa e organizada.',
   },
   {
@@ -267,10 +267,10 @@ function ElisonHowSection() {
           <div className="section-header-center elison-how-header">
             <span className="section-label">Como funciona</span>
             <h2 className="section-title elison-how-title">
-              Você ensina. O Elison responde. O cliente continua sendo cuidado.
+              Você ensina. O Elisson.IA responde. O cliente continua sendo cuidado.
             </h2>
             <p className="section-sub elison-how-sub">
-              Cadastre o jeito do seu estúdio, suas respostas frequentes e suas orientações. O Elison usa essas
+              Cadastre o jeito do seu estúdio, suas respostas frequentes e suas orientações. O Elisson.IA usa essas
               informações para conduzir conversas com naturalidade até você poder assumir.
             </p>
           </div>
@@ -388,7 +388,7 @@ function ElisonDeskSection() {
           <div className="section-header-center elison-desk-header">
             <span className="section-label">Atendimento na prática</span>
             <h2 className="section-title elison-desk-title">
-              O Elison ajuda nas mensagens que <span className="landing-accent">mais tomam seu tempo.</span>
+              O Elisson.IA ajuda nas mensagens que <span className="landing-accent">mais tomam seu tempo.</span>
             </h2>
             <p className="section-sub elison-desk-sub">
               Orçamentos, horários, cuidados, dúvidas frequentes e acompanhamento do cliente podem ser respondidos
@@ -471,7 +471,7 @@ function ElisonFinalSection() {
               <span className="landing-accent">Mais tempo tatuando.</span> Menos tempo repetindo resposta.
             </h2>
             <p className="section-sub elison-final-sub">
-              Deixe o Elison cuidar das mensagens repetitivas, organizar informações dos clientes e manter o
+              Deixe o Elisson.IA cuidar das mensagens repetitivas, organizar informações dos clientes e manter o
               atendimento ativo enquanto você foca na arte e no estúdio.
             </p>
 

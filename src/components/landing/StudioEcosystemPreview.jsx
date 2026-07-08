@@ -26,11 +26,11 @@ const modules = [
     label: 'Ver Agenda',
   },
   {
-    name: 'Elison IA',
+    name: 'Elisson.IA',
     role: 'Atender no automático',
     text: 'Confirma horários, envia lembretes e acompanha clientes pelo WhatsApp.',
     to: '/elison-ia',
-    label: 'Ver Elison IA',
+    label: 'Ver Elisson.IA',
   },
   {
     name: 'Studio Shop',

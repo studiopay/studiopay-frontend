@@ -1,7 +1,7 @@
 export const mainNavLinks = [
   { label: 'Conta Digital', to: '/studio-core' },
   { label: 'Studio Shop', to: '/studio-shop' },
-  { label: 'Elison IA', to: '/elison-ia' },
+  { label: 'Elisson.IA', to: '/elison-ia' },
   { label: 'Agenda', to: '/studio-agenda' },
 ]
 

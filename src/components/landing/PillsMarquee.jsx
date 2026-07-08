@@ -10,7 +10,7 @@ const pillItems = [
   { label: 'Conta Digital', Icon: Wallet },
   { label: 'Agenda', Icon: Calendar },
   { label: 'Studio Shop', Icon: ShoppingBag },
-  { label: 'Elison IA', Icon: Bot },
+  { label: 'Elisson.IA', Icon: Bot },
   { label: 'Cursos', Icon: GraduationCap },
   { label: 'Cobranças', Icon: ReceiptText },
   { label: 'Pix', Icon: QrCode },

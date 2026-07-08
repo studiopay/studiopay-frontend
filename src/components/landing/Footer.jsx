@@ -6,7 +6,7 @@ const productLinks = [
   { label: 'Início', anchor: 'inicio' },
   { label: 'Conta Digital', anchor: 'conta-digital' },
   { label: 'Studio Shop', anchor: 'studio-shop' },
-  { label: 'Elison IA', anchor: 'elison-ia' },
+  { label: 'Elisson.IA', anchor: 'elison-ia' },
   { label: 'Agenda', anchor: 'agenda' },
   { label: 'Cursos', anchor: 'cursos' },
   { label: 'Tráfego Pago', anchor: 'trafego' },

@@ -13,7 +13,7 @@ const items = [
   },
   {
     q: 'A IA responde meus clientes?',
-    a: 'O Elison IA ajuda com respostas, lembretes, confirmações e recuperação de clientes, sempre conforme sua configuração.',
+    a: 'O Elisson.IA ajuda com respostas, lembretes, confirmações e recuperação de clientes, sempre conforme sua configuração.',
   },
   {
     q: 'Tem fidelidade?',

@@ -24,9 +24,9 @@
     cta: 'Organizar minha agenda',
   },
   elison: {
-    eyebrow: 'Elison IA',
-    title: 'Elison IA',
-    headline: 'Enquanto você tatua, o Elison acompanha seus clientes.',
+    eyebrow: 'Elisson.IA',
+    title: 'Elisson.IA',
+    headline: 'Enquanto você tatua, o Elisson.IA acompanha seus clientes.',
     subheadline: 'Um assistente inteligente para confirmar horários, enviar lembretes, responder mensagens e recuperar clientes sem você precisar parar o atendimento.',
     problem: 'Responder tudo manualmente toma tempo, clientes somem e confirmações viram mais uma tarefa no meio do dia.',
     solution: ['Responder clientes', 'Confirmar horários', 'Enviar lembretes', 'Recuperar clientes sumidos', 'Organizar mensagens', 'Suporte inteligente'],

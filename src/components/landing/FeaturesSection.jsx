@@ -22,10 +22,10 @@ const features = [
   {
     Icon: Bot,
     color: '#A78BFA',
-    title: 'Elison IA',
+    title: 'Elisson.IA',
     desc: 'Automatize mensagens, confirmações e recuperação de clientes.',
     to: '/elison-ia',
-    action: 'Conhecer Elison IA',
+    action: 'Conhecer Elisson.IA',
   },
   {
     Icon: ShoppingBag,

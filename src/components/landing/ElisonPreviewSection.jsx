@@ -49,10 +49,10 @@ export default function ElisonPreviewSection() {
         <div className="elison-preview-layout">
           <Reveal>
             <div className="elison-preview-copy">
-              <span className="section-label">Elison IA</span>
+              <span className="section-label">Elisson.IA</span>
               <h2 className="section-title">
                 Enquanto você tatua,<br />
-                o <span className="landing-accent">Elison</span> acompanha seus clientes.
+                o <span className="landing-accent">Elisson.IA</span> acompanha seus clientes.
               </h2>
               <p className="section-sub">
                 Confirma horários, envia lembretes e mantém o cliente acompanhado sem você precisar parar o atendimento.
@@ -62,12 +62,12 @@ export default function ElisonPreviewSection() {
 
           <Reveal delay={80}>
             <div className="elison-preview-demo">
-              <div className="elison-phone" aria-label="Demonstração de conversa do Elison IA">
+              <div className="elison-phone" aria-label="Demonstração de conversa do Elisson.IA">
                 <div className="elison-chat-header">
                   <span className="elison-chat-avatar" aria-hidden="true">J</span>
                   <div className="elison-chat-contact">
                     <strong>João</strong>
-                    <span>Atendimento via Elison.IA</span>
+                    <span>Atendimento via Elisson.IA</span>
                   </div>
                   <div className="elison-chat-actions" aria-hidden="true">
                     <Video size={15} strokeWidth={1.8} />
@@ -86,7 +86,7 @@ export default function ElisonPreviewSection() {
                       className={`elison-chat-bubble ${message.from === 'client' ? 'client' : 'elison'}`}
                       key={`${message.from}-${index}`}
                     >
-                      <span>{message.from === 'client' ? 'João' : 'Elison.IA'}</span>
+                      <span>{message.from === 'client' ? 'João' : 'Elisson.IA'}</span>
                       <p>{message.text}</p>
                       <small>
                         {message.time}
@@ -102,7 +102,7 @@ export default function ElisonPreviewSection() {
                 </div>
               </div>
 
-              <div className="elison-step-tabs" aria-label="Estados demonstrativos do Elison IA">
+              <div className="elison-step-tabs" aria-label="Estados demonstrativos do Elisson.IA">
                 {elisonSteps.map((step, index) => (
                   <button
                     type="button"
@@ -119,7 +119,7 @@ export default function ElisonPreviewSection() {
           </Reveal>
 
           <Reveal delay={140}>
-            <ul className="elison-preview-bullets" aria-label="O que o Elison IA ajuda a organizar">
+            <ul className="elison-preview-bullets" aria-label="O que o Elisson.IA ajuda a organizar">
               {elisonBullets.map((bullet) => (
                 <li key={bullet}>
                   <span aria-hidden="true"><Check size={15} strokeWidth={2} /></span>
@@ -134,7 +134,7 @@ export default function ElisonPreviewSection() {
               <p>Menos conversa manual. Mais cliente acompanhado.</p>
               <div className="elison-preview-actions">
                 <Link to="/elison-ia" className="btn btn-primary btn-lg">
-                  Conhecer benefícios do Elison IA <ArrowRight size={18} />
+                  Conhecer benefícios do Elisson.IA <ArrowRight size={18} />
                 </Link>
                 <Link to="/elison-ia" className="elison-inline-link">
                   Ver como funciona

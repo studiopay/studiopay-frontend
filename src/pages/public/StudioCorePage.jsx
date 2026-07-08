@@ -121,7 +121,7 @@ const flowSteps = ['Agenda', 'Cobrança', 'WhatsApp', 'Pagamento', 'Relatório']
 
 const flowCards = [
   { Icon: Calendar, title: 'Agenda', text: 'Sessão marcada, cobrança organizada.' },
-  { Icon: Sparkles, title: 'Elison IA', text: 'Cliente lembrado sem mensagem manual.' },
+  { Icon: Sparkles, title: 'Elisson.IA', text: 'Cliente lembrado sem mensagem manual.' },
   { Icon: Wallet, title: 'Conta Digital', text: 'Pagamento recebido e registrado.' },
   { Icon: BarChart3, title: 'Relatórios', text: 'Você entende o resultado do mês.' },
 ]

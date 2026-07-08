@@ -109,7 +109,7 @@ function AgendaHero() {
 // painel interno da Agenda — sem depender de imagem.
 
 const reminderItems = [
-  { Icon: Bell, title: 'Confirmação automática', text: 'Elison confirma 24h antes', on: true },
+  { Icon: Bell, title: 'Confirmação automática', text: 'Elisson.IA confirma 24h antes', on: true },
   { Icon: MessageCircle, title: 'Robô pré-tattoo', text: 'Cuidados enviados 2h antes', on: true },
   { Icon: ShieldCheck, title: 'Robô pós-tattoo', text: 'Cicatrização enviada após sessão', on: true },
   { Icon: CalendarClock, title: 'Lembretes ativos', text: '3 lembretes configurados', on: false },

@@ -4163,6 +4163,15 @@
   border: 1px solid var(--app-border);
   border-radius: var(--radius-lg);
 }
+.mob-charges-item-clickable {
+  width: 100%;
+  text-align: left;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s;
+}
+.mob-charges-item-clickable:hover { border-color: var(--border-hover); }
+.mob-charges-item-clickable:active { background: var(--app-surface-soft); }
 .mob-charges-item-icon {
   width: 34px; height: 34px; border-radius: 10px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
@@ -4475,4 +4484,96 @@
 
 .theme-light .mob-agenda-month-nav { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
 .theme-light .mob-agenda-day-panel { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+
+/* ══════════════════════════════════════════════
+   MOBILE CHARGES — nota auxiliar dos atalhos e
+   bottom sheet de detalhe da cobrança (UI local,
+   sem backend/API). Classes próprias: mob-charges-
+   shortcuts-note, mob-charges-detail-*. ══════════ */
+.mob-charges-shortcuts-note {
+  font-size: 11px;
+  color: var(--app-text-muted);
+  opacity: 0.8;
+  line-height: 1.5;
+  margin-top: -6px;
+}
+
+.mob-charges-detail-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(2px);
+  z-index: 400;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fadeIn 0.15s ease;
+}
+.mob-charges-detail-sheet {
+  width: 100%;
+  max-width: 480px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-bottom: none;
+  border-radius: 20px 20px 0 0;
+  padding: 10px 20px max(20px, env(safe-area-inset-bottom, 20px));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideUp 0.2s ease;
+}
+.mob-charges-detail-handle {
+  width: 36px; height: 4px; border-radius: var(--radius-full);
+  background: var(--app-border);
+  margin: 4px auto 0;
+}
+.mob-charges-detail-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+.mob-charges-detail-client { font-size: 15px; font-weight: 800; color: var(--app-text); }
+.mob-charges-detail-desc { font-size: 12.5px; color: var(--app-text-muted); margin-top: 3px; }
+.mob-charges-detail-close {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--app-surface-soft);
+  border: none;
+  color: var(--app-text-muted);
+  cursor: pointer;
+}
+.mob-charges-detail-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px;
+  background: var(--app-surface-soft);
+  border-radius: var(--radius-lg);
+}
+.mob-charges-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--app-text-muted);
+}
+.mob-charges-detail-row-value { font-weight: 700; color: var(--app-text); }
+.mob-charges-detail-pix-btn { width: 100%; justify-content: center; margin-bottom: 0; }
+.mob-charges-detail-close-btn {
+  width: 100%;
+  padding: 12px;
+  background: none;
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-full);
+  color: var(--app-text-muted);
+  font-size: 13px; font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+}
+.mob-charges-detail-close-btn:hover { color: var(--app-text); border-color: var(--border-hover); }
+
+.theme-light .mob-charges-detail-sheet { background: #fff; }
+.theme-light .mob-charges-detail-rows { background: #f5f3fa; }
+.theme-light .mob-charges-detail-close { background: #f5f3fa; }
 

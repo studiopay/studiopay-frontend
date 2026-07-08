@@ -33,9 +33,11 @@ export default function Cobracas() {
       {/* ── Cobranças mobile (estilo app financeiro) ─
           Visível apenas abaixo de 768px. O bloco desktop/tablet
           abaixo permanece 100% intocado, apenas oculto nesse
-          mesmo breakpoint. ── */}
+          mesmo breakpoint. Reaproveita a mesma lista (cobracas)
+          e o mesmo handler de copiar Pix (copiarPix/pixCopiado)
+          já usados pelo desktop — sem dado mock desconectado. ── */}
       <div className="hide-desktop">
-        <MobileChargesPage />
+        <MobileChargesPage cobrancas={cobracas} onCopyPix={copiarPix} pixCopiado={pixCopiado} />
       </div>
 
       {/* ── Cobranças desktop/tablet (layout atual) ── */}

@@ -22,6 +22,15 @@ export default function AppLayout() {
 
   const hideTopbarOnMobile = MOBILE_OWN_HEADER_ROUTES.includes(location.pathname)
 
+  // Função central para fechar o Menu mobile — usada tanto pelo painel
+  // (MobileMenuPanel) quanto pela própria BottomNav, para que qualquer
+  // navegação disparada com o menu aberto (de dentro do painel ou pelos
+  // links fixos da BottomNav) sempre feche o menu, mesmo quando a rota
+  // tocada já é a rota atual (ex.: já em /app/shop e tocar em "Shop").
+  function closeMobileMenu() {
+    setMobileMenuOpen(false)
+  }
+
   return (
     <div className={`app-shell theme-${theme}`}>
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
@@ -30,9 +39,13 @@ export default function AppLayout() {
         <main className="app-content">
           <Outlet context={{ theme, toggleTheme }} />
         </main>
-        <BottomNav onMenuClick={() => setMobileMenuOpen(true)} menuActive={mobileMenuOpen} />
+        <BottomNav
+          onMenuClick={() => setMobileMenuOpen((v) => !v)}
+          menuActive={mobileMenuOpen}
+          onNavigate={closeMobileMenu}
+        />
       </div>
-      <MobileMenuPanel open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
+      <MobileMenuPanel open={mobileMenuOpen} onClose={closeMobileMenu} />
     </div>
   )
 }

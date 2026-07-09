@@ -68,9 +68,17 @@ export default function MobileMenuPanel({ open, onClose }) {
     .map((s) => ({ ...s, items: q ? s.items.filter((i) => i.label.toLowerCase().includes(q)) : s.items }))
     .filter((s) => s.items.length > 0)
 
-  function go(to) {
-    onClose()
-    navigate(to)
+  // Função central de navegação: fecha o painel e navega para a rota
+  // escolhida — usada por todo item navegável do menu (cards em grid
+  // e itens de conta), para que o usuário nunca precise tocar em
+  // "voltar" depois de escolher uma opção. onClose() vem ANTES do
+  // navigate() de propósito: o fechamento não pode depender de uma
+  // mudança de rota efetivamente acontecer (ex.: tocar em "Studio
+  // Shop" já estando em /app/shop não gera navegação nova, mas o
+  // menu precisa fechar do mesmo jeito).
+  function handleNavigate(path) {
+    onClose?.()
+    navigate(path)
   }
 
   // Mesmo logout real já usado na Sidebar/Home mobile (mesmas chaves
@@ -111,7 +119,7 @@ export default function MobileMenuPanel({ open, onClose }) {
             <h2 className="mob-menu-section-title">{s.title}</h2>
             <div className="mob-menu-grid">
               {s.items.map(({ label, icon: Icon, to }) => (
-                <button key={label} type="button" className="mob-menu-card" onClick={() => go(to)}>
+                <button key={label} type="button" className="mob-menu-card" onClick={() => handleNavigate(to)}>
                   <span className="mob-menu-card-icon"><Icon size={20} /></span>
                   <span className="mob-menu-card-label">{label}</span>
                 </button>
@@ -133,7 +141,7 @@ export default function MobileMenuPanel({ open, onClose }) {
                   key={label}
                   type="button"
                   className={`mob-dash-action-row${action === 'logout' ? ' mob-dash-action-row-danger' : ''}`}
-                  onClick={() => (action === 'logout' ? handleLogout() : go(to))}
+                  onClick={() => (action === 'logout' ? handleLogout() : handleNavigate(to))}
                 >
                   <span className="mob-dash-action-icon"><Icon size={16} /></span>
                   <span className="mob-dash-action-label">{label}</span>

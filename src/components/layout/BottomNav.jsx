@@ -13,13 +13,18 @@ const navItems = [
   { to: '/app/shop', icon: ShoppingBag, label: 'Shop' },
 ]
 
-export default function BottomNav({ onMenuClick, menuActive = false }) {
+export default function BottomNav({ onMenuClick, menuActive = false, onNavigate }) {
   return (
     <nav className="bottom-nav hide-desktop">
       {navItems.map(({ to, icon: Icon, label }) => (
         <NavLink
           key={to}
           to={to}
+          // Fecha o Menu mobile sempre que um link fixo da BottomNav é
+          // tocado — inclusive quando a rota tocada já é a rota atual
+          // (o painel fica sobreposto pela BottomNav enquanto aberto, então
+          // sem isso o menu continuava aberto atrás dela).
+          onClick={() => onNavigate?.()}
           // Enquanto o Menu mobile está aberto, nenhum item de rota deve
           // ficar em destaque junto com "Menu" — só o Menu fica ativo.
           className={({ isActive }) => `bottom-nav-link ${isActive && !menuActive ? 'active' : ''}`}

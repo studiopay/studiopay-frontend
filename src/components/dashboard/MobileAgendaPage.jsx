@@ -345,17 +345,22 @@ export default function MobileAgendaPage({
                 return (
                   <div
                     key={i}
-                    className={`ag-month-cell${current ? '' : ' outside'}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}`}
+                    className={`ag-month-cell mob-agenda-month-cell-tap${current ? '' : ' outside'}${isToday ? ' today' : ''}${isSelected ? ' selected' : ''}`}
                     onClick={() => selectDay(iso)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`${date.getDate()}${dayAppts.length > 0 ? `, ${dayAppts.length} agendamento${dayAppts.length === 1 ? '' : 's'}` : ', sem agendamentos'}`}
                   >
                     <span className={`ag-month-cell-num${isToday ? ' today' : ''}`}>{date.getDate()}</span>
                     <div className="ag-month-appts">
+                      {/* Chips só indicativos no mobile — o toque em
+                          qualquer ponto da célula seleciona o dia;
+                          detalhe/edição acontece no painel abaixo. */}
                       {dayAppts.slice(0, 1).map((appt) => (
                         <div
                           key={appt.id}
-                          className="ag-month-appt"
+                          className="ag-month-appt mob-agenda-month-appt-indicator"
                           style={{ background: `${appt.cor}1a`, borderLeft: `2px solid ${appt.cor}`, color: appt.cor }}
-                          onClick={(e) => { e.stopPropagation(); onOpenAppt?.(appt) }}
                         >
                           <span className="ag-month-appt-time">{appt.horario}</span>
                           <span className="ag-month-appt-nome">{appt.cliente.split(' ')[0]}</span>

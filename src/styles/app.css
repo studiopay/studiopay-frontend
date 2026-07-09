@@ -4454,8 +4454,18 @@
     font-size: 9px; font-weight: 700;
     color: var(--pink);
     padding: 1px 4px;
-    cursor: pointer;
   }
+
+  /* Toque único na célula inteira — os chips/indicador "+N" dentro
+     dela são só visuais no mobile, sem clique próprio. pointer-events
+     none garante que o toque sempre chega na célula, mesmo em cima
+     do texto do cliente ou do "+N". */
+  .mob-agenda-month-grid .mob-agenda-month-appt-indicator,
+  .mob-agenda-month-grid .mob-agenda-month-more {
+    pointer-events: none;
+  }
+  .mob-agenda-month-cell-tap:active { background: var(--app-surface-soft); }
+  .mob-agenda-month-cell-tap.today:active { background: rgba(255,46,209,0.09); }
 }
 @media (max-width: 360px) {
   .mob-agenda-month-grid .ag-month-cell { min-height: 48px; }

@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import Badge from '@/components/ui/Badge'
 import MobileDashboardHome from '@/components/dashboard/MobileDashboardHome'
+import { cobracas, agendamentos } from '@/data/mockData'
 
 // ── Mock data ──────────────────────────────────────
 const SALDO = 9067.94
@@ -64,6 +65,21 @@ const PROXIMOS = [
   { horario: '11:30', cliente: 'Juliana Costa', status: 'confirmado' },
   { horario: '14:00', cliente: 'Henrique Silva', status: 'pendente' },
 ]
+
+// ── Números do dashboard mobile — derivados da mesma fonte mock
+// compartilhada usada por Cobranças e Clientes (@/data/mockData),
+// em vez de números soltos. Não é backend/API, só evita valores
+// hardcoded desconectados da lista real. ──
+const cobrancasAbertas = cobracas.filter((c) => c.status === 'aberto')
+const cobrancasPagas = cobracas.filter((c) => c.status === 'pago')
+const cobrancasVencidas = cobracas.filter((c) => c.status === 'vencido')
+const agendamentosPendentes = agendamentos.filter((a) => a.status === 'pendente')
+
+const RECEBIDO_TOTAL = cobrancasPagas.reduce((s, c) => s + c.valor, 0)
+const A_RECEBER_TOTAL = [...cobrancasAbertas, ...cobrancasVencidas].reduce((s, c) => s + c.valor, 0)
+const COBRANCAS_ABERTAS_COUNT = cobrancasAbertas.length
+const SINAIS_PENDENTES_COUNT = agendamentosPendentes.length
+const CLIENTES_PARA_CONFIRMAR_COUNT = new Set(agendamentosPendentes.map((a) => a.cliente)).size
 
 // ── Helpers ────────────────────────────────────────
 function fmt(v) {
@@ -225,13 +241,13 @@ export default function Dashboard() {
           saldo={SALDO}
           showSaldo={showSaldo}
           onToggleSaldo={() => setShowSaldo(v => !v)}
-          recebidoHoje={1450}
-          aReceber={2980}
-          pendente={3}
+          recebidoHoje={RECEBIDO_TOTAL}
+          aReceber={A_RECEBER_TOTAL}
+          pendente={COBRANCAS_ABERTAS_COUNT}
           sessoesHoje={PROXIMOS.length}
-          cobrancasVencendo={3}
-          sinaisPendentes={2}
-          clientesParaConfirmar={PROXIMOS.filter((a) => a.status === 'pendente').length}
+          cobrancasVencendo={COBRANCAS_ABERTAS_COUNT}
+          sinaisPendentes={SINAIS_PENDENTES_COUNT}
+          clientesParaConfirmar={CLIENTES_PARA_CONFIRMAR_COUNT}
         />
       </div>
 

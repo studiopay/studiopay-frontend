@@ -3,6 +3,7 @@ import { Outlet, Navigate, useLocation } from 'react-router-dom'
 import Sidebar from '@/components/layout/Sidebar'
 import Topbar from '@/components/layout/Topbar'
 import BottomNav from '@/components/layout/BottomNav'
+import MobileMenuPanel from '@/components/layout/MobileMenuPanel'
 import { useTheme } from '@/hooks/useTheme'
 
 // Rotas que já têm seu próprio header mobile (ex.: MobileDashboardHome),
@@ -13,6 +14,7 @@ const MOBILE_OWN_HEADER_ROUTES = ['/app/dashboard', '/app/cobrancas', '/app/agen
 export default function AppLayout() {
   const isAuth = localStorage.getItem('studioPayAuth') === 'true' || !!localStorage.getItem('studiopay_user')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
   const location = useLocation()
 
@@ -28,8 +30,9 @@ export default function AppLayout() {
         <main className="app-content">
           <Outlet context={{ theme, toggleTheme }} />
         </main>
-        <BottomNav onMenuClick={() => setSidebarOpen(true)} />
+        <BottomNav onMenuClick={() => setMobileMenuOpen(true)} menuActive={mobileMenuOpen} />
       </div>
+      <MobileMenuPanel open={mobileMenuOpen} onClose={() => setMobileMenuOpen(false)} />
     </div>
   )
 }

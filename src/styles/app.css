@@ -4655,3 +4655,117 @@
 .mob-dash-plan-detail-name { font-size: 13.5px; font-weight: 700; color: var(--app-text); }
 .mob-dash-plan-detail-note { font-size: 12px; color: var(--app-text-muted); margin-top: 4px; }
 
+/* ══════════════════════════════════════════════
+   MOBILE MENU PANEL — tela cheia estilo app bancário
+   que substitui a Sidebar off-canvas quando "Menu" é
+   tocado na bottom nav mobile. Visível apenas <768px
+   ("hide-desktop"); o desktop continua usando a
+   Sidebar de sempre, intocada. Fica abaixo da bottom
+   nav (z-index menor + "bottom" recuado), então o
+   dock flutuante continua visível/tocável por cima. */
+.mob-menu-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 140;
+  background: var(--app-bg);
+  display: flex;
+  flex-direction: column;
+  animation: fadeIn 0.15s ease;
+}
+
+.mob-menu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 16px 4px;
+  flex-shrink: 0;
+}
+.mob-menu-back {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  color: var(--app-text);
+  cursor: pointer;
+}
+.mob-menu-back:hover { background: var(--app-surface-soft); }
+.mob-menu-title { flex: 1; text-align: center; font-size: 18px; font-weight: 800; color: var(--app-text); }
+.mob-menu-header-spacer { width: 36px; flex-shrink: 0; }
+
+.mob-menu-search {
+  display: flex; align-items: center; gap: 10px;
+  margin: 14px 16px 0;
+  padding: 12px 16px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+.mob-menu-search-icon { color: var(--app-text-muted); flex-shrink: 0; }
+.mob-menu-search-input {
+  flex: 1; min-width: 0;
+  background: none; border: none; outline: none;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--app-text);
+}
+.mob-menu-search-input::placeholder { color: var(--app-text-muted); }
+
+.mob-menu-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Painel cobre a tela inteira (inclusive atrás da bottom nav, que
+     fica visualmente por cima); esse padding garante que os últimos
+     cards fiquem acima do dock, não escondidos atrás dele. */
+  padding: 18px 16px 128px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.mob-menu-section { display: flex; flex-direction: column; gap: 12px; }
+.mob-menu-section-title {
+  font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--app-text-muted);
+}
+.mob-menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.mob-menu-card {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 6px;
+  padding: 10px 6px;
+  background: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  font-family: var(--font-body);
+  transition: background 0.12s, border-color 0.12s;
+}
+.mob-menu-card:active { background: var(--app-surface-soft); }
+.mob-menu-card-icon {
+  width: 34px; height: 34px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--pink-dim); color: var(--pink);
+}
+.mob-menu-card-label {
+  font-size: 10.5px; font-weight: 600;
+  color: var(--app-text);
+  text-align: center;
+  line-height: 1.2;
+}
+.mob-menu-empty { font-size: 13px; color: var(--app-text-muted); text-align: center; padding: 20px 0; }
+
+.theme-light .mob-menu-back { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-menu-search { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+.theme-light .mob-menu-card { background: #fff; box-shadow: 0 1px 3px rgba(12,12,18,0.06); }
+
+@media (max-width: 360px) {
+  .mob-menu-card { padding: 8px 4px; }
+  .mob-menu-card-icon { width: 30px; height: 30px; }
+  .mob-menu-card-label { font-size: 9.5px; }
+}
+

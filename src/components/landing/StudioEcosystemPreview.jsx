@@ -1,75 +1,82 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import {
+  ArrowRight, ChevronDown,
+  CreditCard, ReceiptText, CalendarDays, Bot, ShoppingBag, GraduationCap, Megaphone, PieChart,
+} from 'lucide-react'
 import Reveal from './Reveal'
 
-// "primary: true" marca os 4 módulos mostrados por padrão no mobile
-// (Studio Shop, Elisson.IA, Agenda, Conta Digital) — no desktop todos
-// os 8 continuam sempre visíveis, sem nenhuma alteração (ver CSS
-// escopado em @media max-width:640px). Nenhum módulo foi removido.
-// "mobileOrder" só reordena visualmente esses 4 cards no mobile (via
-// CSS order, escopado no mesmo breakpoint) — a ordem no array/desktop
-// não muda.
+// Ordem segue a narrativa da landing: Studio Shop, Elisson.IA, Agenda,
+// Conta Digital, Cobranças, Cursos, Tráfego, Relatórios — vale tanto
+// para o desktop (grid mostra os 8 nessa ordem) quanto para o mobile.
+// "primary: true" marca os 4 primeiros módulos, mostrados por padrão
+// no mobile (os outros 4 ficam atrás do botão "Ver mais recursos");
+// no desktop todos os 8 continuam sempre visíveis. Como esses 4 já são
+// os primeiros do array, a ordem visual no mobile sai correta sem
+// precisar de nenhum CSS "order" — só display:none nos não-primary.
 const modules = [
   {
-    id: 'conta-digital',
-    name: 'Conta Digital',
-    role: 'Receber e controlar',
-    text: 'Veja Pix, cobranças, entradas, saídas e quanto sobrou no mês.',
-    to: '/studio-core',
-    label: 'Ver Conta Digital',
+    name: 'Studio Shop',
+    role: 'Compre com inteligência',
+    text: 'Com Studio Pro você garante acesso a alguns dos melhores preços do Brasil!',
+    to: '/studio-shop',
+    label: 'Ver Studio Shop',
+    Icon: ShoppingBag,
     primary: true,
-    mobileOrder: 4,
-  },
-  {
-    name: 'Cobranças',
-    role: 'Cobrar sem improviso',
-    text: 'Crie cobranças, acompanhe pagamentos e reduza esquecimentos na rotina.',
-    to: '/studio-core',
-    label: 'Ver Cobranças',
-  },
-  {
-    name: 'Agenda',
-    role: 'Organizar horários',
-    text: 'Controle compromissos, lembretes e atendimentos em uma rotina mais clara.',
-    to: '/studio-agenda',
-    label: 'Ver Agenda',
-    primary: true,
-    mobileOrder: 3,
   },
   {
     name: 'Elisson.IA',
-    role: 'Atender no automático',
-    text: 'Confirma horários, envia lembretes e acompanha clientes pelo WhatsApp.',
+    role: 'Atenda mesmo enquanto tatua',
+    text: 'Tenha um assistente conectado à sua plataforma, controlando atendimentos, agenda e financeiro.',
     to: '/elison-ia',
     label: 'Ver Elisson.IA',
+    Icon: Bot,
     primary: true,
-    mobileOrder: 2,
   },
   {
-    name: 'Studio Shop',
-    role: 'Comprar melhor',
-    text: 'Acesse produtos, kits e condições especiais para reduzir custos do estúdio.',
-    to: '/studio-shop',
-    label: 'Ver Studio Shop',
+    name: 'Agenda',
+    role: 'Agenda sempre organizada',
+    text: 'Permita que seus clientes agendem horários online e mantenha total controle sobre sua rotina e compromissos.',
+    to: '/studio-agenda',
+    label: 'Ver Agenda',
+    Icon: CalendarDays,
     primary: true,
-    mobileOrder: 1,
+  },
+  {
+    id: 'conta-digital',
+    name: 'Conta Digital',
+    role: 'Receba sem complicação',
+    text: 'Receba com PIX, boleto, cartão e outros meios de pagamento. Controle entradas, saídas e acompanhe seu financeiro em um só lugar.',
+    to: '/studio-core',
+    label: 'Ver Conta Digital',
+    Icon: CreditCard,
+    primary: true,
+  },
+  {
+    name: 'Cobranças',
+    role: 'Cobranças no piloto automático',
+    text: 'Crie cobranças automáticas pelo WhatsApp e deixe o Studio Pay lembrar seus clientes por você.',
+    to: '/studio-core',
+    label: 'Ver Cobranças',
+    Icon: ReceiptText,
   },
   {
     id: 'cursos',
     name: 'Cursos',
-    role: 'Evoluir como profissional',
-    text: 'Conteúdos para melhorar técnica, venda, gestão e posicionamento.',
+    role: 'Aprenda com quem vive o mercado',
+    text: 'Tenha acesso a conteúdos exclusivos sobre técnica, vendas, gestão e posicionamento para acelerar o crescimento do seu estúdio.',
     to: '/studio-learn',
     label: 'Ver Cursos',
+    Icon: GraduationCap,
   },
   {
     id: 'trafego',
     name: 'Tráfego',
-    role: 'Atrair mais clientes',
-    text: 'Campanhas, criativos e relatórios para transformar agenda vazia em oportunidade.',
+    role: 'Mais clientes, com menos custo',
+    text: 'Studio Pay subsidia até 50% dos custos com gestão de tráfego durante 3 meses, dentro da plataforma.',
     to: '/studio-ads',
     label: 'Ver Tráfego',
+    Icon: Megaphone,
   },
   {
     name: 'Relatórios',
@@ -77,6 +84,7 @@ const modules = [
     text: 'Acompanhe números importantes da operação e entenda melhor o crescimento do estúdio.',
     to: '/studio-core',
     label: 'Ver Relatórios',
+    Icon: PieChart,
   },
 ]
 
@@ -120,12 +128,11 @@ export default function StudioEcosystemPreview() {
 
         <div className={`ecosystem-grid${expanded ? ' ecosystem-grid-expanded' : ''}`}>
           {modules.map((mod, i) => (
-            <Reveal
-              key={mod.name}
-              delay={120 + i * 40}
-              className={mod.mobileOrder ? `ecosystem-reveal-order-${mod.mobileOrder}` : undefined}
-            >
+            <Reveal key={mod.name} delay={120 + i * 40}>
               <div className={`ecosystem-card${mod.primary ? ' ecosystem-card-primary' : ''}`} id={mod.id}>
+                <span className="ecosystem-card-icon" aria-hidden="true">
+                  <mod.Icon size={22} strokeWidth={1.8} />
+                </span>
                 <div className="ecosystem-card-head">
                   <p className="ecosystem-card-name">{mod.name}</p>
                   <p className="ecosystem-card-role">{mod.role}</p>
@@ -154,7 +161,7 @@ export default function StudioEcosystemPreview() {
 
         <Reveal delay={380}>
           <p className="ecosystem-footer-note">
-            Comece por onde mais pesa hoje. O resto se conecta.
+            Comece por onde mais pesa hoje. <span className="landing-accent">O resto se conecta.</span>
           </p>
         </Reveal>
       </div>

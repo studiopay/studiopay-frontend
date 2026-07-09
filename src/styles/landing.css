@@ -1003,8 +1003,8 @@
 }
 .ecosystem-card {
   width: 100%;
-  padding: 22px 20px;
-  background: rgba(255,255,255,0.022);
+  padding: 26px 22px;
+  background: linear-gradient(165deg, rgba(255,255,255,0.032) 0%, rgba(255,255,255,0.014) 100%);
   border: 1px solid var(--border);
   border-radius: 18px;
   display: flex;
@@ -1014,39 +1014,56 @@
   backdrop-filter: blur(6px);
   transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
-.ecosystem-card:hover {
-  background: rgba(255,255,255,0.045);
-  border-color: rgba(255,46,209,0.32);
-  transform: translateY(-2px);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 14px 32px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,46,209,0.08), 0 10px 32px rgba(255,46,209,0.09);
+@media (hover: hover) {
+  .ecosystem-card:hover {
+    background: linear-gradient(165deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.024) 100%);
+    border-color: rgba(255,46,209,0.32);
+    transform: translateY(-2px);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.04), 0 14px 32px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,46,209,0.08), 0 10px 32px rgba(255,46,209,0.09);
+  }
 }
 .landing.theme-light .ecosystem-card { box-shadow: 0 12px 28px rgba(11,11,14,0.07); }
 .landing.theme-light .ecosystem-card:hover { box-shadow: 0 12px 28px rgba(11,11,14,0.07), 0 10px 32px rgba(255,46,209,0.08); }
+/* Ícone grande em rosa, quadrado arredondado com borda rosa — topo
+   esquerdo do card, mais presente que o antigo texto solto. */
+.ecosystem-card-icon {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 14px;
+  border: 1.5px solid rgba(255,46,209,0.3);
+  background: rgba(255,46,209,0.07);
+  color: var(--pink);
+  margin-bottom: 16px;
+}
 .ecosystem-card-head {
   margin-bottom: 12px;
 }
 .ecosystem-card-name {
   font-family: var(--font-body);
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   color: var(--text-primary);
-  line-height: 1.2;
+  line-height: 1.25;
   margin: 0 0 4px;
 }
 .ecosystem-card-role {
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
   color: var(--pink);
   margin: 0;
-  opacity: 0.82;
+  opacity: 0.9;
   letter-spacing: 0.1px;
 }
 .ecosystem-card-text {
   font-size: 13px;
   color: var(--text-secondary);
-  line-height: 1.65;
+  line-height: 1.7;
   flex: 1;
-  margin: 0 0 14px;
+  margin: 0 0 16px;
 }
 .ecosystem-card-link {
   display: inline-flex;
@@ -1074,6 +1091,15 @@
   font-weight: 500;
   margin-top: 30px;
   opacity: 0.72;
+}
+/* "O resto se conecta." só muda de cor — mesma fonte/peso/tamanho do
+   resto da frase (evita o mesmo problema já corrigido nas headlines). */
+.ecosystem-footer-note .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 
 .system-list {
@@ -2197,7 +2223,15 @@
   .ecosystem-title-line1 { white-space: normal; }
   .ecosystem-header .section-sub { font-size: 14px; max-width: 340px; }
   .ecosystem-grid { grid-template-columns: 1fr; gap: 12px; }
-  .ecosystem-card { padding: 18px 18px; }
+  /* Cards mais compactos no mobile — menos padding vertical e menos
+     respiro entre ícone/título/subtítulo/texto/CTA, sem reduzir fonte
+     nem prejudicar a leitura. Ícone continua grande (40px). Desktop
+     não é afetado (regras só existem dentro deste breakpoint). */
+  .ecosystem-card { padding: 16px 16px; }
+  .ecosystem-card-icon { width: 40px; height: 40px; margin-bottom: 8px; }
+  .ecosystem-card-head { margin-bottom: 6px; }
+  .ecosystem-card-name { margin: 0 0 2px; }
+  .ecosystem-card-text { margin: 0 0 10px; line-height: 1.55; }
   .ecosystem-flow { gap: 8px 6px; margin-bottom: 24px; }
   .ecosystem-flow-arrow { display: none; }
   .ecosystem-flow-step { font-size: 11px; padding: 6px 13px; }
@@ -2239,14 +2273,6 @@
      atrás do botão "Ver mais recursos". Desktop não é afetado (regra só
      existe dentro deste breakpoint). Nenhum módulo é removido do DOM. */
   .ecosystem-grid:not(.ecosystem-grid-expanded) .ecosystem-card:not(.ecosystem-card-primary) { display: none; }
-  /* Ordem só no mobile: Studio Shop, Elisson.IA, Agenda, Conta Digital —
-     via CSS order no wrapper .reveal (item real da grid), sem reordenar
-     o array/DOM. Desktop mantém a ordem original da grid (order:0 fora
-     deste breakpoint). */
-  .ecosystem-reveal-order-1 { order: 1; }
-  .ecosystem-reveal-order-2 { order: 2; }
-  .ecosystem-reveal-order-3 { order: 3; }
-  .ecosystem-reveal-order-4 { order: 4; }
   .ecosystem-more-btn {
     display: flex;
     align-items: center;

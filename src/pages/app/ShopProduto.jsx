@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import {
   ArrowLeft, ChevronRight, Heart, ShoppingCart,
   Shield, Truck, Check, Star, Minus, Plus,
+  Package, Trash2, Clock, X,
 } from 'lucide-react'
+import { useShopCart } from '@/hooks/useShopCart'
 
 // ─────────────────────────────────────
 // DADOS MOCK
@@ -22,6 +24,19 @@ const PRODUTOS_MAP = {
 
 function fmt(v) {
   return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+}
+
+// Array derivado de PRODUTOS_MAP (mesmos ids 1–8 do catálogo em
+// Shop.jsx) só para o hook de carrinho conseguir resolver nome/preço
+// de qualquer item, mesmo os adicionados a partir da listagem mobile.
+const PRODUTOS_ARRAY = Object.entries(PRODUTOS_MAP).map(([pid, p]) => ({ id: Number(pid), ...p }))
+
+// Placeholder premium para item do carrinho sem imagem — ícone +
+// fundo escuro/gradiente sutil, sem bloco colorido genérico.
+function CartItemMedia({ produto }) {
+  return produto.imagem
+    ? <img src={produto.imagem} alt={produto.nome} className="mob-shop-cart-item-img" />
+    : <Package size={18} strokeWidth={1.6} className="mob-shop-media-icon" />
 }
 
 // ─────────────────────────────────────
@@ -59,16 +74,75 @@ export default function ShopProduto() {
     ? Math.round((produto.preco + produto.precoPro) / 2 * 100) / 100
     : null
 
+  // Id numérico real do produto exibido (mesmo fallback do "base"
+  // acima, para o carrinho sempre corresponder ao que está na tela).
+  const produtoId = PRODUTOS_MAP[id] ? Number(id) : 1
+
   const [fotoAtiva, setFotoAtiva] = useState(0)
   const [corAtiva, setCorAtiva]   = useState(0)
   const [qtd, setQtd]             = useState(1)
   const [fav, setFav]             = useState(false)
+
+  // Carrinho local — MESMO hook/chave (studiopay_shop_cart) usado
+  // pela listagem mobile (MobileShopPage.jsx), então um item
+  // adicionado aqui aparece lá e vice-versa. Sem backend/checkout real.
+  const {
+    items: cartItems,
+    addItem,
+    increment,
+    decrement,
+    removeItem,
+    totalQuantity,
+    subtotal,
+    savings,
+  } = useShopCart(PRODUTOS_ARRAY)
+  const [showCart, setShowCart] = useState(false)
+  const [checkoutNotice, setCheckoutNotice] = useState(false)
+  const [toast, setToast] = useState('')
+
+  useEffect(() => {
+    if (!toast) return
+    const t = setTimeout(() => setToast(''), 1800)
+    return () => clearTimeout(t)
+  }, [toast])
+
+  function handleAddToCart() {
+    addItem(produtoId, qtd)
+    setToast('Adicionado ao carrinho')
+  }
+  function handleBuyNow() {
+    addItem(produtoId, qtd)
+    setCheckoutNotice(false)
+    setShowCart(true)
+  }
+  function openCart() {
+    setCheckoutNotice(false)
+    setShowCart(true)
+  }
+  function closeCart() {
+    setShowCart(false)
+    setCheckoutNotice(false)
+  }
 
   const FOTOS = 4
   const CORES_CSS = ['#1a1a2e', '#2c2c2e', '#4a1942', '#1c3a1c']
 
   return (
     <div className="animate-fade-in shop2-prod-page">
+
+      {/* ── Carrinho — ícone discreto flutuante (a página não tinha
+          nenhum acesso a carrinho antes). Mesmo carrinho local usado
+          pela listagem mobile; não altera o layout existente abaixo,
+          só sobrepõe um botão pequeno com badge. ── */}
+      <button
+        type="button"
+        className="mob-shop-prod-cart-btn"
+        onClick={openCart}
+        aria-label={`Carrinho: ${totalQuantity} ${totalQuantity === 1 ? 'item' : 'itens'}`}
+      >
+        <ShoppingCart size={17} />
+        {totalQuantity > 0 && <span className="mob-shop-cart-badge">{totalQuantity}</span>}
+      </button>
 
       {/* ── Breadcrumb ──────────────────────────────── */}
       <nav className="shop2-prod-bc">
@@ -236,12 +310,13 @@ export default function ShopProduto() {
             </div>
           </div>
 
-          {/* Ações */}
+          {/* Ações — mesmo carrinho local (useShopCart) da listagem
+              mobile; quantidade selecionada acima (qtd) é respeitada. */}
           <div className="shop2-prod-actions">
-            <button className="shop2-prod-buy">
+            <button className="shop2-prod-buy" onClick={handleBuyNow}>
               <ShoppingCart size={16} /> Comprar agora
             </button>
-            <button className="shop2-prod-add">
+            <button className="shop2-prod-add" onClick={handleAddToCart}>
               Adicionar ao carrinho
             </button>
           </div>
@@ -268,6 +343,20 @@ export default function ShopProduto() {
         </div>
       </div>
 
+      {/* ── Barra fixa de compra — só mobile (CSS esconde as ações
+          inline em .shop2-prod-actions abaixo de 768px e mostra esta
+          barra no lugar); no desktop nada muda, .shop2-prod-actions
+          continua visível exatamente como antes. Mesmos handlers,
+          respeita a quantidade (qtd) selecionada acima. ── */}
+      <div className="mob-shop-prod-buybar">
+        <button className="mob-shop-add-btn" onClick={handleAddToCart}>
+          Adicionar ao carrinho
+        </button>
+        <button className="mob-charges-cta mob-shop-detail-cta" onClick={handleBuyNow}>
+          <ShoppingCart size={15} /> Comprar agora
+        </button>
+      </div>
+
       {/* ── Detalhes e features ─────────────────────── */}
       <div className="shop2-prod-details">
         <div className="card" style={{ padding: 24 }}>
@@ -286,6 +375,100 @@ export default function ShopProduto() {
           </div>
         </div>
       </div>
+
+      {/* ── Bottom sheet do carrinho — mesmo carrinho local (useShopCart,
+          chave "studiopay_shop_cart") da listagem mobile, sem
+          API/banco/checkout real. Reaproveita as classes genéricas de
+          bottom sheet e de item de carrinho já usadas em
+          MobileShopPage.jsx, sem duplicar CSS. ── */}
+      {showCart && (
+        <div className="mob-charges-detail-overlay" onClick={closeCart}>
+          <div className="mob-charges-detail-sheet" onClick={(e) => e.stopPropagation()}>
+            <div className="mob-charges-detail-handle" />
+            <div className="mob-charges-detail-head">
+              <p className="mob-charges-detail-client">Carrinho</p>
+              <button className="mob-charges-detail-close" onClick={closeCart} aria-label="Fechar">
+                <X size={18} />
+              </button>
+            </div>
+
+            {checkoutNotice ? (
+              <div className="mob-shop-checkout-notice">
+                <span className="mob-shop-checkout-notice-icon"><Clock size={20} /></span>
+                <p className="mob-shop-checkout-notice-title">Finalização em breve</p>
+                <p className="mob-shop-checkout-notice-text">
+                  O checkout do Studio Shop será conectado ao fluxo oficial de compra.
+                </p>
+                <button className="mob-charges-cta mob-shop-checkout-back" onClick={closeCart}>
+                  Entendi
+                </button>
+              </div>
+            ) : cartItems.length > 0 ? (
+              <>
+                <div className="mob-shop-cart-items">
+                  {cartItems.map(({ id: itemId, qty, product }) => (
+                    <div key={itemId} className="mob-shop-cart-item">
+                      <div className="mob-shop-cart-item-media">
+                        <CartItemMedia produto={product} />
+                      </div>
+                      <div className="mob-shop-cart-item-body">
+                        <p className="mob-shop-cart-item-nome">{product.nome}</p>
+                        <p className="mob-shop-cart-item-preco">{fmt(product.precoPro ?? product.preco)}</p>
+                        <div className="mob-shop-cart-item-row">
+                          <div className="mob-shop-qty-control mob-shop-qty-control-sm">
+                            <button type="button" className="mob-shop-qty-btn" onClick={() => decrement(itemId)} aria-label="Diminuir quantidade">
+                              <Minus size={12} />
+                            </button>
+                            <span className="mob-shop-qty-value">{qty}</span>
+                            <button type="button" className="mob-shop-qty-btn" onClick={() => increment(itemId)} aria-label="Aumentar quantidade">
+                              <Plus size={12} />
+                            </button>
+                          </div>
+                          <button type="button" className="mob-shop-cart-item-remove" onClick={() => removeItem(itemId)} aria-label={`Remover ${product.nome}`}>
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mob-charges-detail-rows">
+                  <div className="mob-charges-detail-row">
+                    <span>Itens</span>
+                    <span className="mob-charges-detail-row-value">{totalQuantity}</span>
+                  </div>
+                  {savings > 0 && (
+                    <div className="mob-charges-detail-row">
+                      <span>Economia total</span>
+                      <span className="mob-charges-status green">{fmt(savings)}</span>
+                    </div>
+                  )}
+                  <div className="mob-charges-detail-row">
+                    <span>Subtotal</span>
+                    <span className="mob-charges-detail-row-value mob-shop-cart-subtotal">{fmt(subtotal)}</span>
+                  </div>
+                </div>
+
+                <div className="mob-shop-detail-actions">
+                  <button className="mob-shop-add-btn" onClick={closeCart}>Continuar comprando</button>
+                  <button className="mob-charges-cta mob-shop-detail-cta" onClick={() => setCheckoutNotice(true)}>
+                    Finalizar pedido
+                  </button>
+                </div>
+              </>
+            ) : (
+              <div className="mob-charges-empty mob-shop-cart-empty">
+                <p className="mob-charges-empty-title">Seu carrinho está vazio</p>
+                <p className="mob-charges-empty-text">Adicione produtos do Studio Shop para continuar.</p>
+                <button className="mob-charges-cta" onClick={closeCart}>Ver produtos</button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {toast && <div className="mob-shop-toast">{toast}</div>}
 
     </div>
   )

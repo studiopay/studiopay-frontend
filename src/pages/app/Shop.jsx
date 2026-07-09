@@ -4,6 +4,7 @@ import {
   Heart, ShoppingCart, ChevronDown, ArrowRight,
   CheckCheck, Info,
 } from 'lucide-react'
+import MobileShopPage from '@/components/dashboard/MobileShopPage'
 
 // ─────────────────────────────────────
 // CATEGORIAS
@@ -147,7 +148,20 @@ export default function Shop() {
   const openCatDef = SHOP_CATS.find(c => c.value === openDrop)
 
   return (
-    <div className="shop-page animate-fade-in">
+    <div className="animate-fade-in">
+
+      {/* ── Shop mobile (estilo app financeiro) ──────
+          Visível apenas abaixo de 768px. O bloco desktop/tablet
+          abaixo permanece 100% intocado, apenas oculto nesse
+          mesmo breakpoint. Reaproveita a mesma lista de produtos
+          (incluindo override de admin) já usada pelo catálogo
+          desktop — sem mock desconectado. ── */}
+      <div className="hide-desktop">
+        <MobileShopPage products={PRODUTOS_EFETIVOS} />
+      </div>
+
+      {/* ── Shop desktop/tablet (layout atual) ──────── */}
+      <div className="shop-page hide-mobile">
 
       {/* ── 1. HERO ─────────────────────────────────── */}
       <div className="shop2-hero">
@@ -412,6 +426,7 @@ export default function Shop() {
         <p>Produtos, preços e condições são demonstrativos neste protótipo e podem variar conforme parceiros, estoque e disponibilidade.</p>
       </div>
 
+      </div>
     </div>
   )
 }

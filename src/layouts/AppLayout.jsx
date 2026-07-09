@@ -9,7 +9,7 @@ import { useTheme } from '@/hooks/useTheme'
 // Rotas que já têm seu próprio header mobile (ex.: MobileDashboardHome),
 // então a Topbar padrão fica redundante no mobile só nessas telas.
 // No desktop a Topbar continua sempre visível, sem exceção.
-const MOBILE_OWN_HEADER_ROUTES = ['/app/dashboard', '/app/cobrancas', '/app/agenda']
+const MOBILE_OWN_HEADER_ROUTES = ['/app/dashboard', '/app/cobrancas', '/app/agenda', '/app/shop']
 
 export default function AppLayout() {
   const isAuth = localStorage.getItem('studioPayAuth') === 'true' || !!localStorage.getItem('studiopay_user')

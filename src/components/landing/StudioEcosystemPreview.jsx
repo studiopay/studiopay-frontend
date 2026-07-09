@@ -1,7 +1,15 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, ChevronDown } from 'lucide-react'
 import Reveal from './Reveal'
 
+// "primary: true" marca os 4 módulos mostrados por padrão no mobile
+// (Studio Shop, Elisson.IA, Agenda, Conta Digital) — no desktop todos
+// os 8 continuam sempre visíveis, sem nenhuma alteração (ver CSS
+// escopado em @media max-width:640px). Nenhum módulo foi removido.
+// "mobileOrder" só reordena visualmente esses 4 cards no mobile (via
+// CSS order, escopado no mesmo breakpoint) — a ordem no array/desktop
+// não muda.
 const modules = [
   {
     id: 'conta-digital',
@@ -10,6 +18,8 @@ const modules = [
     text: 'Veja Pix, cobranças, entradas, saídas e quanto sobrou no mês.',
     to: '/studio-core',
     label: 'Ver Conta Digital',
+    primary: true,
+    mobileOrder: 4,
   },
   {
     name: 'Cobranças',
@@ -24,6 +34,8 @@ const modules = [
     text: 'Controle compromissos, lembretes e atendimentos em uma rotina mais clara.',
     to: '/studio-agenda',
     label: 'Ver Agenda',
+    primary: true,
+    mobileOrder: 3,
   },
   {
     name: 'Elisson.IA',
@@ -31,6 +43,8 @@ const modules = [
     text: 'Confirma horários, envia lembretes e acompanha clientes pelo WhatsApp.',
     to: '/elison-ia',
     label: 'Ver Elisson.IA',
+    primary: true,
+    mobileOrder: 2,
   },
   {
     name: 'Studio Shop',
@@ -38,6 +52,8 @@ const modules = [
     text: 'Acesse produtos, kits e condições especiais para reduzir custos do estúdio.',
     to: '/studio-shop',
     label: 'Ver Studio Shop',
+    primary: true,
+    mobileOrder: 1,
   },
   {
     id: 'cursos',
@@ -67,6 +83,10 @@ const modules = [
 const flowSteps = ['Captar', 'Atender', 'Agendar', 'Cobrar', 'Receber', 'Comprar', 'Evoluir']
 
 export default function StudioEcosystemPreview() {
+  // Só tem efeito no mobile (ver @media max-width:640px em landing.css) —
+  // no desktop a grid sempre mostra os 8 módulos, sem depender deste estado.
+  const [expanded, setExpanded] = useState(false)
+
   return (
     <section className="ecosystem-section" id="ecossistema">
       <div className="container">
@@ -98,10 +118,14 @@ export default function StudioEcosystemPreview() {
           </div>
         </Reveal>
 
-        <div className="ecosystem-grid">
+        <div className={`ecosystem-grid${expanded ? ' ecosystem-grid-expanded' : ''}`}>
           {modules.map((mod, i) => (
-            <Reveal key={mod.name} delay={120 + i * 40}>
-              <div className="ecosystem-card" id={mod.id}>
+            <Reveal
+              key={mod.name}
+              delay={120 + i * 40}
+              className={mod.mobileOrder ? `ecosystem-reveal-order-${mod.mobileOrder}` : undefined}
+            >
+              <div className={`ecosystem-card${mod.primary ? ' ecosystem-card-primary' : ''}`} id={mod.id}>
                 <div className="ecosystem-card-head">
                   <p className="ecosystem-card-name">{mod.name}</p>
                   <p className="ecosystem-card-role">{mod.role}</p>
@@ -114,6 +138,19 @@ export default function StudioEcosystemPreview() {
             </Reveal>
           ))}
         </div>
+
+        {/* Só aparece no mobile (display:none por padrão, mostrado só em
+            @media max-width:640px) — no desktop os 8 módulos já ficam
+            sempre visíveis na grid acima. */}
+        <button
+          type="button"
+          className="ecosystem-more-btn"
+          onClick={() => setExpanded((v) => !v)}
+          aria-expanded={expanded}
+        >
+          {expanded ? 'Ver menos' : 'Ver mais recursos'}
+          <ChevronDown size={16} className={`ecosystem-more-btn-icon${expanded ? ' open' : ''}`} />
+        </button>
 
         <Reveal delay={380}>
           <p className="ecosystem-footer-note">

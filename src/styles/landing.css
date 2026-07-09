@@ -1063,6 +1063,10 @@
   color: var(--text-primary);
   gap: 7px;
 }
+/* Botão "Ver mais recursos" — só existe visualmente no mobile (ver
+   @media max-width:640px); no desktop/tablet fica sempre oculto e os
+   8 módulos continuam 100% visíveis, sem nenhuma mudança. */
+.ecosystem-more-btn { display: none; }
 .ecosystem-footer-note {
   text-align: center;
   color: var(--text-primary);
@@ -2218,14 +2222,56 @@
   .why-grid { grid-template-columns: 1fr; }
   .why-header { max-width: 100%; margin-bottom: 34px; }
   .why-header .section-label { font-size: 10px; padding: 5px 13px; margin-bottom: 16px; }
-  .why-header .section-title { font-size: clamp(24px, 7.5vw, 30px); line-height: 1.18; }
-  .why-title-line1 { white-space: normal; }
+  /* Fonte reduzida + nowrap na 1ª linha: evita "para" isolado numa 3ª
+     linha (ex.: "Ecossistema completo" / "para" / "estúdios
+     profissionais."). Tamanho calibrado com folga para não estourar a
+     largura da tela em 360-430px (sem overflow horizontal). */
+  .why-header .section-title { font-size: clamp(19px, 5.4vw, 25px); line-height: 1.22; letter-spacing: -0.015em; }
+  .why-title-line1 { white-space: nowrap; }
   .why-header .section-sub { font-size: 14px; max-width: 340px; }
   .why-grid { gap: 12px; }
   .why-card { padding: 22px 18px 16px; gap: 10px; }
   .why-card-icon { width: 38px; height: 38px; }
   .why-card-title { font-size: 15.5px; }
   .why-card-text { font-size: 13.5px; }
+  /* Ecossistema (seção 3) — mobile mostra só os 4 módulos principais
+     (Studio Shop, Elisson.IA, Agenda, Conta Digital); os outros 4 ficam
+     atrás do botão "Ver mais recursos". Desktop não é afetado (regra só
+     existe dentro deste breakpoint). Nenhum módulo é removido do DOM. */
+  .ecosystem-grid:not(.ecosystem-grid-expanded) .ecosystem-card:not(.ecosystem-card-primary) { display: none; }
+  /* Ordem só no mobile: Studio Shop, Elisson.IA, Agenda, Conta Digital —
+     via CSS order no wrapper .reveal (item real da grid), sem reordenar
+     o array/DOM. Desktop mantém a ordem original da grid (order:0 fora
+     deste breakpoint). */
+  .ecosystem-reveal-order-1 { order: 1; }
+  .ecosystem-reveal-order-2 { order: 2; }
+  .ecosystem-reveal-order-3 { order: 3; }
+  .ecosystem-reveal-order-4 { order: 4; }
+  .ecosystem-more-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    max-width: 280px;
+    margin: 6px auto 0;
+    padding: 12px 20px;
+    border-radius: 9999px;
+    border: 1px solid rgba(255,46,209,0.22);
+    background: rgba(255,46,209,0.05);
+    color: var(--pink);
+    font-size: 13px;
+    font-weight: 700;
+    font-family: var(--font-body);
+    cursor: pointer;
+  }
+  .ecosystem-more-btn-icon { transition: transform 0.2s ease; }
+  .ecosystem-more-btn-icon.open { transform: rotate(180deg); }
+  /* Studio Shop (teaser na landing) — mostra no máximo 3 cards de
+     produto no mobile, mesmo se o Admin cadastrar mais; o catálogo
+     completo continua só dentro da página /studio-shop. Desktop
+     continua mostrando todos os cards configurados, sem alteração. */
+  .shop-showcase > .reveal:nth-child(n+4) { display: none; }
   .shop-showcase { border-radius: 20px; }
   .shop-showcase-card { min-height: auto; padding: 16px 16px; gap: 12px; }
   .shop-product-media { height: 128px; border-radius: 18px; }
@@ -2240,9 +2286,11 @@
 .elison-chat-bubble p { font-size: 13px; }
 .elison-step-tabs { grid-template-columns: 1fr; max-width: 330px; }
   .elison-step-tab { min-height: 44px; }
-  .demo-gif-section { padding: 64px 0 78px; }
+  .demo-gif-section { padding: 48px 0 56px; }
   .demo-gif-media { max-width: 100%; padding: 5px; border-radius: 20px; }
-  .demo-gif-frame { aspect-ratio: 4 / 3; border-radius: 16px; }
+  /* Proporção mais baixa que o 4:3 anterior — reduz a altura visual do
+     mockup no mobile sem cortar mais da imagem (mesmo object-fit). */
+  .demo-gif-frame { aspect-ratio: 16 / 10; border-radius: 16px; }
   .demo-gif-img { object-fit: cover; border-radius: 16px; }
   .demo-gif-fallback { border-radius: 16px; }
   .system-item { align-items: flex-start; gap: 12px; }
@@ -6491,11 +6539,19 @@
   .core-preview-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 640px) {
-  .core-preview-section { padding: 64px 0 40px; }
-  .core-preview-panel { padding: 20px; border-radius: 20px; margin-top: 32px; }
-  .core-preview-panel-head { flex-direction: column; gap: 2px; margin-bottom: 20px; padding-bottom: 16px; }
+  .core-preview-section { padding: 56px 0 40px; }
+  .core-preview-panel { padding: 20px; border-radius: 20px; margin-top: 24px; }
+  .core-preview-panel-head { flex-direction: column; gap: 2px; margin-bottom: 16px; padding-bottom: 14px; }
+  .core-preview-block { margin-bottom: 16px; }
   .core-preview-row { padding: 10px 12px; gap: 10px; }
-  .core-preview-pill { margin-top: 28px; padding: 12px 20px; font-size: 13px; }
+  /* Menos linhas no mobile — mantém só as 2 movimentações e os 2
+     números mais relevantes (recebido / a receber) para não deixar o
+     mockup grande/cheio demais; a mensagem principal (receber, cobrar
+     e acompanhar o dinheiro em um só lugar) continua na headline.
+     Desktop/tablet continuam mostrando as 4 linhas completas. */
+  .core-preview-rows .core-preview-row:nth-child(n+3) { display: none; }
+  .core-preview-summary-item:nth-child(n+3) { display: none; }
+  .core-preview-pill { margin-top: 22px; padding: 12px 20px; font-size: 13px; }
 }
 
 /* ─── New Footer ─────────────────────────────────────────── */

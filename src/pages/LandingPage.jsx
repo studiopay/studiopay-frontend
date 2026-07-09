@@ -21,10 +21,10 @@ export default function LandingPage() {
         <PillsMarquee />
         <WhyStudioPaySection />
         <StudioEcosystemPreview />
-        <CoreDigitalPreviewSection />
         <PainSection />
         <ElisonPreviewSection />
         <DemoGifSection />
+        <CoreDigitalPreviewSection />
         <PlansSection compact />
       </div>
       <Footer />

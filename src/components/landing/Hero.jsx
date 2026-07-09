@@ -16,12 +16,12 @@ export default function Hero() {
           <p className="hero-eyebrow">Feito pra quem vive da tatuagem.</p>
 
           <h1 className="hero-title">
-            Tatuador, seu estúdio<br className="hero-title-break" />{' '}
-            também é uma <span className="landing-accent">empresa.</span>
+            Tatuador, transforme seu estúdio<br className="hero-title-break" />{' '}
+            em uma <span className="landing-accent">máquina de resultados.</span>
           </h1>
 
           <p className="hero-subtitle">
-            Com o Studio Pay, você organiza agenda, cobranças, clientes e financeiro em um só lugar — para vender mais e perder menos tempo.
+            Oferecemos tudo o que seu estúdio precisa para crescer de forma profissional.
           </p>
 
           <div className="hero-actions">

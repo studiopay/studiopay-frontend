@@ -64,7 +64,7 @@ const modules = [
   },
 ]
 
-const flowSteps = ['Receber', 'Organizar', 'Atender', 'Comprar', 'Crescer']
+const flowSteps = ['Captar', 'Atender', 'Agendar', 'Cobrar', 'Receber', 'Comprar', 'Evoluir']
 
 export default function StudioEcosystemPreview() {
   return (
@@ -72,12 +72,15 @@ export default function StudioEcosystemPreview() {
       <div className="container">
         <Reveal>
           <div className="section-header-center ecosystem-header">
-            <span className="section-label">Ecossistema</span>
+            <span className="section-label">ECOSSISTEMA</span>
             <h2 className="section-title">
-              Uma operação inteira para o seu estúdio.
+              <span className="ecosystem-title-line1">Toda a operação do seu estúdio</span><br className="ecosystem-title-break" />
+              <span className="landing-accent">em um só lugar.</span>
             </h2>
             <p className="section-sub">
-              Do financeiro ao crescimento, cada módulo do Studio Pay cuida de uma parte da rotina.
+              Da captação de clientes ao pós-tatuagem, o Studio Pay conecta atendimento,{' '}
+              <strong>agenda, pagamentos, compras, marketing e gestão</strong> para que você tenha mais
+              controle e foque no que realmente importa: <strong>tatuar e crescer.</strong>
             </p>
           </div>
         </Reveal>

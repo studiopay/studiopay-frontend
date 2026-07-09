@@ -1,21 +1,21 @@
-import { CalendarCheck, BellOff, Gauge } from 'lucide-react'
+import { MessageCircle, CreditCard, BarChart3 } from 'lucide-react'
 import Reveal from './Reveal'
 
 const positioningCards = [
   {
-    Icon: CalendarCheck,
-    title: 'Feito para tatuadores',
-    text: 'Pensado para quem agenda, atende, cobra, compra material e ainda precisa cuidar do crescimento do estúdio.',
+    Icon: MessageCircle,
+    title: 'Não pare de tatuar\npara responder clientes.',
+    text: 'O Elisson.IA atende, responde dúvidas,\nenvia orçamentos e agenda horários\nenquanto você foca no que faz de melhor.',
   },
   {
-    Icon: BellOff,
-    title: 'Menos improviso',
-    text: 'Chega de depender só de conversa perdida, anotação solta e planilha esquecida.',
+    Icon: CreditCard,
+    title: 'Venda mais com\npagamentos profissionais.',
+    text: 'Ofereça PIX, boleto e cartão de crédito.\nFacilite o pagamento para o cliente\ne receba com mais segurança.',
   },
   {
-    Icon: Gauge,
-    title: 'Mais controle',
-    text: 'Você acompanha clientes, cobranças, agenda e financeiro em uma rotina mais clara.',
+    Icon: BarChart3,
+    title: 'Controle clientes,\nagenda e financeiro.',
+    text: 'Tenha uma visão completa do seu estúdio.\nOrganize sua agenda, acompanhe clientes\ne saiba exatamente o que entra e o que sai.',
   },
 ]
 
@@ -25,12 +25,14 @@ export default function WhyStudioPaySection() {
       <div className="container">
         <Reveal>
           <div className="section-header-center why-header">
-            <span className="section-label">Por que o Studio Pay existe</span>
+            <span className="section-label">TUDO EM UM SÓ LUGAR</span>
             <h2 className="section-title">
-              Criado para a rotina real do <span className="landing-accent">tatuador.</span>
+              <span className="why-title-line1">Ecossistema completo para</span><br className="why-title-break" />
+              <span className="landing-accent">estúdios profissionais.</span>
             </h2>
             <p className="section-sub">
-              O Studio Pay nasceu para ajudar tatuadores a tratarem o estúdio como um negócio de verdade: com agenda organizada, cobranças no lugar, clientes acompanhados e clareza sobre o dinheiro que entra e sai.
+              Venda mais, organize sua rotina e tenha controle total
+              do seu estúdio em uma única plataforma.
             </p>
           </div>
         </Reveal>
@@ -40,10 +42,25 @@ export default function WhyStudioPaySection() {
             <Reveal key={title} delay={i * 100}>
               <div className="why-card">
                 <span className="why-card-icon" aria-hidden="true">
-                  <Icon size={17} strokeWidth={1.8} />
+                  <Icon size={18} strokeWidth={1.8} />
                 </span>
-                <h3 className="why-card-title">{title}</h3>
-                <p className="why-card-text">{text}</p>
+                <h3 className="why-card-title">
+                  {title.split('\n').map((line, li, lines) => (
+                    <span key={li} className={li === lines.length - 1 ? 'why-card-title-accent' : undefined}>
+                      {line}
+                      {li < lines.length - 1 && <br />}
+                    </span>
+                  ))}
+                </h3>
+                <span className="why-card-divider" aria-hidden="true" />
+                <p className="why-card-text">
+                  {text.split('\n').map((line, li) => (
+                    <span key={li}>
+                      {line}
+                      {li < text.split('\n').length - 1 && <br />}
+                    </span>
+                  ))}
+                </p>
               </div>
             </Reveal>
           ))}

@@ -1385,6 +1385,17 @@
 .plans-note { margin-top: 26px; max-width: 640px; margin-left: auto; margin-right: auto; }
 .plans-note-inner { padding: 0; background: transparent; border: none; text-align: center; font-size: 13.5px; color: var(--text-secondary); line-height: 1.7; }
 .plans-note-inner strong { color: var(--text-primary); }
+/* "clientes" (headline) e "estrutura profissional" (nota final) só
+   mudam de cor — mesma fonte/peso/tamanho do resto da frase (evita o
+   mesmo problema já corrigido nas outras seções da landing). */
+.plans-section .section-title .landing-accent,
+.plans-footer-note .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
 .plans-footer-note {
   margin: 32px auto 0;
   text-align: center;
@@ -1491,6 +1502,15 @@
   pointer-events: none;
 }
 .footer-cta-title { font-size: clamp(28px, 4vw, 46px); font-family: var(--font-body); font-weight: 800; margin-bottom: 16px; position: relative; color: #F8F9FB; }
+/* "organiza." só muda de cor — mesma fonte/peso/tamanho do resto da
+   headline (evita o mesmo problema já corrigido em outras seções). */
+.footer-cta-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
 .footer-cta-sub { font-size: 16px; color: rgba(248,249,251,0.55); max-width: 460px; margin: 0 auto 36px; position: relative; line-height: 1.75; }
 .footer-module-nav-wrap {
   padding: 0 0 34px;
@@ -1551,6 +1571,15 @@
 }
 .elison-preview-copy .section-sub {
   max-width: 520px;
+}
+/* "por você." só muda de cor — mesma fonte/peso/tamanho do resto da
+   headline (evita o mesmo problema já corrigido em outras seções). */
+.elison-preview-copy .section-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 .elison-preview-bullets {
   grid-area: bullets;
@@ -1867,6 +1896,15 @@
 }
 .demo-gif-copy .section-title {
   font-size: clamp(24px, 3.2vw, 34px);
+}
+/* "agenda." só muda de cor — mesma fonte/peso/tamanho do resto da
+   headline (evita o mesmo problema já corrigido em outras seções). */
+.demo-gif-copy .section-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
 }
 .demo-gif-copy .section-sub {
   max-width: 460px;

@@ -5,7 +5,7 @@ import Reveal from './Reveal'
 const plans = [
   {
     name: 'Starter',
-    tagline: 'Pra sair do improviso.',
+    tagline: 'Para sair do improviso.',
     currency: 'R$',
     amount: '37,90',
     period: '/mês',
@@ -32,7 +32,7 @@ const plans = [
     period: '/mês',
     consult: false,
     description: 'Para quem quer automatizar cobranças, atendimento e acompanhar melhor a rotina do estúdio.',
-    tag: 'Mais escolhido',
+    tag: 'MAIS ESCOLHIDO',
     highlighted: true,
     premium: false,
     ctaLabel: 'Começar com Pro',
@@ -75,13 +75,12 @@ export default function PlansSection({ compact = false }) {
       <div className="container">
         <Reveal>
           <div className="section-header-center">
-            <span className="section-label">Planos</span>
+            <span className="section-label">PLANOS</span>
             <h2 className="section-title">
-              Comece simples.<br />
-              Cresça com <span className="landing-accent">automação.</span>
+              Não perca <span className="landing-accent">clientes</span> enquanto tatua.
             </h2>
             <p className="section-sub">
-              Do básico ao automatizado, escolha o plano que combina com a fase do seu estúdio.
+              Escolha o plano ideal e leve mais controle para o atendimento, agenda e financeiro.
             </p>
           </div>
         </Reveal>
@@ -151,7 +150,7 @@ export default function PlansSection({ compact = false }) {
 
         <Reveal delay={160}>
           <p className="plans-footer-note">
-            Você pode começar pelo básico e evoluir conforme sua operação cresce.
+            Comece pelo Pro e tenha <span className="landing-accent">estrutura profissional</span> desde o primeiro dia.
           </p>
         </Reveal>
       </div>

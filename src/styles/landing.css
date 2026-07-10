@@ -2829,41 +2829,53 @@
 }
 .core-hero-inner {
   display: grid;
-  grid-template-columns: minmax(0, 0.9fr) minmax(420px, 1.1fr);
+  grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr) minmax(240px, 0.9fr);
   grid-template-areas:
-    "copy visual"
-    "cards visual";
-  column-gap: 40px;
+    "copy phone side"
+    "cards phone side";
+  column-gap: 32px;
   row-gap: 28px;
-  align-items: center;
+  align-items: start;
 }
 .core-hero-copy-area { grid-area: copy; }
-.core-hero-visual-area { grid-area: visual; align-self: center; }
+.core-hero-phone-area { grid-area: phone; align-self: center; }
 .core-hero-cards-area { grid-area: cards; }
+.core-hero-side-area { grid-area: side; }
 .core-hero-copy {
   max-width: 520px;
 }
 .core-hero-title {
   font-family: var(--font-body);
-  font-size: clamp(30px, 4.2vw, 48px);
+  font-size: clamp(34px, 4.6vw, 54px);
   font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
   color: var(--text-primary);
-  margin: 12px 0 14px;
+  margin: 18px 0 20px;
   text-wrap: balance;
+}
+/* O trecho em rosa herda a mesma fonte/peso/tamanho do título — só muda
+   a cor (.landing-accent global tem sua própria fonte/tamanho, que
+   destoa aqui). */
+.core-hero-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
 }
 .core-hero-sub {
   font-size: clamp(15px, 1.7vw, 18px);
   color: var(--text-secondary);
-  line-height: 1.7;
-  max-width: 500px;
-  margin-bottom: 24px;
+  line-height: 1.6;
+  max-width: 460px;
+  margin-bottom: 28px;
 }
 .core-hero-actions {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
 }
 
@@ -2904,26 +2916,120 @@
 .core-window-wide { max-width: 640px; margin: 0 auto; }
 .core-window-xl { max-width: 780px; margin: 0 auto; }
 
-/* Hero — bloco visual grande, sem chrome de navegador */
-.core-hero-visual {
+/* Hero — celular sem moldura/caixa: só a imagem (com transparência),
+   com uma sombra sutil aplicada na própria imagem. O cartão mantém a
+   moldura própria (ver .core-hero-card-mock abaixo). */
+.core-hero-phone-mock {
   width: 100%;
-  border-radius: 24px;
-  border: 1px solid rgba(255,255,255,0.1);
-  overflow: hidden;
-  background: linear-gradient(160deg, #0d1117, #101822);
-  box-shadow:
-    0 0 0 1px rgba(255,46,209,0.07),
-    0 32px 90px rgba(0,0,0,0.5),
-    0 0 70px rgba(255,46,209,0.07);
+  max-width: 300px;
+  margin: 0 auto;
+  aspect-ratio: 9 / 18;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
 }
-/* Sem imagem enviada ainda: reserva uma proporção para o placeholder */
-.core-hero-visual.core-hero-visual-empty {
-  aspect-ratio: 16 / 11;
+.core-hero-phone-mock p {
+  font-size: 12.5px;
+  color: rgba(248,249,251,0.38);
+  letter-spacing: 0.2px;
+  line-height: 1.5;
 }
-.core-hero-visual-img {
-  width: 100%;
-  height: auto;
+.core-hero-phone-mock picture,
+.core-hero-card-mock picture {
   display: block;
+  width: 100%;
+  height: 100%;
+}
+.core-hero-phone-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 24px 50px rgba(0,0,0,0.4));
+}
+.core-hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.core-hero-card-mock {
+  width: 100%;
+  aspect-ratio: 1.586 / 1;
+  margin: 0 auto 30px;
+  transform: rotate(-3.5deg) scale(1.16);
+  transform-origin: 60% 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+.core-hero-card-mock p {
+  font-size: 12px;
+  color: rgba(248,249,251,0.38);
+  letter-spacing: 0.2px;
+  line-height: 1.5;
+}
+.core-hero-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+}
+.core-hero-phone-mock .core-image-placeholder,
+.core-hero-card-mock .core-image-placeholder {
+  min-height: 0;
+  background: none;
+}
+.core-hero-phone-mock .core-image-placeholder-icon,
+.core-hero-card-mock .core-image-placeholder-icon {
+  width: 44px;
+  height: 44px;
+}
+.core-hero-benefits {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.core-hero-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(255,255,255,0.028);
+}
+.core-hero-benefit-icon {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: rgba(255,46,209,0.09);
+  border: 1px solid rgba(255,46,209,0.26);
+  color: var(--pink);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.core-hero-benefit-copy { min-width: 0; }
+.core-hero-benefit-title {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+.core-hero-benefit-text {
+  font-size: 12px;
+  color: rgba(248,249,251,0.5);
+  line-height: 1.5;
+  margin-top: 2px;
 }
 
 /* Image placeholder (aguardando upload via /admin) */
@@ -3722,8 +3828,19 @@
 .core-auto-text-area { grid-area: text; }
 .core-auto-visual-area { grid-area: visual; }
 .core-auto-cards-area { grid-area: cards; }
-.core-auto-title { margin-top: 14px; }
-.core-auto-sub { margin-top: 12px; max-width: 460px; }
+.core-auto-title { margin-top: 14px; line-height: 1.14; }
+/* O trecho em rosa herda a mesma fonte/peso/tamanho do título — só muda
+   a cor (.landing-accent global tem sua própria fonte/tamanho, que
+   destoa aqui). */
+.core-auto-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
+}
+.core-auto-sub { margin-top: 12px; max-width: 460px; line-height: 1.65; }
 .core-auto-v2 .core-pill { margin-top: 20px; }
 
 .core-auto-visual {
@@ -4026,6 +4143,10 @@
   border-color: rgba(255,46,209,0.22);
 }
 .landing.theme-light .core-hero-cards .core-solution-text { color: rgba(11,11,14,0.55); }
+.landing.theme-light .core-hero-phone-mock p,
+.landing.theme-light .core-hero-card-mock p { color: rgba(11,11,14,0.4); }
+.landing.theme-light .core-hero-benefit { background: rgba(255,255,255,0.72); border-color: var(--border); }
+.landing.theme-light .core-hero-benefit-text { color: rgba(11,11,14,0.55); }
 .landing.theme-light .core-auto-visual::before {
   background: radial-gradient(ellipse at center, rgba(255,46,209,0.14) 0%, transparent 68%);
 }
@@ -4058,12 +4179,14 @@
     grid-template-columns: 1fr;
     grid-template-areas:
       "copy"
-      "visual"
-      "cards";
+      "phone"
+      "cards"
+      "side";
     row-gap: 32px;
   }
   .core-hero-copy { max-width: 100%; }
   .core-hero-cards { max-width: 100%; }
+  .core-hero-phone-mock { max-width: 180px; }
   .core-mockup { max-width: 100%; }
   .core-pain-inner { grid-template-columns: 1fr; gap: 36px; }
   .core-steps { grid-template-columns: 1fr; gap: 0; }
@@ -4111,6 +4234,8 @@
   .core-hero-actions .btn { width: 100%; max-width: 340px; justify-content: center; }
   .core-solution-grid { grid-template-columns: 1fr; margin-top: 36px; }
   .core-hero-cards { margin-top: 0; }
+  .core-hero-phone-mock { max-width: 165px; }
+  .core-hero-card-mock { max-width: 240px; margin: 6px auto 22px; }
   .core-legal-inner { flex-direction: column; gap: 18px; padding: 26px 22px; }
   .core-cta-actions { flex-direction: column; align-items: center; }
   .core-cta-actions .btn { width: 100%; max-width: 340px; justify-content: center; }

@@ -17,6 +17,9 @@ import {
   BarChart3,
   PiggyBank,
   Clock,
+  Smartphone,
+  Building2,
+  TrendingUp,
 } from 'lucide-react'
 import Navbar from '@/components/landing/Navbar'
 import Footer from '@/components/landing/Footer'
@@ -36,7 +39,8 @@ function readAdminCoreSection() {
 // Imagens oficiais de produção — ficam em /public, então sobem junto com o
 // deploy independente do que estiver salvo no localStorage do Admin Visual.
 // Prioridade: imagem do admin (teste local) > imagem fixa em /public > placeholder.
-const HERO_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-hero.webp'
+const HERO_APP_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-app.webp'
+const HERO_CARD_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-cartao.webp'
 const AUTO_CHARGE_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-cobrancas.webp'
 const CREATE_CHARGE_IMAGE_FALLBACK = '/images/studio-pay/conta-digital-criar-cobranca.webp'
 
@@ -66,21 +70,6 @@ function FallbackImage({ src, mobileSrc, alt, className, placeholderIcon: Placeh
   )
 }
 
-// Destaca uma palavra específica do título (ex.: "acompanhe") em rosa,
-// mesmo quando o título vem editado pelo admin.
-function highlightWord(text, word) {
-  if (!text) return text
-  const idx = text.toLowerCase().indexOf(word.toLowerCase())
-  if (idx === -1) return text
-  return (
-    <>
-      {text.slice(0, idx)}
-      <span className="landing-accent">{text.slice(idx, idx + word.length)}</span>
-      {text.slice(idx + word.length)}
-    </>
-  )
-}
-
 // Destaca várias palavras/expressões dentro de um texto, preservando o
 // restante. Usado quando mais de uma palavra precisa ficar em rosa.
 function highlightWords(text, words) {
@@ -100,6 +89,13 @@ const heroCards = [
   { Icon: ReceiptText, title: 'Boletos', text: 'Gere cobranças profissionais.' },
   { Icon: Link2, title: 'Link de pagamento', text: 'Envie um link e facilite o pagamento.' },
   { Icon: BarChart3, title: 'Financeiro', text: 'Acompanhe sua evolução financeira.' },
+]
+
+const heroBenefits = [
+  { Icon: Wallet, title: 'Receba por Pix, boleto e cartão', text: 'Tudo em uma conta só.' },
+  { Icon: Building2, title: 'Pague fornecedores e contas do estúdio', text: 'Agilidade no dia a dia.' },
+  { Icon: TrendingUp, title: 'Acompanhe tudo em tempo real', text: 'Mais clareza para decidir.' },
+  { Icon: ShieldCheck, title: 'Segurança e controle para o seu negócio', text: 'Proteção em cada transação.' },
 ]
 
 const bankTxns = [
@@ -198,12 +194,12 @@ function BankMockup() {
 
 // ── Page ───────────────────────────────────────────────────────
 
-const DEFAULT_HERO_TITLE = 'Pague, receba e acompanhe seu dinheiro em um só lugar.'
-const DEFAULT_HERO_SUB = 'Receba no Pix, gere boletos, envie links de pagamento e acompanhe a evolução financeira do seu estúdio sem depender de planilhas.'
+const DEFAULT_HERO_TITLE = 'A Conta PJ\npensada para\nestúdios\nde tatuagem.'
+const DEFAULT_HERO_SUB = 'Receba, cobre e acompanhe o financeiro\ndo seu estúdio em um só lugar.'
 
-const DEFAULT_AUTO_BADGE = 'Cobranças automáticas'
-const DEFAULT_AUTO_TITLE = 'Configure uma vez.\nO Studio Pay cobra por você.'
-const DEFAULT_AUTO_SUB = 'Automatize lembretes e cobranças pelo WhatsApp e tenha mais tempo para o que realmente importa.'
+const DEFAULT_AUTO_BADGE = 'COBRANÇAS AUTOMÁTICAS'
+const DEFAULT_AUTO_TITLE = 'Automatize as cobranças\ndo seu estúdio.'
+const DEFAULT_AUTO_SUB = 'Organize seus recebimentos sem depender\nde mensagens manuais.'
 const DEFAULT_AUTO_PILL = 'Automatize cobranças e mensagens no WhatsApp com lembretes enviados no momento certo.'
 
 const DEFAULT_CREATE_BADGE = 'Criar cobrança'
@@ -214,20 +210,15 @@ const DEFAULT_CREATE_PILL = 'Automatize cobranças no WhatsApp com lembretes env
 export default function StudioCorePage() {
   const admin = readAdminCoreSection()
 
-  const heroLabel = admin?.heroLabel || 'Conta digital Studio Pay'
-  const heroTitle = admin?.heroTitle || DEFAULT_HERO_TITLE
-  const heroSub = admin?.heroSub || DEFAULT_HERO_SUB
+  const heroLabel = admin?.heroLabel || 'CONTA DIGITAL STUDIO PAY'
+  const heroTitleLines = (admin?.heroTitle || DEFAULT_HERO_TITLE).split('\n')
+  const heroSubLines = (admin?.heroSub || DEFAULT_HERO_SUB).split('\n')
   const heroBtnPrimario = admin?.heroBtnPrimario || 'Começar agora'
   const heroBtnSecundario = admin?.heroBtnSecundario || 'Ver planos'
-  // Prioridade: imagem do admin (teste local) > imagem fixa em /public (oficial
-  // de produção) > placeholder. Cada versão (desktop/mobile) cai de volta na
-  // outra quando a sua própria não existe, antes de cair no fallback fixo.
-  const heroImage = admin?.heroImage || admin?.heroImageMobile || HERO_IMAGE_FALLBACK
-  const heroImageMobile = admin?.heroImageMobile || admin?.heroImage || HERO_IMAGE_FALLBACK
 
   const autoBadge = admin?.autoChargeBadge || DEFAULT_AUTO_BADGE
   const autoTitleLines = (admin?.autoChargeTitle || DEFAULT_AUTO_TITLE).split('\n')
-  const autoSub = admin?.autoChargeSubtitle || DEFAULT_AUTO_SUB
+  const autoSubLines = (admin?.autoChargeSubtitle || DEFAULT_AUTO_SUB).split('\n')
   const autoPillText = admin?.autoChargePillText || DEFAULT_AUTO_PILL
   const autoDesktopImage = admin?.autoChargeImage || admin?.autoChargeImageMobile || AUTO_CHARGE_IMAGE_FALLBACK
   const autoMobileImage = admin?.autoChargeImageMobile || admin?.autoChargeImage || AUTO_CHARGE_IMAGE_FALLBACK
@@ -253,9 +244,21 @@ export default function StudioCorePage() {
                 <div className="core-hero-copy">
                   <span className="section-label">{heroLabel}</span>
                   <h1 className="core-hero-title">
-                    {highlightWord(heroTitle, 'acompanhe')}
+                    {heroTitleLines.map((line, i) => (
+                      <Fragment key={i}>
+                        {highlightWords(line, ['Conta PJ', 'estúdios'])}
+                        {i < heroTitleLines.length - 1 && <br />}
+                      </Fragment>
+                    ))}
                   </h1>
-                  <p className="core-hero-sub">{heroSub}</p>
+                  <p className="core-hero-sub">
+                    {heroSubLines.map((line, i) => (
+                      <Fragment key={i}>
+                        {line}
+                        {i < heroSubLines.length - 1 && <br />}
+                      </Fragment>
+                    ))}
+                  </p>
                   <div className="core-hero-actions">
                     <Link to="/cadastro" className="btn btn-primary btn-lg">
                       {heroBtnPrimario} <ArrowRight size={18} />
@@ -265,20 +268,19 @@ export default function StudioCorePage() {
                 </div>
               </Reveal>
 
-              <Reveal delay={100} className="core-hero-visual-area">
-                <div className="core-hero-visual">
+              <Reveal delay={100} className="core-hero-phone-area">
+                <div className="core-hero-phone-mock">
                   <FallbackImage
-                    src={heroImage}
-                    mobileSrc={heroImageMobile}
-                    alt="Dashboard da Conta Digital"
-                    className="core-hero-visual-img"
-                    placeholderIcon={Wallet}
-                    placeholderLabel="Preview do painel"
+                    src={HERO_APP_IMAGE_FALLBACK}
+                    alt="App Studio Pay — Conta Digital"
+                    className="core-hero-phone-img"
+                    placeholderIcon={Smartphone}
+                    placeholderLabel="Imagem do app em breve"
                   />
                 </div>
               </Reveal>
 
-              <Reveal delay={160} className="core-hero-cards-area">
+              <Reveal delay={140} className="core-hero-cards-area">
                 <div className="core-solution-grid core-hero-cards">
                   {heroCards.map(({ Icon, title, text }, i) => (
                     <Reveal key={title} delay={i * 50}>
@@ -289,6 +291,31 @@ export default function StudioCorePage() {
                       </div>
                     </Reveal>
                   ))}
+                </div>
+              </Reveal>
+
+              <Reveal delay={180} className="core-hero-side-area">
+                <div className="core-hero-side">
+                  <div className="core-hero-card-mock">
+                    <FallbackImage
+                      src={HERO_CARD_IMAGE_FALLBACK}
+                      alt="Cartão Studio Pay"
+                      className="core-hero-card-img"
+                      placeholderIcon={CreditCard}
+                      placeholderLabel="Cartão Studio Pay em breve"
+                    />
+                  </div>
+                  <div className="core-hero-benefits">
+                    {heroBenefits.map(({ Icon, title, text }) => (
+                      <div key={title} className="core-hero-benefit">
+                        <span className="core-hero-benefit-icon"><Icon size={16} strokeWidth={1.8} /></span>
+                        <div className="core-hero-benefit-copy">
+                          <p className="core-hero-benefit-title">{title}</p>
+                          <p className="core-hero-benefit-text">{text}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </Reveal>
             </div>
@@ -311,12 +338,19 @@ export default function StudioCorePage() {
                 <h2 className="section-title core-auto-title">
                   {autoTitleLines.map((line, i) => (
                     <Fragment key={i}>
-                      {highlightWords(line, ['Configure', 'cobra'])}
+                      {highlightWords(line, ['Automatize', 'estúdio.'])}
                       {i < autoTitleLines.length - 1 && <br />}
                     </Fragment>
                   ))}
                 </h2>
-                <p className="section-sub core-auto-sub">{autoSub}</p>
+                <p className="section-sub core-auto-sub">
+                  {autoSubLines.map((line, i) => (
+                    <Fragment key={i}>
+                      {line}
+                      {i < autoSubLines.length - 1 && <br />}
+                    </Fragment>
+                  ))}
+                </p>
               </Reveal>
 
               <Reveal delay={100} className="core-auto-visual-area">

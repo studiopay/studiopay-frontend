@@ -35,7 +35,7 @@ function withCurrency(val) {
   return /^R\$/.test(s) ? s : `R$ ${s}`
 }
 
-const HIGHLIGHT_TERMS = ['Studio Pay']
+const HIGHLIGHT_TERMS = ['Studio Pay', 'Studio Pro\\.?']
 const HIGHLIGHT_PATTERN = new RegExp(`(${HIGHLIGHT_TERMS.join('|')})`, 'gi')
 
 function highlightText(text) {
@@ -52,10 +52,10 @@ function highlightText(text) {
 export default function PainSection() {
   const admin = readAdminShopSection()
 
-  const label          = admin?.label          || 'Studio Shop'
-  const title          = admin?.title          || 'Seu lucro também começa na compra.'
-  const highlightTitle = admin?.highlightTitle || 'Produtos com vantagem para quem usa Studio Pay.'
-  const subtitle       = admin?.subtitle       || 'Com o Studio Shop, assinantes Studio Pay acessam produtos, kits e condições pensadas para reduzir custos na rotina do estúdio.'
+  const label          = admin?.label          || 'STUDIO SHOP'
+  const title          = admin?.title          || 'Seu lucro começa na compra.'
+  const highlightTitle = admin?.highlightTitle || 'Conheça as vantagens dos assinantes Studio Pro.'
+  const subtitle       = admin?.subtitle       || 'Obtenha acesso aos melhores produtos do Brasil na Shop Studio Pay.'
 
   const items = admin?.cards
     ? admin.cards
@@ -119,7 +119,7 @@ export default function PainSection() {
 
         <Reveal delay={180}>
           <div className="shop-benefits-footer">
-            <p>Mais controle no sistema. Mais vantagem na compra dos insumos.</p>
+            <p>Clique no botão abaixo e comece agora mesmo!</p>
             <div className="shop-benefits-actions">
               <Link to="/studio-shop" className="btn btn-primary btn-lg">
                 Ver benefícios do Shop <ArrowRight size={18} />

@@ -38,10 +38,10 @@ const DEFAULT_LANDING = {
 }
 
 const DEFAULT_LANDING_SHOP = {
-  label:          'Studio Shop',
-  title:          'Produtos que você já compra.',
-  highlightTitle: 'Com vantagem pra quem usa Studio Pay.',
-  subtitle:       'O Studio Shop conecta assinantes a produtos, kits e benefícios pensados para a rotina real do tatuador.',
+  label:          'STUDIO SHOP',
+  title:          'Seu lucro começa na compra.',
+  highlightTitle: 'Conheça as vantagens dos assinantes Studio Pro.',
+  subtitle:       'Obtenha acesso aos melhores produtos do Brasil na Shop Studio Pay.',
   cards: [
     { id: 1, title: 'Tintas selecionadas',  badge: 'Condição exclusiva',  normalPrice: 'R$ 89,90',  proPrice: 'R$ 79,90',  savingText: 'R$ 10,00', image: null, active: true },
     { id: 2, title: 'Cartuchos',            badge: 'Benefício Pro',        normalPrice: 'R$ 120,00', proPrice: 'R$ 105,00', savingText: 'R$ 15,00', image: null, active: true },

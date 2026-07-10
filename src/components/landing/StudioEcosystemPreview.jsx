@@ -102,13 +102,11 @@ export default function StudioEcosystemPreview() {
           <div className="section-header-center ecosystem-header">
             <span className="section-label">ECOSSISTEMA</span>
             <h2 className="section-title">
-              <span className="ecosystem-title-line1">Toda a operação do seu estúdio</span><br className="ecosystem-title-break" />
-              <span className="landing-accent">em um só lugar.</span>
+              <span className="ecosystem-title-line1">Da captação de clientes</span><br className="ecosystem-title-break" />
+              <span className="landing-accent">ao pós-tatuagem.</span>
             </h2>
             <p className="section-sub">
-              Da captação de clientes ao pós-tatuagem, o Studio Pay conecta atendimento,{' '}
-              <strong>agenda, pagamentos, compras, marketing e gestão</strong> para que você tenha mais
-              controle e foque no que realmente importa: <strong>tatuar e crescer.</strong>
+              Conheça as soluções que conectam toda a operação do seu estúdio.
             </p>
           </div>
         </Reveal>

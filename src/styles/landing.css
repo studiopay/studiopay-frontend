@@ -593,6 +593,15 @@
   font-family: var(--font-body);
   font-size: clamp(24px, 3.6vw, 36px);
 }
+/* "Studio Pro." só muda de cor — mesma fonte/peso/tamanho do resto da
+   headline (evita o mesmo problema já corrigido nas outras seções). */
+.shop-benefits-title.section-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+}
 .shop-showcase {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

@@ -1618,213 +1618,55 @@
   align-items: center;
   gap: 18px;
 }
-.elison-phone {
+/* Screenshot real da conversa do Elisson.IA (uma imagem por aba) —
+   substitui o antigo mockup fake em HTML/CSS. Mesma caixa/proporção
+   de "celular" que o mockup ocupava antes, para não mudar o layout.
+   A imagem já vem recortada com fundo transparente (sem card/borda
+   branca), então a caixa só centraliza — sem border-radius/overflow
+   forçando um recorte, e com um drop-shadow escuro sutil para
+   integrar o aparelho ao fundo da seção. */
+.elison-phone-shot {
   width: min(100%, 374px);
   min-height: 642px;
-  padding: 12px;
-  border-radius: 44px;
-  border: 1px solid rgba(255,255,255,0.11);
-  background:
-    radial-gradient(circle at 22% 22%, rgba(255,46,209,0.045), transparent 18%),
-    radial-gradient(circle at 78% 78%, rgba(255,255,255,0.035), transparent 20%),
-    linear-gradient(135deg, #0b141a, #101b22);
-  box-shadow: 0 26px 90px rgba(0,0,0,0.42), 0 0 0 1px rgba(255,46,209,0.055);
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  position: relative;
-  overflow: hidden;
-}
-.elison-phone::before {
-  content: '';
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 92px;
-  height: 5px;
-  border-radius: 9999px;
-  background: rgba(248,249,251,0.18);
-  z-index: 3;
-}
-.elison-chat-header {
-  margin-top: 12px;
-  min-height: 64px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 11px 10px 10px;
-  border-radius: 32px 32px 0 0;
-  background: #202c33;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.elison-chat-avatar {
-  width: 39px;
-  height: 39px;
-  border-radius: 9999px;
-  background:
-    radial-gradient(circle at 50% 35%, rgba(248,249,251,0.85) 0 16%, transparent 17%),
-    radial-gradient(circle at 50% 82%, rgba(248,249,251,0.82) 0 28%, transparent 29%),
-    linear-gradient(145deg, rgba(255,46,209,0.9), rgba(255,46,209,0.32));
-  color: transparent;
-  flex-shrink: 0;
-  box-shadow: 0 0 24px rgba(255,46,209,0.18);
-}
-.elison-chat-contact {
-  min-width: 0;
-  flex: 1;
-}
-.elison-chat-header strong {
-  display: block;
-  color: rgba(248,249,251,0.96);
-  font-size: 14.5px;
-  font-weight: 850;
-  line-height: 1.2;
-}
-.elison-chat-header span:not(.elison-chat-avatar) {
-  display: block;
-  color: rgba(248,249,251,0.58);
-  font-size: 11.5px;
-  line-height: 1.35;
-  margin-top: 3px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.elison-chat-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: rgba(248,249,251,0.62);
-  flex-shrink: 0;
-}
-.elison-phone-status {
-  display: inline-flex;
-  width: fit-content;
-  align-items: center;
-  align-self: center;
-  margin: 10px 0 2px;
-  padding: 5px 10px;
-  border-radius: 9999px;
-  background: rgba(248,249,251,0.08);
-  color: rgba(248,249,251,0.58);
-  font-size: 10.5px;
-  font-weight: 800;
-  letter-spacing: 0.22px;
-}
-.elison-phone-thread {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 7px;
-  padding: 14px 10px 8px;
-  background: transparent;
-  position: relative;
-  overflow: visible;
-  border-radius: 0;
-}
-.elison-phone::after {
-  content: '';
-  position: absolute;
-  inset: 76px 12px 58px;
-  background-image:
-    linear-gradient(30deg, rgba(255,255,255,0.024) 1px, transparent 1px),
-    linear-gradient(150deg, rgba(255,255,255,0.016) 1px, transparent 1px);
-  background-size: 34px 34px;
-  opacity: 0.28;
-  pointer-events: none;
-}
-.elison-chat-bubble {
-  max-width: 86%;
-  border-radius: 7px 16px 16px 16px;
-  padding: 7px 9px 5px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.16);
-  position: relative;
-  z-index: 1;
-}
-.elison-chat-bubble span {
-  display: block;
-  font-size: 10px;
-  font-weight: 850;
-  letter-spacing: 0.18px;
-  margin-bottom: 4px;
-}
-.elison-chat-bubble p {
-  font-size: 13.2px;
-  line-height: 1.38;
-  padding-right: 6px;
-}
-.elison-chat-bubble small {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 3px;
-  min-height: 13px;
-  margin-top: 3px;
-  font-size: 9.5px;
-  line-height: 1;
-}
-.elison-chat-bubble.elison {
-  align-self: flex-end;
-  border-radius: 16px 7px 16px 16px;
-  background: #005c4b;
-  color: rgba(248,249,251,0.95);
-}
-.elison-chat-bubble.elison span {
-  color: rgba(248,249,251,0.72);
-}
-.elison-chat-bubble.elison small {
-  color: rgba(248,249,251,0.55);
-}
-.elison-chat-bubble.elison small svg {
-  color: rgba(255,46,209,0.7);
-}
-.elison-chat-bubble.client {
-  align-self: flex-start;
-  border-radius: 7px 16px 16px 16px;
-  background: #202c33;
-  color: rgba(248,249,251,0.9);
-}
-.elison-chat-bubble.client span {
-  color: rgba(248,249,251,0.58);
-}
-.elison-chat-bubble.client small {
-  color: rgba(248,249,251,0.5);
-}
-.elison-chat-bubble.client small svg {
-  color: #63d7ff;
-}
-.elison-chat-input {
-  min-height: 50px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 0 0;
-  background: transparent;
-  border-radius: 0 0 32px 32px;
-}
-.elison-chat-input span {
-  flex: 1;
-  min-height: 40px;
-  display: flex;
-  align-items: center;
-  padding: 0 15px;
-  border-radius: 9999px;
-  background: #202c33;
-  color: rgba(248,249,251,0.38);
-  font-size: 12.5px;
-}
-.elison-chat-input i {
-  width: 40px;
-  height: 40px;
-  border-radius: 9999px;
-  background: #ff2ed1;
-  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 0 18px rgba(255,46,209,0.28);
+}
+.elison-phone-shot-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: 642px;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 26px 60px rgba(0,0,0,0.5)) drop-shadow(0 0 36px rgba(255,46,209,0.07));
+}
+.elison-phone-shot-fallback {
+  width: 100%;
+  height: 100%;
+  min-height: 642px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  border-radius: 32px;
+  border: 1px solid rgba(255,255,255,0.11);
+  background: linear-gradient(135deg, #0b141a, #101b22);
+  color: var(--text-secondary);
+  font-size: 15px;
+  font-weight: 600;
+}
+.elison-phone-shot-fallback-mark {
+  width: 56px;
+  height: 56px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,46,209,0.08);
+  border: 1px solid rgba(255,46,209,0.22);
+  color: var(--pink);
 }
 .elison-step-tabs {
   width: min(100%, 430px);
@@ -2030,25 +1872,10 @@
 .landing.theme-light .elison-preview-card { background: var(--bg-card); }
 .landing.theme-light .elison-preview-card:hover { background: var(--bg-card2); border-color: rgba(11,11,14,0.13); }
 .landing.theme-light .elison-preview-icon { background: rgba(255,46,209,0.08); }
-.landing.theme-light .elison-phone {
+.landing.theme-light .elison-phone-shot-fallback {
   border-color: rgba(11,11,14,0.16);
-  background:
-    radial-gradient(circle at 22% 22%, rgba(255,46,209,0.045), transparent 18%),
-    radial-gradient(circle at 78% 78%, rgba(255,255,255,0.035), transparent 20%),
-    linear-gradient(135deg, #0b141a, #101b22);
-  box-shadow: 0 24px 72px rgba(11,11,14,0.16), 0 0 0 1px rgba(255,46,209,0.05);
+  background: linear-gradient(135deg, #0b141a, #101b22);
 }
-.landing.theme-light .elison-chat-header,
-.landing.theme-light .elison-chat-input span { background: #202c33; }
-.landing.theme-light .elison-chat-input { background: transparent; }
-.landing.theme-light .elison-phone-thread { background: transparent; }
-.landing.theme-light .elison-chat-header strong,
-.landing.theme-light .elison-chat-bubble p { color: rgba(248,249,251,0.92); }
-.landing.theme-light .elison-chat-header span:not(.elison-chat-avatar),
-.landing.theme-light .elison-chat-input span { color: rgba(248,249,251,0.55); }
-.landing.theme-light .elison-chat-bubble.elison { background: #005c4b; color: rgba(248,249,251,0.95); }
-.landing.theme-light .elison-chat-bubble.client { background: #202c33; color: rgba(248,249,251,0.9); }
-.landing.theme-light .elison-chat-bubble.client span { color: rgba(248,249,251,0.58); }
 .landing.theme-light .elison-step-tab { background: rgba(255,255,255,0.74); }
 .landing.theme-light .feature-icon-mark,
 .landing.theme-light .benefit-item-icon,
@@ -2354,10 +2181,9 @@
   .elison-preview-actions .btn { width: 100%; max-width: 340px; justify-content: center; }
   .elison-preview-layout { gap: 20px; }
   .elison-preview-demo { gap: 12px; }
-  .elison-phone { width: min(100%, 330px); min-height: 460px; border-radius: 38px; padding: 11px; }
-.elison-chat-bubble { max-width: 92%; }
-.elison-chat-bubble p { font-size: 13px; }
-.elison-step-tabs { grid-template-columns: 1fr; max-width: 330px; }
+  .elison-phone-shot { width: min(100%, 330px); min-height: 460px; max-height: 460px; }
+  .elison-phone-shot-fallback { width: min(100%, 330px); min-height: 460px; max-height: 460px; border-radius: 38px; }
+  .elison-step-tabs { grid-template-columns: 1fr; max-width: 330px; }
   .elison-step-tab { min-height: 44px; }
   .demo-gif-section { padding: 48px 0 56px; }
   .demo-gif-media { max-width: 100%; padding: 5px; border-radius: 20px; }

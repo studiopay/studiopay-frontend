@@ -413,7 +413,7 @@ export default function StudioCorePage() {
                     </Fragment>
                   ))}
                 </h2>
-                <p className="section-sub">{createSub}</p>
+                <p className="section-sub core-create-sub">{createSub}</p>
               </div>
             </Reveal>
 

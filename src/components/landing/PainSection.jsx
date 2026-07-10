@@ -2,6 +2,7 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight, Tags } from 'lucide-react'
 import Reveal from './Reveal'
+import { LANDING_SHOP_COPY_VERSION } from '@/utils/adminContent'
 
 // Imagens oficiais de produção — ficam em /public, então sobem junto com o
 // deploy independente do que estiver salvo no localStorage do Admin Visual.
@@ -25,8 +26,17 @@ function ShopProductImage({ src, alt }) {
   return <img src={src} alt={alt} className="shop-product-img" onError={() => setFailed(true)} />
 }
 
+// Ignora qualquer copy salva no localStorage que não tenha a versão
+// atual (_v) — isso migra automaticamente navegadores com uma copy
+// antiga (salva antes desta atualização de texto) de volta para os
+// textos padrão novos, sem precisar de ação manual no Admin.
 function readAdminShopSection() {
-  try { return JSON.parse(localStorage.getItem('studioPayAdmin_landingShopSection') || 'null') } catch { return null }
+  try {
+    const parsed = JSON.parse(localStorage.getItem('studioPayAdmin_landingShopSection') || 'null')
+    return parsed && parsed._v === LANDING_SHOP_COPY_VERSION ? parsed : null
+  } catch {
+    return null
+  }
 }
 
 function withCurrency(val) {

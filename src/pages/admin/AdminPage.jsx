@@ -5,7 +5,7 @@ import {
   Save, Trash2, Plus, Copy, Check, RotateCcw,
   Upload, X, Package, Image as ImageIcon, ExternalLink,
 } from 'lucide-react'
-import { getAdminContent, setAdminContent, resetAllAdminContent, ADMIN_KEYS } from '@/utils/adminContent'
+import { getAdminContent, setAdminContent, resetAllAdminContent, ADMIN_KEYS, LANDING_SHOP_COPY_VERSION } from '@/utils/adminContent'
 import '@/styles/admin.css'
 
 // ─────────────────────────────────────
@@ -660,7 +660,12 @@ function ProductsTab() {
 
 function LandingTab() {
   const [data, setData] = useState(() => getAdminContent(ADMIN_KEYS.landing, DEFAULT_LANDING))
-  const [shopSec, setShopSec] = useState(() => getAdminContent(ADMIN_KEYS.landingShopSection, DEFAULT_LANDING_SHOP))
+  // Ignora copy salva com versão antiga (_v) — o formulário abre já com
+  // os textos padrão novos em vez de reexibir/persistir uma copy velha.
+  const [shopSec, setShopSec] = useState(() => {
+    const stored = getAdminContent(ADMIN_KEYS.landingShopSection, null)
+    return stored && stored._v === LANDING_SHOP_COPY_VERSION ? stored : DEFAULT_LANDING_SHOP
+  })
   const [activeCard, setActiveCard] = useState(0)
   const [toast, setToast] = useState(null)
 
@@ -679,7 +684,7 @@ function LandingTab() {
   }
 
   const saveShopSection = () => {
-    if (setAdminContent(ADMIN_KEYS.landingShopSection, shopSec)) setToast('Seção de produtos salva!')
+    if (setAdminContent(ADMIN_KEYS.landingShopSection, { ...shopSec, _v: LANDING_SHOP_COPY_VERSION })) setToast('Seção de produtos salva!')
   }
 
   const resetShopSection = () => {

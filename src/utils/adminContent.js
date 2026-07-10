@@ -1,3 +1,11 @@
+// Versão da copy padrão da seção "Studio Shop" da landing pública.
+// Um valor salvo no localStorage (studioPayAdmin_landingShopSection) só é
+// considerado válido se tiver essa mesma versão em "_v" — isso evita que
+// uma copy antiga, salva antes de uma atualização de texto, continue
+// aparecendo indefinidamente na home pública. Incremente este número
+// sempre que os textos padrão da seção Shop mudarem de novo.
+export const LANDING_SHOP_COPY_VERSION = 2
+
 export const ADMIN_KEYS = {
   landing:            'studioPayAdmin_landing',
   landingShopSection: 'studioPayAdmin_landingShopSection',

@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Calendar, CalendarDays, CalendarPlus, Clock3, BellRing } from 'lucide-react'
+import { ArrowRight, Calendar, CalendarDays, CalendarCheck, MessageCircle, BellRing, Wallet, ShieldCheck } from 'lucide-react'
 import Reveal from './Reveal'
 
 const GIF_SRC = '/media/studiopay-agenda.gif'
 
 const demoBullets = [
-  { icon: CalendarDays, label: 'Visualize por dia, semana e mês' },
-  { icon: CalendarPlus, label: 'Cadastre novos agendamentos' },
-  { icon: Clock3, label: 'Acompanhe próximos atendimentos' },
-  { icon: BellRing, label: 'Ative lembretes automáticos' },
+  { icon: CalendarCheck, label: 'Reserva horários automaticamente após o pagamento do sinal' },
+  { icon: MessageCircle, label: 'Confirma atendimentos pelo WhatsApp' },
+  { icon: BellRing, label: 'Envia lembretes antes da sessão' },
+  { icon: CalendarDays, label: 'Organiza compromissos por dia, semana e mês' },
+  { icon: Wallet, label: 'Controla sinais e recebimentos futuros' },
+  { icon: ShieldCheck, label: 'Reduz faltas e atrasos' },
 ]
 
 export default function DemoGifSection() {
@@ -21,12 +23,13 @@ export default function DemoGifSection() {
         <div className="demo-gif-layout">
           <Reveal>
             <div className="demo-gif-copy">
-              <span className="section-label">Agenda Studio Pay</span>
+              <span className="section-label">AGENDA STUDIO PAY</span>
               <h2 className="section-title">
-                Veja sua <span className="landing-accent">agenda</span> em ação.
+                Muito mais do que<br />
+                uma <span className="landing-accent">agenda.</span>
               </h2>
               <p className="section-sub">
-                Visualize compromissos por dia, semana e mês, acompanhe os próximos atendimentos e mantenha sua rotina organizada em um só lugar.
+                Transforme sua rotina de atendimentos em uma operação mais organizada, segura e profissional.
               </p>
 
               <ul className="demo-gif-bullets" aria-label="O que a agenda do Studio Pay faz por você">

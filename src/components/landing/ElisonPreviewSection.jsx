@@ -33,10 +33,10 @@ const elisonSteps = [
   },
 ]
 
-const elisonBullets = [
-  'Confirma antes do horário',
-  'Lembra automaticamente',
-  'Continua o pós-atendimento',
+const elisonBlocks = [
+  { title: 'ATENDIMENTO', text: 'Atende clientes pelo WhatsApp, apresenta seu portfólio e tira dúvidas automaticamente.' },
+  { title: 'VENDAS', text: 'Passa orçamentos, responde objeções e conduz o cliente até o fechamento.' },
+  { title: 'GESTÃO', text: 'Organiza sua agenda, controla receitas e despesas e acompanha o pós-atendimento.' },
 ]
 
 export default function ElisonPreviewSection() {
@@ -49,13 +49,13 @@ export default function ElisonPreviewSection() {
         <div className="elison-preview-layout">
           <Reveal>
             <div className="elison-preview-copy">
-              <span className="section-label">Elisson.IA</span>
+              <span className="section-label">ELISSON.IA</span>
               <h2 className="section-title">
-                Enquanto você tatua,<br />
-                o <span className="landing-accent">Elisson.IA</span> acompanha seus clientes.
+                Elisson.IA vende,<br />
+                atende e organiza <span className="landing-accent" style={{ whiteSpace: 'nowrap' }}>por você.</span>
               </h2>
               <p className="section-sub">
-                Confirma horários, envia lembretes e mantém o cliente acompanhado sem você precisar parar o atendimento.
+                Seu estúdio continua funcionando mesmo quando você está tatuando.
               </p>
             </div>
           </Reveal>
@@ -119,11 +119,18 @@ export default function ElisonPreviewSection() {
           </Reveal>
 
           <Reveal delay={140}>
-            <ul className="elison-preview-bullets" aria-label="O que o Elisson.IA ajuda a organizar">
-              {elisonBullets.map((bullet) => (
-                <li key={bullet}>
-                  <span aria-hidden="true"><Check size={15} strokeWidth={2} /></span>
-                  {bullet}
+            <ul className="elison-preview-bullets" aria-label="O que o Elisson.IA faz por você">
+              {elisonBlocks.map((block) => (
+                <li key={block.title} style={{ alignItems: 'flex-start' }}>
+                  <span aria-hidden="true" style={{ marginTop: 2 }}><Check size={15} strokeWidth={2} /></span>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <strong style={{ display: 'block', fontSize: 12.5, fontWeight: 800, color: 'var(--pink)', textTransform: 'uppercase', letterSpacing: '0.04em', marginBottom: 2 }}>
+                      {block.title}
+                    </strong>
+                    <p style={{ margin: 0, fontWeight: 500, color: 'var(--text-secondary)', fontSize: 13.5, lineHeight: 1.5 }}>
+                      {block.text}
+                    </p>
+                  </div>
                 </li>
               ))}
             </ul>

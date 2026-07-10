@@ -2179,10 +2179,36 @@
   .elison-preview-actions { flex-direction: column; gap: 12px; }
   .shop-benefits-actions .btn,
   .elison-preview-actions .btn { width: 100%; max-width: 340px; justify-content: center; }
-  .elison-preview-layout { gap: 20px; }
-  .elison-preview-demo { gap: 12px; }
-  .elison-phone-shot { width: min(100%, 330px); min-height: 460px; max-height: 460px; }
-  .elison-phone-shot-fallback { width: min(100%, 330px); min-height: 460px; max-height: 460px; border-radius: 38px; }
+  /* Mais respiro entre headline/subheadline, mockup, abas e blocos —
+     evita o texto "pressionado" pelo mockup. */
+  .elison-preview-layout { gap: 32px; }
+  .elison-preview-demo { gap: 16px; }
+  /* aspect-ratio garante que a caixa SEMPRE tenha a mesma proporção da
+     imagem real (960x1639) — antes a caixa usava uma altura fixa
+     (460px) desencontrada da altura que a imagem realmente ocupava
+     (~563px, só limitada pelo max-height de desktop de 642px, que
+     continuava valendo no mobile), fazendo o mockup vazar por cima da
+     subheadline e por baixo cobrir a 1ª aba. Também reduz o mockup
+     para não dominar a tela (largura entre ~78-86vw, até 320px). */
+  .elison-phone-shot {
+    width: min(82vw, 320px);
+    aspect-ratio: 960 / 1639;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+  .elison-phone-shot-img {
+    height: 100%;
+    max-height: none;
+  }
+  .elison-phone-shot-fallback {
+    width: min(82vw, 320px);
+    aspect-ratio: 960 / 1639;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    border-radius: 38px;
+  }
   .elison-step-tabs { grid-template-columns: 1fr; max-width: 330px; }
   .elison-step-tab { min-height: 44px; }
   .demo-gif-section { padding: 48px 0 56px; }

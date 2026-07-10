@@ -5201,11 +5201,22 @@
   font-family: var(--font-body);
   font-size: clamp(28px, 3.6vw, 44px);
   font-weight: 800;
-  line-height: 1.18;
+  line-height: 1.14;
   letter-spacing: -0.02em;
   color: var(--text-primary);
   margin: 16px 0 18px;
   text-wrap: balance;
+}
+/* O trecho em rosa herda a mesma fonte/peso/tamanho do título — só muda
+   a cor (.landing-accent global tem sua própria fonte/tamanho, que
+   destoa aqui). Mesmo padrão aplicado nas demais páginas. */
+.elison-hero-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
 }
 .elison-hero-sub {
   font-size: clamp(15px, 1.6vw, 17px);
@@ -5453,6 +5464,29 @@
 .landing.theme-light .elison-how-glow { opacity: 0.55; }
 .elison-how .container { position: relative; z-index: 1; }
 .elison-how-header { max-width: 760px; margin-bottom: 0; }
+.elison-how-title { line-height: 1.14; }
+/* O trecho em rosa herda a mesma fonte/peso/tamanho do título — só muda
+   a cor (.landing-accent global tem sua própria fonte/tamanho, que
+   destoa aqui). Mesmo padrão aplicado nas demais páginas. */
+.elison-how-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
+}
+.elison-how-sub { line-height: 1.65; }
+/* Mesmo ajuste do título, aplicado ao trecho em rosa dentro da
+   subheadline (parágrafo), que também usa .landing-accent. */
+.elison-how-sub .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
+}
 
 .elison-how-grid {
   display: grid;
@@ -5677,6 +5711,19 @@
 .landing.theme-light .elison-desk-glow { opacity: 0.55; }
 .elison-desk .container { position: relative; z-index: 1; }
 .elison-desk-header { max-width: 760px; margin: 0 auto; }
+.elison-desk-title { line-height: 1.14; }
+/* O trecho em rosa herda a mesma fonte/peso/tamanho do título — só muda
+   a cor (.landing-accent global tem sua própria fonte/tamanho, que
+   destoa aqui). Mesmo padrão aplicado nas demais páginas. */
+.elison-desk-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
+}
+.elison-desk-sub { line-height: 1.65; }
 
 /* Painel único — lista de categorias à esquerda, resumo de exemplo à
    direita, divididos por uma linha interna sutil (não são cards soltos) */

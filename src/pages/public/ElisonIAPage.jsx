@@ -1,13 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import ModulePageLayout from '@/components/landing/ModulePageLayout'
 import Reveal from '@/components/landing/Reveal'
 import { modulePages } from '@/data/publicModules'
 import {
   Bot, MessageCircle, HelpCircle, UserCheck, Sparkles, Send, Check, BookOpen,
-  Calculator, Calendar, ShieldCheck, HeartPulse, CreditCard, ClipboardList,
+  Calculator, Calendar, HeartPulse, ClipboardList,
   ArrowRight,
 } from 'lucide-react'
+
+// Destaca uma ou mais palavras/expressões específicas dentro de um texto.
+function highlightWords(text, words) {
+  if (!text || !words?.length) return text
+  const pattern = new RegExp(`(${words.join('|')})`, 'gi')
+  return text.split(pattern).map((part, i) =>
+    words.some((w) => w.toLowerCase() === part.toLowerCase())
+      ? <span key={i} className="landing-accent">{part}</span>
+      : part
+  )
+}
 
 // ── Data ──────────────────────────────────────────────────────
 
@@ -177,14 +188,15 @@ function ElisonHero() {
         <div className="elison-hero-inner">
           <Reveal className="elison-hero-copy-area">
             <div className="elison-hero-copy">
-              <span className="section-label">Elisson.IA</span>
+              <span className="section-label">ELISSON.IA</span>
               <h1 className="elison-hero-title">
-                Enquanto você tatua, o Elisson.IA atende{' '}
-                <span className="landing-accent">como se fosse você.</span>
+                Mantenha seu<br />
+                estúdio funcionando<br />
+                {highlightWords('enquanto você tatua.', ['enquanto você tatua.'])}
               </h1>
               <p className="elison-hero-sub">
-                Uma IA treinada com o jeito do seu estúdio para responder leads, tirar dúvidas e acompanhar
-                clientes pelo WhatsApp sem deixar conversa parada.
+                O Elisson.IA atende clientes, responde dúvidas e conduz conversas com base nas informações do seu
+                estúdio.
               </p>
             </div>
           </Reveal>
@@ -265,13 +277,15 @@ function ElisonHowSection() {
       <div className="container">
         <Reveal>
           <div className="section-header-center elison-how-header">
-            <span className="section-label">Como funciona</span>
+            <span className="section-label">ELISSON.IA</span>
             <h2 className="section-title elison-how-title">
-              Você ensina. O Elisson.IA responde. O cliente continua sendo cuidado.
+              Antes de atender<br />
+              seu cliente,<br />
+              {highlightWords('ele entrevista você.', ['ele entrevista você.'])}
             </h2>
             <p className="section-sub elison-how-sub">
-              Cadastre o jeito do seu estúdio, suas respostas frequentes e suas orientações. O Elisson.IA usa essas
-              informações para conduzir conversas com naturalidade até você poder assumir.
+              Em uma entrevista inicial, o Elisson.IA aprende sua rotina, seus serviços e sua forma de atender.
+              Depois, conversa com seus clientes como {highlightWords('parte da equipe.', ['parte da equipe.'])}
             </p>
           </div>
         </Reveal>
@@ -338,32 +352,17 @@ const deskCategories = [
   {
     Icon: Calculator,
     title: 'Orçamentos',
-    text: 'Coleta referência da arte, tamanho, local do corpo, estilo e informações para avaliação.',
+    text: 'Responde orçamentos com base no seu estilo, tamanho, região e referências.',
   },
   {
     Icon: Calendar,
-    title: 'Agenda e horários',
-    text: 'Responde sobre disponibilidade, confirma sessões, lembra horários e ajuda no reagendamento.',
-  },
-  {
-    Icon: ShieldCheck,
-    title: 'Cuidados pré-tattoo',
-    text: 'Envia orientações antes da sessão para preparar melhor o cliente.',
+    title: 'Horários e agenda',
+    text: 'Confirma sessões, informa disponibilidade e lembra horários.',
   },
   {
     Icon: HeartPulse,
-    title: 'Cuidados pós-tattoo',
-    text: 'Orienta sobre cicatrização, higiene, pomada e acompanhamento depois da tattoo.',
-  },
-  {
-    Icon: CreditCard,
-    title: 'Pagamentos e sinal',
-    text: 'Explica regras de sinal, formas de pagamento, cobranças e próximos passos.',
-  },
-  {
-    Icon: HelpCircle,
-    title: 'Dúvidas frequentes',
-    text: 'Responde sobre endereço, estilos atendidos, tempo de sessão, política do estúdio e atendimento.',
+    title: 'Cuidados e dúvidas',
+    text: 'Orienta sobre cuidados pré e pós-tattoo e tira dúvidas frequentes.',
   },
 ]
 
@@ -386,9 +385,11 @@ function ElisonDeskSection() {
       <div className="container">
         <Reveal>
           <div className="section-header-center elison-desk-header">
-            <span className="section-label">Atendimento na prática</span>
+            <span className="section-label">ELISSON.IA</span>
             <h2 className="section-title elison-desk-title">
-              O Elisson.IA ajuda nas mensagens que <span className="landing-accent">mais tomam seu tempo.</span>
+              Elisson responde<br />
+              mensagens que {highlightWords('mais', ['mais'])}<br />
+              {highlightWords('tomam seu tempo.', ['tomam seu tempo.'])}
             </h2>
             <p className="section-sub elison-desk-sub">
               Orçamentos, horários, cuidados, dúvidas frequentes e acompanhamento do cliente podem ser respondidos
@@ -441,7 +442,7 @@ function ElisonDeskSection() {
               <MessageCircle size={16} strokeWidth={2} />
             </span>
             <p>
-              Menos WhatsApp repetitivo, mais atendimento organizado e{' '}
+              Menos mensagens repetitivas, mais atendimento organizado e{' '}
               <span className="text-pink">mais tempo para tatuar.</span>
             </p>
           </div>

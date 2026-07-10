@@ -4651,7 +4651,27 @@
 }
 .landing.theme-light .shop-catalog-glow { opacity: 0.55; }
 .shop-catalog .container { position: relative; z-index: 1; }
-.shop-catalog-title { text-wrap: balance; max-width: 660px; margin-left: auto; margin-right: auto; }
+.shop-catalog-title {
+  text-wrap: balance;
+  max-width: 660px;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: clamp(32px, 5vw, 52px);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+}
+/* O trecho em rosa herda a mesma fonte/peso/tamanho do título — só muda
+   a cor (.landing-accent global tem sua própria fonte/tamanho, que
+   destoa aqui). Mesmo padrão aplicado nas demais páginas (Conta Digital). */
+.shop-catalog-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
+}
+.shop-catalog-sub { line-height: 1.65; }
 
 .shop-catalog-visual {
   position: relative;
@@ -4708,8 +4728,19 @@
   row-gap: 20px;
   align-items: center;
 }
-.shop-detail-title { margin-top: 14px; }
-.shop-detail-sub { margin-top: 12px; max-width: 460px; }
+.shop-detail-title { margin-top: 14px; line-height: 1.14; }
+/* O trecho em rosa herda a mesma fonte/peso/tamanho do título — só muda
+   a cor (.landing-accent global tem sua própria fonte/tamanho, que
+   destoa aqui). Mesmo padrão aplicado nas demais páginas. */
+.shop-detail-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
+}
+.shop-detail-sub { margin-top: 12px; max-width: 460px; line-height: 1.65; }
 
 .shop-detail-visual {
   position: relative;
@@ -4771,6 +4802,67 @@
 .shop-detail-benefit-row .core-solution-title { font-size: 15.5px; margin-bottom: 3px; }
 .shop-detail-benefit-row .core-solution-text { font-size: 13.5px; }
 
+/* Seção 3 — CTA final da Shop. Classes próprias (shop-final-*), não
+   afeta outras páginas. */
+.shop-final { position: relative; overflow: hidden; }
+.shop-final-glow {
+  position: absolute;
+  top: -160px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 940px;
+  height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,46,209,0.1) 0%, transparent 58%);
+  pointer-events: none;
+}
+.landing.theme-light .shop-final-glow { opacity: 0.5; }
+.shop-final .container { position: relative; z-index: 1; }
+.shop-final-panel {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 56px 48px;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.1);
+  background: linear-gradient(160deg, #0d1117, #101822);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(255,46,209,0.08),
+    0 40px 100px rgba(0,0,0,0.5),
+    0 0 90px rgba(255,46,209,0.1);
+}
+.landing.theme-light .shop-final-panel {
+  background: linear-gradient(160deg, #ffffff, #fbfbfd);
+  border-color: rgba(11,11,14,0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.6),
+    0 30px 70px rgba(11,11,14,0.08),
+    0 0 60px rgba(255,46,209,0.06);
+}
+.shop-final-title { margin-bottom: 14px; line-height: 1.14; }
+/* O trecho em rosa herda a mesma fonte/peso/tamanho do título — só muda
+   a cor (.landing-accent global tem sua própria fonte/tamanho, que
+   destoa aqui). Mesmo padrão aplicado nas demais páginas. */
+.shop-final-title .landing-accent {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  letter-spacing: inherit;
+  color: var(--pink);
+}
+.shop-final-sub { max-width: 480px; margin: 0 auto; line-height: 1.65; }
+.shop-final-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+
 @media (max-width: 920px) {
   .shop-catalog-visual { margin-top: 36px; }
   .shop-catalog-cards { margin-top: 40px; }
@@ -4782,6 +4874,8 @@
   .shop-catalog-cards { margin-top: 32px; }
   .shop-detail-visual-img { max-height: 300px; }
   .shop-detail-benefits { margin-top: 22px; }
+  .shop-final-panel { padding: 36px 22px; border-radius: 22px; }
+  .shop-final-actions .btn { width: 100%; max-width: 320px; justify-content: center; }
 }
 
 /* ─── Cursos — landing pública (hero + vantagem para assinantes).

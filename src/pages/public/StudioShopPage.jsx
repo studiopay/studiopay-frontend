@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import Navbar from '@/components/landing/Navbar'
 import Footer from '@/components/landing/Footer'
 import PublicSiteShell from '@/components/landing/PublicSiteShell'
@@ -6,7 +7,7 @@ import Reveal from '@/components/landing/Reveal'
 import { getAdminContent, ADMIN_KEYS } from '@/utils/adminContent'
 import {
   ShoppingBag, Percent, Package, Lightbulb, Star,
-  DollarSign, TrendingDown, Layers,
+  TrendingDown, Layers, ArrowRight,
 } from 'lucide-react'
 
 // ── Admin-swappable content (opcional — sem UI de edição nesta rodada) ──
@@ -63,9 +64,10 @@ const catalogBenefits = [
 ]
 
 const productBenefits = [
-  { Icon: DollarSign, title: 'Preço especial para cliente Studio Pay', text: 'O assinante encontra valores mais vantajosos em produtos selecionados.' },
-  { Icon: TrendingDown, title: 'Mais economia por compra', text: 'A vantagem aparece no dia a dia, especialmente em itens recorrentes do estúdio.' },
-  { Icon: Layers, title: 'Ecossistema que ajuda no lucro', text: 'O Studio Pay organiza a operação e ainda reduz custo na compra dos insumos.' },
+  { Icon: Star, title: 'Studio Pro', text: 'Preços e benefícios exclusivos para assinantes.' },
+  { Icon: Package, title: 'Seleção de produtos', text: 'Os principais insumos da rotina do seu estúdio.' },
+  { Icon: TrendingDown, title: 'Economia real', text: 'Economia que faz diferença em cada compra.' },
+  { Icon: Layers, title: 'Compra integrada', text: 'Compre sem sair da plataforma Studio Pay.' },
 ]
 
 const productTags = ['Até 40% OFF', 'Condições exclusivas', 'Benefício para assinante']
@@ -79,14 +81,15 @@ function ShopCatalogSection({ image }) {
       <div className="container">
         <Reveal>
           <div className="section-header-center">
-            <span className="section-label">Studio Shop</span>
+            <span className="section-label">STUDIO SHOP</span>
             <h2 className="section-title shop-catalog-title">
-              Seu lucro também começa na compra.<br />
-              Produtos com <span className="landing-accent">vantagem</span> para quem usa Studio Pay.
+              {highlightWords('Compare primeiro.', ['Compare'])}
+              <br />
+              {highlightWords('Compre depois.', ['depois.'])}
             </h2>
-            <p className="section-sub">
-              Com o Studio Shop, assinantes Studio Pay acessam produtos, kits e condições pensadas para reduzir
-              custos na rotina do estúdio.
+            <p className="section-sub shop-catalog-sub">
+              Antes de comprar seus insumos, veja as condições que o Studio Shop preparou para assinantes Studio
+              Pay.
             </p>
           </div>
         </Reveal>
@@ -156,14 +159,13 @@ function ShopDetailSection({ image }) {
           </Reveal>
 
           <Reveal delay={100} className="shop-detail-text-area">
-            <span className="section-label">Condições exclusivas</span>
+            <span className="section-label">CONDIÇÕES EXCLUSIVAS</span>
             <h2 className="section-title shop-detail-title">
-              Não é só comprar.<br />
-              É <span className="landing-accent">comprar melhor</span> com o Studio Pay.
+              Compre seus insumos<br />
+              {highlightWords('sem sair do Studio Pay.', ['Studio Pay.'])}
             </h2>
             <p className="section-sub shop-detail-sub">
-              Veja preços especiais, vantagens por plano e benefícios que ajudam o tatuador a economizar em cada
-              compra.
+              Assine o Studio Pro e garanta acesso a uma seleção de produtos com condições exclusivas.
             </p>
 
             <div className="shop-detail-benefits">
@@ -183,10 +185,39 @@ function ShopDetailSection({ image }) {
         <Reveal delay={220}>
           <p className="core-pill">
             {highlightWords(
-              'Menos custo por compra, mais margem no estúdio e um ecossistema que trabalha a seu favor.',
-              ['trabalha a seu favor.']
+              'Comprar melhor também faz parte da gestão do seu estúdio.',
+              ['gestão do seu estúdio.']
             )}
           </p>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+// ── Seção 3 — CTA final da Shop ──────────────────────────────
+
+function ShopFinalSection() {
+  return (
+    <section className="shop-final module-section">
+      <div className="shop-final-glow" />
+      <div className="container">
+        <Reveal>
+          <div className="shop-final-panel">
+            <h2 className="section-title shop-final-title">
+              Comprar melhor<br />
+              {highlightWords('começa no Studio Pay.', ['Studio Pay.'])}
+            </h2>
+            <p className="section-sub shop-final-sub">
+              Produtos selecionados, condições exclusivas<br />
+              e tudo dentro da plataforma.
+            </p>
+            <div className="shop-final-actions">
+              <Link to="/cadastro" className="btn btn-primary btn-lg">
+                Começar agora <ArrowRight size={18} />
+              </Link>
+            </div>
+          </div>
         </Reveal>
       </div>
     </section>
@@ -204,8 +235,9 @@ export default function StudioShopPage() {
       <main className="module-page shop-page">
         <ShopCatalogSection image={catalogImage} />
         <ShopDetailSection image={productImage} />
+        <ShopFinalSection />
       </main>
-      <Footer />
+      <Footer showCta={false} />
     </PublicSiteShell>
   )
 }

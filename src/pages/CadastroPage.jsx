@@ -1,27 +1,27 @@
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
-import { Eye, EyeOff, Check } from 'lucide-react'
+import { Eye, EyeOff, Check, ArrowRight, Building2, ShieldCheck } from 'lucide-react'
 
 const PLANOS = [
-  { id: 'starter', name: 'Starter', price: 'R$ 37,90/mês', desc: 'Para começar organizado.' },
-  { id: 'pro', name: 'Pro', price: 'R$ 97,90/mês', desc: 'Para crescer com automação.' },
+  { id: 'starter', name: 'Starter', price: 'R$ 37,90/mês', desc: 'Organização essencial.' },
+  { id: 'pro', name: 'Pro', price: 'R$ 97,90/mês', desc: 'Para crescer organizado.' },
 ]
 const PLANO_IDS = new Set(PLANOS.map(p => p.id))
 
-const PROCESS_STEPS = [
-  { title: 'Você informa os dados', text: 'Preencha nome, e-mail, CNPJ e escolha o plano.' },
-  { title: 'Análise cadastral', text: 'As informações passam por validação interna de segurança.' },
-  { title: 'Ativação do acesso', text: 'Você recebe confirmação quando o acesso estiver liberado.' },
-  { title: 'Organização da rotina', text: 'Comece pelo módulo que mais pesa hoje e conecte o resto no seu tempo.' },
-]
+function formatWhatsapp(value) {
+  const digits = value.replace(/\D/g, '').slice(0, 11)
+  if (digits.length <= 2) return digits
+  if (digits.length <= 7) return `(${digits.slice(0, 2)}) ${digits.slice(2)}`
+  return `(${digits.slice(0, 2)}) ${digits.slice(2, 7)}-${digits.slice(7)}`
+}
 
 export default function CadastroPage() {
   const navigate = useNavigate()
   const [params] = useSearchParams()
-  const planoInicial = PLANO_IDS.has(params.get('plano')) ? params.get('plano') : 'starter'
+  const planoInicial = PLANO_IDS.has(params.get('plano')) ? params.get('plano') : 'pro'
 
   const [form, setForm] = useState({
-    nome: '', estudio: '', cnpj: '', email: '',
+    nome: '', estudio: '', cnpj: '', email: '', whatsapp: '',
     senha: '', confirmar: '', plano: planoInicial,
   })
   const [showPass, setShowPass] = useState(false)
@@ -38,7 +38,7 @@ export default function CadastroPage() {
 
     if (!form.nome.trim()) return setError('Informe seu nome completo.')
     if (!form.email.trim() || !form.email.includes('@')) return setError('Informe um e-mail válido.')
-    if (!form.senha || form.senha.length < 6) return setError('A senha deve ter pelo menos 6 caracteres.')
+    if (!form.senha || form.senha.length < 8) return setError('A senha deve ter pelo menos 8 caracteres.')
     if (form.senha !== form.confirmar) return setError('As senhas não coincidem. Verifique e tente novamente.')
 
     setLoading(true)
@@ -57,46 +57,33 @@ export default function CadastroPage() {
   }
 
   return (
-    <div className="auth-page">
+    <div className="auth-page auth-page-cadastro">
 
-      {/* ── LADO ESQUERDO — processo de abertura ── */}
+      {/* ── LADO ESQUERDO — logo + headline ── */}
       <div className="auth-left">
         <Link to="/" className="logo auth-logo">
           <img src="/brand/logo-studio-pay-horizontal-white.png" alt="Studio Pay" className="auth-logo-img" />
         </Link>
 
-        <div className="auth-hero-text">
-          <h2>Sua conta para organizar o estúdio.</h2>
-          <p>Uma operação financeira e de gestão pensada para tatuadores.</p>
-        </div>
-
-        <div className="auth-process">
-          <p className="auth-process-title">Como funciona a abertura</p>
-          <div className="auth-process-steps">
-            {PROCESS_STEPS.map((step, i) => (
-              <div className="auth-process-step" key={i}>
-                <div className="auth-process-step-num">{i + 1}</div>
-                <div className="auth-process-step-body">
-                  <span className="auth-process-step-label">{step.title}</span>
-                  <span className="auth-process-step-text">{step.text}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="auth-cadastro-hero">
+          <h1 className="auth-cadastro-title">
+            Studio Pay.<br />
+            <span className="text-pink">Seu estúdio<br />merece.</span>
+          </h1>
         </div>
 
         <div className="auth-glow" />
       </div>
 
-      {/* ── LADO DIREITO — formulário ── */}
+      {/* ── LADO DIREITO — card de cadastro ── */}
       <div className="auth-right">
-        <div className="auth-form-wrapper">
-          <div className="auth-form-header">
-            <h1>Solicite sua conta Studio Pay</h1>
-            <p>
-              Informe seus dados para iniciar a abertura. A ativação pode passar por análise
-              cadastral e validação de segurança.
-            </p>
+        <div className="auth-form-wrapper auth-cadastro-card">
+          <div className="auth-cadastro-card-head">
+            <div>
+              <h1 className="auth-cadastro-card-title">Abra sua conta</h1>
+              <p className="auth-cadastro-card-sub">Em poucos minutos</p>
+            </div>
+            <span className="auth-cadastro-step-pill">Etapa 1 de 2</span>
           </div>
 
           <form className="auth-form" onSubmit={handleSubmit}>
@@ -113,11 +100,13 @@ export default function CadastroPage() {
                 />
               </div>
               <div className="form-group">
-                <label>Nome do estúdio</label>
+                <label className="auth-cadastro-label-row">
+                  Nome do estúdio <span className="auth-cadastro-optional">Opcional</span>
+                </label>
                 <input
                   className="form-input"
                   type="text"
-                  placeholder="Opcional"
+                  placeholder="Ex.: Black House"
                   value={form.estudio}
                   onChange={set('estudio')}
                 />
@@ -137,15 +126,36 @@ export default function CadastroPage() {
                 />
               </div>
               <div className="form-group">
-                <label>CNPJ ou CPF</label>
+                <label>WhatsApp</label>
                 <input
                   className="form-input"
-                  type="text"
-                  placeholder="00.000.000/0001-00"
-                  value={form.cnpj}
-                  onChange={set('cnpj')}
+                  type="tel"
+                  placeholder="(47) 99999-9999"
+                  value={form.whatsapp}
+                  onChange={e => setForm(prev => ({ ...prev, whatsapp: formatWhatsapp(e.target.value) }))}
+                  autoComplete="tel"
                 />
               </div>
+            </div>
+
+            <div className="form-group">
+              <label>Tipo de conta</label>
+              <div className="auth-cadastro-type-option selected">
+                <span className="auth-cadastro-type-icon"><Building2 size={18} strokeWidth={1.8} /></span>
+                <span className="auth-cadastro-type-label">Empresa</span>
+                <span className="auth-cadastro-type-check"><Check size={12} /></span>
+              </div>
+            </div>
+
+            <div className="form-group">
+              <label>CNPJ</label>
+              <input
+                className="form-input"
+                type="text"
+                placeholder="00.000.000/0000-00"
+                value={form.cnpj}
+                onChange={set('cnpj')}
+              />
             </div>
 
             <div className="auth-grid-2">
@@ -155,7 +165,7 @@ export default function CadastroPage() {
                   <input
                     className="form-input"
                     type={showPass ? 'text' : 'password'}
-                    placeholder="Mín. 6 caracteres"
+                    placeholder="Use pelo menos 8 caracteres"
                     value={form.senha}
                     onChange={set('senha')}
                     autoComplete="new-password"
@@ -178,8 +188,10 @@ export default function CadastroPage() {
               </div>
             </div>
 
+            <div className="auth-cadastro-divider" />
+
             <div className="form-group">
-              <label>Plano</label>
+              <label>Escolha seu plano</label>
               <div className="plan-picker">
                 {PLANOS.map(p => (
                   <div
@@ -187,6 +199,7 @@ export default function CadastroPage() {
                     className={`plan-pick-card ${form.plano === p.id ? 'selected' : ''}`}
                     onClick={() => setForm(prev => ({ ...prev, plano: p.id }))}
                   >
+                    {p.id === 'pro' && <span className="plan-pick-highlight">+ MAIS ESCOLHIDO</span>}
                     {form.plano === p.id && <div className="plan-pick-check"><Check size={12} /></div>}
                     <p className="plan-pick-name">{p.name}</p>
                     <p className="plan-pick-price">{p.price}</p>
@@ -198,21 +211,21 @@ export default function CadastroPage() {
 
             {error && <p className="auth-error">{error}</p>}
 
-            <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={loading}>
-              {loading ? 'Enviando solicitação...' : 'Solicitar abertura'}
+            <button type="submit" className="btn btn-primary btn-block btn-lg auth-cadastro-submit" disabled={loading}>
+              {loading ? 'Enviando solicitação...' : <>Continuar cadastro <ArrowRight size={18} /></>}
             </button>
 
-            <p className="auth-compliance">
-              A abertura da conta está sujeita à análise cadastral e validação das informações.
-            </p>
-            <p className="auth-compliance">
-              Produtos financeiros podem ser oferecidos por parceiros autorizados, conforme
-              disponibilidade e análise.
-            </p>
+            <div className="auth-cadastro-compliance">
+              <span className="auth-cadastro-compliance-icon"><ShieldCheck size={16} strokeWidth={1.8} /></span>
+              <p>
+                Seus dados são protegidos e utilizados apenas para criação e validação da conta.
+                Alguns recursos podem exigir validação cadastral.
+              </p>
+            </div>
           </form>
 
           <p className="auth-switch">
-            Já tem conta? <Link to="/login" className="text-pink">Acessar</Link>
+            Já tem conta? <Link to="/login" className="text-pink">Entrar</Link>
           </p>
         </div>
       </div>

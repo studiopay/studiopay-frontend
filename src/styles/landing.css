@@ -2303,24 +2303,6 @@
   border-right: 1px solid rgba(255,255,255,0.06);
   position: relative; overflow: hidden;
 }
-.auth-left-top { display: flex; align-items: center; justify-content: space-between; }
-.auth-hero-text h2 {
-  font-size: clamp(24px, 3vw, 34px); font-family: var(--font-body);
-  font-weight: 800; margin-bottom: 12px; line-height: 1.2; color: #F8F9FB;
-}
-.auth-hero-text p { color: rgba(248,249,251,0.65); font-size: 15px; margin-bottom: 28px; }
-.auth-features { display: flex; flex-direction: column; gap: 12px; }
-.auth-feature-item {
-  display: flex; align-items: center; gap: 12px; font-size: 14px;
-  color: rgba(248,249,251,0.65); padding: 10px 14px;
-  background: rgba(255,255,255,0.04); border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.06);
-}
-.auth-feature-check {
-  width: 22px; height: 22px; background: var(--pink-dim); border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--pink); font-size: 12px; font-weight: 700; flex-shrink: 0;
-}
 .auth-glow {
   position: absolute; bottom: -120px; right: -120px;
   width: 400px; height: 400px; border-radius: 50%;
@@ -2470,30 +2452,139 @@
 .auth-mockup-txn-value.out { color: rgba(251,113,133,0.9); }
 .auth-mockup-tagline { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.72); margin-bottom: 12px; }
 
-/* ─── Auth process steps (Cadastro) ─────────────────────────── */
-.auth-process { display: flex; flex-direction: column; gap: 12px; }
-.auth-process-title {
-  font-size: 11px; font-weight: 700; color: var(--pink);
-  text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px;
+/* ─── Cadastro Page Layout (/cadastro) ────────────────────────
+   Logo + headline grande à esquerda, card grande de formulário à
+   direita. Reaproveita a base .auth-page/.auth-left/.auth-right/
+   .form-input/.plan-picker (compartilhada com /login), sobrescrevendo
+   só o necessário sob o modifier .auth-page-cadastro — mesmo padrão
+   já usado por .auth-page-login, então /login não é afetado.
+────────────────────────────────────────────────────────────── */
+.auth-page-cadastro .auth-left {
+  justify-content: space-between;
+  padding: 56px 64px;
 }
-.auth-process-steps { display: flex; flex-direction: column; }
-.auth-process-step {
-  display: flex; align-items: flex-start; gap: 14px;
-  padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+.auth-page-cadastro .auth-glow {
+  width: 620px;
+  height: 620px;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(255,46,209,0.22) 0%, rgba(139,92,246,0.12) 45%, transparent 72%);
+  filter: blur(30px);
 }
-.auth-process-step:last-child { border-bottom: none; padding-bottom: 0; }
-.auth-process-step-num {
-  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
-  background: rgba(255,46,209,0.12); border: 1px solid rgba(255,46,209,0.28);
-  color: var(--pink); font-size: 12px; font-weight: 700;
-  display: flex; align-items: center; justify-content: center; margin-top: 1px;
+.auth-cadastro-hero {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
 }
-.auth-process-step-body { display: flex; flex-direction: column; gap: 2px; }
-.auth-process-step-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.88); }
-.auth-process-step-text { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+.auth-cadastro-title {
+  font-family: var(--font-body);
+  font-size: clamp(36px, 4.4vw, 58px);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: #F8F9FB;
+}
 
-/* Auth compliance notes */
-.auth-compliance { font-size: 11px; color: rgba(248,249,251,0.38); line-height: 1.6; text-align: center; }
+.auth-page-cadastro .auth-right { align-items: center; }
+.auth-cadastro-card {
+  max-width: 620px;
+  background: linear-gradient(160deg, #0d1117, #101822);
+  border: 1px solid rgba(255,46,209,0.16);
+  border-radius: 28px;
+  padding: 40px 44px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.05),
+    0 0 0 1px rgba(255,46,209,0.06),
+    0 32px 90px rgba(0,0,0,0.5),
+    0 0 60px rgba(255,46,209,0.08);
+}
+.auth-cadastro-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.auth-cadastro-card-title { font-size: 24px; font-family: var(--font-body); font-weight: 800; color: #F8F9FB; margin-bottom: 4px; }
+.auth-cadastro-card-sub { font-size: 14px; color: rgba(248,249,251,0.55); }
+.auth-cadastro-step-pill {
+  flex-shrink: 0;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: var(--pink);
+  background: var(--pink-dim);
+  border: 1px solid rgba(255,46,209,0.2);
+  border-radius: 9999px;
+  padding: 6px 14px;
+  white-space: nowrap;
+}
+
+.auth-cadastro-label-row { display: flex; align-items: center; justify-content: space-between; }
+.auth-cadastro-optional { font-size: 11px; font-weight: 600; color: rgba(248,249,251,0.4); }
+
+.auth-cadastro-type-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(255,46,209,0.4);
+  background: rgba(255,46,209,0.05);
+}
+.auth-cadastro-type-icon { color: var(--pink); display: flex; align-items: center; flex-shrink: 0; }
+.auth-cadastro-type-label { flex: 1; font-size: 14px; font-weight: 600; color: #F8F9FB; }
+.auth-cadastro-type-check {
+  width: 20px; height: 20px; border-radius: 50%; background: var(--pink);
+  display: flex; align-items: center; justify-content: center; color: #fff; flex-shrink: 0;
+}
+
+.auth-cadastro-divider { height: 1px; background: rgba(255,255,255,0.08); margin: 6px 0 4px; }
+
+.plan-pick-highlight {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pink), #c91fae);
+  border-radius: 9999px;
+  padding: 4px 10px;
+  white-space: nowrap;
+  box-shadow: 0 4px 14px rgba(255,46,209,0.35);
+}
+.auth-cadastro-submit { margin-top: 4px; gap: 8px; }
+
+.auth-cadastro-compliance {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 4px;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: rgba(248,249,251,0.42);
+}
+.auth-cadastro-compliance-icon { color: var(--pink); flex-shrink: 0; margin-top: 1px; }
+
+@media (max-width: 980px) {
+  .auth-page-cadastro .auth-left { padding: 44px 40px; }
+  .auth-cadastro-title { font-size: clamp(30px, 5vw, 42px); }
+  .auth-cadastro-card { padding: 32px; }
+}
+@media (max-width: 520px) {
+  .auth-cadastro-card-head { flex-direction: column; align-items: flex-start; gap: 10px; }
+  .auth-cadastro-title { font-size: clamp(28px, 8vw, 36px); }
+  .auth-cadastro-card { padding: 24px 20px; border-radius: 22px; }
+  .auth-page-cadastro .plan-picker { grid-template-columns: 1fr; }
+  .plan-pick-highlight { position: static; display: inline-block; transform: none; margin-bottom: 8px; }
+}
 
 /* ─── Login Page Layout ──────────────────────────────────────
    Estrutura inversa ao cadastro: left=form, right=visual.
@@ -2809,7 +2900,7 @@
 
 @media (max-width: 860px) {
   .auth-page { grid-template-columns: 1fr; }
-  /* Cadastro: oculta left (visual), mostra right (form) */
+  /* Cadastro (layout antigo): oculta left (visual), mostra right (form) */
   .auth-left { display: none; }
   .auth-right { padding: 24px 16px 40px; align-items: flex-start; }
   .auth-form-wrapper { max-width: 100%; }
@@ -2820,6 +2911,21 @@
   .auth-page-login .auth-right { display: none; }
   .auth-login-center { max-width: 100%; gap: 24px; }
   .auth-login-body { max-width: 100%; }
+
+  /* Cadastro (layout novo): empilha logo → headline → card, todos
+     visíveis — ordem de prioridade pedida para o mobile. */
+  .auth-page-cadastro .auth-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 24px;
+    padding: 32px 20px 28px;
+    text-align: center;
+  }
+  .auth-page-cadastro .auth-glow { width: 420px; height: 420px; }
+  .auth-cadastro-hero { flex: none; padding: 20px 0; justify-content: center; }
+  .auth-cadastro-title { text-align: center; }
+  .auth-page-cadastro .auth-right { padding: 0 16px 40px; align-items: center; }
 }
 @media (max-width: 480px) {
   .objetivo-picker { grid-template-columns: 1fr; }

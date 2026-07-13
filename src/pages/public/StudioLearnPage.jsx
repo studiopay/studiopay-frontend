@@ -5,7 +5,7 @@ import PublicSiteShell from '@/components/landing/PublicSiteShell'
 import Reveal from '@/components/landing/Reveal'
 import { getAdminContent, ADMIN_KEYS } from '@/utils/adminContent'
 import {
-  GraduationCap, Award, Percent, TrendingUp, Sparkles,
+  GraduationCap,
   Play, Star, Clock,
 } from 'lucide-react'
 
@@ -52,21 +52,6 @@ function highlightWords(text, words) {
   )
 }
 
-// ── Data ──────────────────────────────────────────────────────
-
-const heroBenefits = [
-  { Icon: Award, title: 'Grandes tatuadores', text: 'Aulas com profissionais reconhecidos no mercado.' },
-  { Icon: Percent, title: 'Preço de assinante', text: 'Condições melhores do que comprar o curso fora da plataforma.' },
-  { Icon: TrendingUp, title: 'Técnica e negócio', text: 'Conteúdos para evoluir a arte, o atendimento e a gestão.' },
-  { Icon: Sparkles, title: 'Crescimento contínuo', text: 'Aprenda, aplique e cresça dentro do ecossistema Studio Pay.' },
-]
-
-const valueBenefits = [
-  { Icon: Percent, title: 'Menor custo para aprender', text: 'O assinante acessa cursos com condições especiais dentro do Studio Pay.' },
-  { Icon: GraduationCap, title: 'Conteúdo de alto nível', text: 'Técnica, estilo, gestão e posicionamento com profissionais experientes.' },
-  { Icon: TrendingUp, title: 'Evolução que gera retorno', text: 'Quanto mais o tatuador evolui, melhor atende, vende e valoriza o próprio trabalho.' },
-]
-
 // ── Mockup do card de curso ───────────────────────────────────
 // Topo com foto real de tatuador trabalhando (fallback público fixo);
 // se a imagem não carregar, mantém o gradiente escuro com o ícone de
@@ -111,11 +96,11 @@ function CourseCardMockup({ image }) {
           </div>
           <div className="courses-mockup-price-row">
             <span>Cliente Studio Pay</span>
-            <span className="courses-mockup-price-in">R$ 297,00</span>
+            <span className="courses-mockup-price-in">R$ 47,90</span>
           </div>
         </div>
 
-        <div className="courses-mockup-savings">Economize R$ 200,00</div>
+        <div className="courses-mockup-savings">Economize R$ 449,10</div>
 
         <span className="courses-mockup-btn">Acessar condição</span>
       </div>
@@ -133,15 +118,17 @@ function CoursesHeroSection({ image }) {
         <div className="courses-hero-inner">
           <Reveal className="courses-hero-copy-area">
             <div className="courses-hero-copy">
-              <span className="section-label">Cursos Studio Pay</span>
+              <span className="section-label">CURSOS STUDIO PAY</span>
               <h1 className="courses-hero-title">
-                Aprenda com referências da tatuagem<br />
-                <span className="landing-accent">pagando menos</span> por ser Studio Pay.
+                Eleve seu conhecimento<br />
+                {highlightWords('com cursos Studio Pay.', ['com cursos Studio Pay.'])}
               </h1>
               <p className="courses-hero-sub">
-                Acesse cursos dos maiores tatuadores do Brasil com condições especiais para evoluir sua técnica,
-                melhorar sua gestão e crescer como profissional.
+                Cursos selecionados para tatuadores que querem evoluir na técnica, no atendimento e na gestão,
+                com condições especiais para assinantes Studio Pay.
               </p>
+              <span className="courses-hero-divider" aria-hidden="true" />
+              <p className="courses-hero-tagline">Crescer exige direção. O resto depende de você.</p>
             </div>
           </Reveal>
 
@@ -156,30 +143,7 @@ function CoursesHeroSection({ image }) {
               />
             </div>
           </Reveal>
-
-          <Reveal delay={160} className="courses-hero-cards-area">
-            <div className="core-solution-grid courses-benefits">
-              {heroBenefits.map(({ Icon, title, text }, i) => (
-                <Reveal key={title} delay={i * 50}>
-                  <div className="core-solution-card">
-                    <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
-                    <h3 className="core-solution-title">{title}</h3>
-                    <p className="core-solution-text">{text}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </Reveal>
         </div>
-
-        <Reveal delay={220}>
-          <p className="core-pill courses-pill">
-            {highlightWords(
-              'Conhecimento, técnica e crescimento com vantagem para quem vive da tatuagem.',
-              ['vantagem']
-            )}
-          </p>
-        </Reveal>
       </div>
     </section>
   )
@@ -198,35 +162,23 @@ function CoursesValueSection({ cardImage }) {
           </Reveal>
 
           <Reveal delay={100} className="courses-value-text-area">
-            <span className="section-label">Vantagem para assinantes</span>
+            <span className="section-label">VANTAGEM PARA ASSINANTES</span>
             <h2 className="section-title courses-value-title">
-              O mesmo curso, uma{' '}
-              {highlightWords('condição melhor', ['condição melhor'])} para quem é Studio Pay.
+              <span className="courses-value-title-line">Os cursos que você deseja,</span><br />
+              <span className="courses-value-title-line">com {highlightWords('condições exclusivas', ['condições exclusivas'])}</span><br />
+              <span className="courses-value-title-line">para assinantes.</span>
             </h2>
             <p className="section-sub courses-value-sub">
-              Cursos que normalmente custariam mais fora da plataforma chegam ao assinante com valores especiais,
-              combos e benefícios exclusivos.
+              Formações de alto nível, com valores exclusivos para assinantes Studio Pay.
             </p>
-
-            <div className="courses-value-benefits">
-              {valueBenefits.map(({ Icon, title, text }) => (
-                <div key={title} className="courses-value-benefit-row">
-                  <span className="core-solution-icon"><Icon size={19} strokeWidth={1.8} /></span>
-                  <div>
-                    <h3 className="core-solution-title">{title}</h3>
-                    <p className="core-solution-text">{text}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </Reveal>
         </div>
 
         <Reveal delay={220}>
           <p className="core-pill courses-pill">
             {highlightWords(
-              'Aprenda melhor, cobre melhor e cresça com uma plataforma feita para quem vive da tatuagem.',
-              ['cobre melhor']
+              'Conteúdos que acompanham a arte, o atendimento e a gestão.',
+              ['arte', 'atendimento', 'gestão']
             )}
           </p>
         </Reveal>

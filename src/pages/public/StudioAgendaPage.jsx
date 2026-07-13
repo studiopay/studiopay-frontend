@@ -4,9 +4,10 @@ import ModulePageLayout from '@/components/landing/ModulePageLayout'
 import Reveal from '@/components/landing/Reveal'
 import { modulePages } from '@/data/publicModules'
 import {
-  CalendarCheck, CalendarClock, BellRing, LayoutGrid, Calendar,
-  Bell, MessageCircle, ShieldCheck, CalendarX2, MessageCircleOff, HeartHandshake,
-  Wallet, CheckCircle2, Clock, Users, ArrowRight, Hourglass, ListChecks, Sparkles,
+  Calendar,
+  Bell, MessageCircle,
+  CheckCircle2, Users, ArrowRight, Sparkles,
+  CalendarX2, ShieldCheck, TrendingUp,
 } from 'lucide-react'
 
 // Imagem oficial de produção — fica em /public, então sobe junto com o
@@ -18,13 +19,6 @@ const AGENDA_HERO_IMAGE_FALLBACK = '/images/studio-pay/agenda-hero.webp?v=2'
 function readAdminAgendaHero() {
   try { return JSON.parse(localStorage.getItem('studioPayAdmin_agendaHero') || 'null') } catch { return null }
 }
-
-const agendaHeroCards = [
-  { Icon: CalendarCheck, title: 'Horários disponíveis', text: 'Mostre sua disponibilidade sem precisar responder manualmente.' },
-  { Icon: CalendarClock, title: 'Confirmação automática', text: 'O Studio Pay envia mensagens para confirmar a sessão antes do horário.' },
-  { Icon: BellRing, title: 'Lembretes da sessão', text: 'Reduza esquecimentos e atrasos com avisos automáticos no momento certo.' },
-  { Icon: LayoutGrid, title: 'Agenda organizada', text: 'Visualize sessões, bloqueios e atendimentos em um só lugar.' },
-]
 
 // Mostra a imagem (admin/localStorage como override local, ou o fallback fixo
 // em /public); só cai para o placeholder se nenhuma imagem carregar.
@@ -56,13 +50,14 @@ function AgendaHero() {
         <div className="agenda-hero-inner">
           <Reveal className="agenda-hero-copy-area">
             <div className="agenda-hero-copy">
-              <span className="section-label">Agenda inteligente</span>
+              <span className="section-label">AGENDA INTELIGENTE</span>
               <h1 className="agenda-hero-title">
-                Sua agenda trabalha <span className="landing-accent">por você,</span> mesmo quando você está tatuando.
+                Agenda inteligente<br />
+                trabalhando <span className="landing-accent">por você.</span>
               </h1>
               <p className="agenda-hero-sub">
-                O cliente consulta horários disponíveis, agenda com mais facilidade e recebe lembretes automáticos
-                quando a sessão estiver chegando.
+                Organize horários, confirme sessões e envie lembretes automáticos sem depender de controle
+                manual.
               </p>
             </div>
           </Reveal>
@@ -70,20 +65,6 @@ function AgendaHero() {
           <Reveal delay={100} className="agenda-hero-visual-area">
             <div className="agenda-hero-visual">
               <AgendaHeroImage src={heroImage} alt="Studio Agenda" />
-            </div>
-          </Reveal>
-
-          <Reveal delay={160} className="agenda-hero-cards-area">
-            <div className="core-solution-grid agenda-hero-cards">
-              {agendaHeroCards.map(({ Icon, title, text }, i) => (
-                <Reveal key={title} delay={i * 50}>
-                  <div className="core-solution-card">
-                    <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
-                    <h3 className="core-solution-title">{title}</h3>
-                    <p className="core-solution-text">{text}</p>
-                  </div>
-                </Reveal>
-              ))}
             </div>
           </Reveal>
         </div>
@@ -94,8 +75,8 @@ function AgendaHero() {
               <Calendar size={16} strokeWidth={2} />
             </span>
             <p>
-              Horários disponíveis, confirmações automáticas e lembretes em uma experiência{' '}
-              <span className="text-pink">feita para quem vive da tatuagem.</span>
+              Horários disponíveis, confirmações automáticas e lembretes{' '}
+              <span className="text-pink">inteligentes.</span>
             </p>
           </div>
         </Reveal>
@@ -109,22 +90,18 @@ function AgendaHero() {
 // painel interno da Agenda — sem depender de imagem.
 
 const reminderItems = [
-  { Icon: Bell, title: 'Confirmação automática', text: 'Elisson.IA confirma 24h antes', on: true },
-  { Icon: MessageCircle, title: 'Robô pré-tattoo', text: 'Cuidados enviados 2h antes', on: true },
-  { Icon: ShieldCheck, title: 'Robô pós-tattoo', text: 'Cicatrização enviada após sessão', on: true },
-  { Icon: CalendarClock, title: 'Lembretes ativos', text: '3 lembretes configurados', on: false },
-]
-
-const reminderBenefits = [
-  { Icon: CalendarX2, title: 'Menos faltas', text: 'O cliente recebe aviso antes da sessão.' },
-  { Icon: MessageCircleOff, title: 'Menos mensagem manual', text: 'O sistema envia os lembretes por você.' },
-  { Icon: HeartHandshake, title: 'Mais acompanhamento', text: 'Antes e depois da tattoo, o cliente continua sendo cuidado.' },
+  { Icon: CheckCircle2, title: 'Confirmação de horário', text: 'Lembra o cliente de confirmar o horário agendado.', on: true },
+  { Icon: Bell, title: 'Lembrete pré-sessão', text: 'Envia um lembrete antes do horário da sessão.', on: true },
+  { Icon: MessageCircle, title: 'Mensagem pós-sessão', text: 'Agradece e mantém o relacionamento ativo.', on: false },
 ]
 
 function RemindersPanel() {
   return (
     <div className="agenda-reminders-panel" aria-hidden="true">
-      <p className="agenda-reminders-panel-title">Lembretes automáticos</p>
+      <p className="agenda-reminders-panel-title">
+        <span className="agenda-reminders-panel-icon"><Calendar size={16} strokeWidth={1.8} /></span>
+        Agenda inteligente
+      </p>
       <div className="agenda-reminders-list">
         {reminderItems.map(({ Icon, title, text, on }) => (
           <div key={title} className="agenda-reminder-row">
@@ -132,7 +109,6 @@ function RemindersPanel() {
             <div className="agenda-reminder-copy">
               <h3 className="agenda-reminder-title">{title}</h3>
               <p className="agenda-reminder-text">{text}</p>
-              <span className="agenda-reminder-action">Configurar</span>
             </div>
             <span className={`agenda-reminder-toggle${on ? '' : ' off'}`}>
               <span className="agenda-reminder-knob" />
@@ -155,35 +131,14 @@ function AgendaRemindersSection() {
           </Reveal>
 
           <Reveal delay={100} className="agenda-reminders-text-area">
-            <span className="section-label">Lembretes automáticos</span>
+            <span className="section-label">AGENDA INTELIGENTE</span>
             <h2 className="section-title agenda-reminders-title">
-              Lembretes automáticos<br />
-              para o cliente{' '}
-              <span className="landing-accent agenda-reminders-accent">
-                não{' '}esquecer<br />
-                da sessão.
-              </span>
+              Lembretes automáticos,<br />
+              <span className="landing-accent">na hora certa.</span>
             </h2>
             <p className="section-sub agenda-reminders-sub">
-              Configure confirmações, avisos pré-tattoo e mensagens pós-sessão para acompanhar o cliente sem
-              depender do WhatsApp manual.
+              A agenda confirma horários e lembra seus clientes antes da sessão, ajudando na rotina do estúdio.
             </p>
-          </Reveal>
-
-          <Reveal delay={160} className="agenda-reminders-benefits-area">
-            <div className="agenda-reminders-benefits">
-              {reminderBenefits.map(({ Icon, title, text }, i) => (
-                <Reveal key={title} delay={i * 50}>
-                  <div className="core-solution-card agenda-reminders-benefit-card">
-                    <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
-                    <div className="agenda-reminders-benefit-copy">
-                      <h3 className="core-solution-title">{title}</h3>
-                      <p className="core-solution-text">{text}</p>
-                    </div>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
           </Reveal>
         </div>
 
@@ -192,10 +147,7 @@ function AgendaRemindersSection() {
             <span className="core-pill-icon-mark" aria-hidden="true">
               <Bell size={16} strokeWidth={2} />
             </span>
-            <p>
-              Menos esquecimento, menos atraso e{' '}
-              <span className="text-pink">mais cliente acompanhado</span> sem depender do WhatsApp manual.
-            </p>
+            <p>Horários confirmados, clientes lembrados e uma rotina mais organizada.</p>
           </div>
         </Reveal>
       </div>
@@ -203,13 +155,21 @@ function AgendaRemindersSection() {
   )
 }
 
-// ── Seção 3 — Sinal, confirmação e dinheiro na agenda ────────────
-// Painel operacional em HTML/CSS (dados fictícios), mostrando que a
-// Agenda também é visão financeira, não só um calendário.
+// ── Seção 3 — Encaixes inteligentes ──────────────────────────────
+// Composição em HTML/CSS (dados fictícios) mostrando horário livre
+// virando cliente chamado: coluna de horários à esquerda, coluna de
+// clientes em espera à direita, conectadas por um elemento central.
 
-const agendaSessions = [
-  { status: 'confirmed', client: 'Marina', time: '14:00', value: 'R$ 650,00', signal: 'Pago' },
-  { status: 'pending', client: 'Rafael', time: '17:30', value: 'R$ 420,00', signal: 'Pendente' },
+const freeSlots = [
+  { day: 'Quinta', time: '15:00' },
+  { day: 'Sexta', time: '10:30' },
+  { day: 'Sábado', time: '16:00' },
+]
+
+const waitlistClients = [
+  'Cliente com desejo de antecipar a sessão para quinta',
+  'Cliente aguardando encaixe para flash',
+  'Cliente deseja um horário para sábado',
 ]
 
 function AgendaMoneySection() {
@@ -219,117 +179,70 @@ function AgendaMoneySection() {
       <div className="container">
         <Reveal>
           <div className="section-header-center">
-            <span className="section-label">Agenda operacional</span>
+            <span className="section-label agenda-money-badge">
+              <Sparkles size={14} strokeWidth={2.2} /> ENCAIXES INTELIGENTES
+            </span>
             <h2 className="section-title agenda-money-title">
-              Sua agenda não mostra só horários. Ela mostra{' '}
-              <span className="landing-accent">dinheiro em movimento.</span>
+              Seu horário vago<br />
+              pode virar <span className="landing-accent">cliente fechado.</span>
             </h2>
-            <p className="section-sub agenda-money-sub">
-              Acompanhe sessões confirmadas, sinais pendentes, receita prevista e clientes que ainda precisam
-              confirmar presença.
-            </p>
           </div>
         </Reveal>
 
         <Reveal delay={100}>
-          <div className="agenda-money-panel" aria-hidden="true">
-            <div className="agenda-money-sessions">
-              {agendaSessions.map((s) => (
-                <div key={s.client} className="agenda-money-session-row">
-                  <span className={`agenda-money-session-icon ${s.status}`}>
-                    {s.status === 'confirmed' ? <CheckCircle2 size={18} strokeWidth={1.8} /> : <Clock size={18} strokeWidth={1.8} />}
-                  </span>
-                  <div className="agenda-money-session-copy">
-                    <h3 className="agenda-money-session-title">
-                      {s.status === 'confirmed' ? 'Sessão confirmada' : 'Aguardando sinal'}
-                    </h3>
-                    <p className="agenda-money-session-meta">Cliente: {s.client} · Horário: {s.time}</p>
-                  </div>
-                  <div className="agenda-money-session-value">
-                    <span className="agenda-money-session-amount">{s.value}</span>
-                    <span className={`agenda-money-session-signal ${s.status}`}>Sinal: {s.signal}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="agenda-money-stats">
-              <div className="agenda-money-stat">
-                <span className="agenda-money-stat-icon"><Wallet size={17} strokeWidth={1.8} /></span>
-                <div>
-                  <p className="agenda-money-stat-label">Receita prevista hoje</p>
-                  <p className="agenda-money-stat-value">R$ 1.070,00</p>
-                </div>
-              </div>
-              <div className="agenda-money-stat">
-                <span className="agenda-money-stat-icon"><Users size={17} strokeWidth={1.8} /></span>
-                <div>
-                  <p className="agenda-money-stat-label">Clientes para confirmar</p>
-                  <p className="agenda-money-stat-value">2 pendências</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Reveal>
-
-        <Reveal delay={160}>
-          <p className="core-pill agenda-money-pill">
-            Menos sessão perdida, <span className="text-pink">mais controle</span> sobre o que entra e sai da
-            agenda.
-          </p>
-        </Reveal>
-      </div>
-    </section>
-  )
-}
-
-// ── Seção 4 — Horários livres viram oportunidade ─────────────────
-
-const openSlots = ['Quinta, 15:00', 'Sexta, 10:30', 'Sábado, 16:00']
-const waitlist = [
-  'Cliente quer realismo no antebraço',
-  'Cliente aguardando encaixe para flash',
-  'Cliente pediu orçamento e sumiu',
-]
-
-function AgendaSlotsSection() {
-  return (
-    <section className="agenda-slots module-section">
-      <div className="container">
-        <Reveal>
-          <div className="section-header-center">
-            <span className="section-label">Encaixes inteligentes</span>
-            <h2 className="section-title agenda-slots-title">
-              Quando abre um horário, a agenda ajuda você a <span className="landing-accent">preencher.</span>
-            </h2>
-            <p className="section-sub agenda-slots-sub">
-              Veja horários livres, clientes em espera e oportunidades para transformá-los em novas sessões.
-            </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={100}>
-          <div className="agenda-slots-grid">
-            <div className="agenda-slots-col">
-              <p className="agenda-slots-col-title">
-                <Hourglass size={15} strokeWidth={1.8} /> Horário livre
+          <div className="agenda-money-flow" aria-hidden="true">
+            <div className="agenda-money-col">
+              <p className="agenda-money-col-title">
+                <Calendar size={14} strokeWidth={2} /> HORÁRIOS LIVRES
               </p>
-              <div className="agenda-slots-list">
-                {openSlots.map((slot) => (
-                  <div key={slot} className="agenda-slots-item">{slot}</div>
+              <div className="agenda-money-cards">
+                {freeSlots.map(({ day, time }) => (
+                  <div key={day} className="agenda-money-slot-card">
+                    <span className="agenda-money-slot-icon"><Calendar size={16} strokeWidth={1.8} /></span>
+                    <span className="agenda-money-slot-text">
+                      {day}, <span className="agenda-money-slot-time">{time}</span>
+                    </span>
+                    <span className="agenda-money-slot-badge">LIVRE</span>
+                  </div>
                 ))}
               </div>
             </div>
 
-            <span className="agenda-slots-arrow" aria-hidden="true"><ArrowRight size={18} strokeWidth={2} /></span>
+            <div className="agenda-money-center">
+              <p className="agenda-money-col-title agenda-money-center-spacer">&nbsp;</p>
+              <div className="agenda-money-center-inner">
+                <svg
+                  className="agenda-money-connections"
+                  viewBox="0 0 100 100"
+                  preserveAspectRatio="none"
+                  aria-hidden="true"
+                >
+                  <path d="M0,16.5 C 26,16.5 26,50 50,50" vectorEffect="non-scaling-stroke" />
+                  <path d="M0,50 L 50,50" vectorEffect="non-scaling-stroke" />
+                  <path d="M0,83.5 C 26,83.5 26,50 50,50" vectorEffect="non-scaling-stroke" />
+                  <path d="M50,50 C 74,50 74,16.5 100,16.5" vectorEffect="non-scaling-stroke" />
+                  <path d="M50,50 L 100,50" vectorEffect="non-scaling-stroke" />
+                  <path d="M50,50 C 74,50 74,83.5 100,83.5" vectorEffect="non-scaling-stroke" />
+                  <path className="agenda-money-connection-arrow" d="M95,13.5 L100,16.5 L95,19.5" vectorEffect="non-scaling-stroke" />
+                  <path className="agenda-money-connection-arrow" d="M95,47 L100,50 L95,53" vectorEffect="non-scaling-stroke" />
+                  <path className="agenda-money-connection-arrow" d="M95,80.5 L100,83.5 L95,86.5" vectorEffect="non-scaling-stroke" />
+                </svg>
+                <span className="agenda-money-center-circle">
+                  <ArrowRight size={26} strokeWidth={2} />
+                </span>
+              </div>
+            </div>
 
-            <div className="agenda-slots-col">
-              <p className="agenda-slots-col-title">
-                <ListChecks size={15} strokeWidth={1.8} /> Lista de espera
+            <div className="agenda-money-col">
+              <p className="agenda-money-col-title">
+                <Users size={14} strokeWidth={2} /> CLIENTES PARA CHAMAR
               </p>
-              <div className="agenda-slots-list">
-                {waitlist.map((item) => (
-                  <div key={item} className="agenda-slots-item">{item}</div>
+              <div className="agenda-money-cards">
+                {waitlistClients.map((text) => (
+                  <div key={text} className="agenda-money-client-card">
+                    <span className="agenda-money-client-icon"><Users size={16} strokeWidth={1.8} /></span>
+                    <span className="agenda-money-client-text">{text}</span>
+                  </div>
                 ))}
               </div>
             </div>
@@ -337,19 +250,12 @@ function AgendaSlotsSection() {
         </Reveal>
 
         <Reveal delay={160}>
-          <div className="agenda-slots-note">
-            <Sparkles size={15} strokeWidth={1.8} />
-            <p>
-              Com a agenda organizada, fica mais fácil enxergar encaixes, horários livres e clientes que podem
-              ser chamados quando surgir uma vaga.
-            </p>
+          <div className="core-pill core-pill-icon agenda-money-pill">
+            <span className="core-pill-icon-mark" aria-hidden="true">
+              <Calendar size={16} strokeWidth={2} />
+            </span>
+            <p>Horário vazio vira oportunidade de encaixe.</p>
           </div>
-        </Reveal>
-
-        <Reveal delay={200}>
-          <p className="core-pill agenda-slots-pill">
-            Horário vazio deixa de ser esquecimento e <span className="text-pink">vira oportunidade.</span>
-          </p>
         </Reveal>
       </div>
     </section>
@@ -358,7 +264,11 @@ function AgendaSlotsSection() {
 
 // ── Seção final — CTA de impacto, no mesmo padrão do Elison IA ───
 
-const agendaFinalBenefits = ['Menos falta', 'Menos esquecimento', 'Mais controle', 'Mais previsibilidade']
+const agendaFinalBenefits = [
+  { Icon: CalendarX2, label: 'Menos faltas' },
+  { Icon: ShieldCheck, label: 'Mais controle' },
+  { Icon: TrendingUp, label: 'Mais previsibilidade' },
+]
 
 function AgendaFinalSection() {
   return (
@@ -367,18 +277,20 @@ function AgendaFinalSection() {
       <div className="container">
         <Reveal>
           <div className="agenda-final-panel">
-            <span className="section-label">Agenda mais leve</span>
+            <span className="section-label">AGENDA MAIS LEVE</span>
             <h2 className="section-title agenda-final-title">
-              Menos agenda solta. <span className="landing-accent">Mais sessão confirmada.</span>
+              Menos horários perdidos.<br />
+              <span className="landing-accent">Mais sessões confirmadas.</span>
             </h2>
             <p className="section-sub agenda-final-sub">
-              Organize horários, confirme clientes, acompanhe sinais e tenha uma visão mais clara da rotina do
-              seu estúdio.
+              Organize sua agenda, confirme clientes e mantenha sua rotina mais previsível.
             </p>
 
             <div className="agenda-final-benefits">
-              {agendaFinalBenefits.map((label) => (
-                <span key={label} className="agenda-final-benefit">{label}</span>
+              {agendaFinalBenefits.map(({ Icon, label }) => (
+                <span key={label} className="agenda-final-benefit">
+                  <Icon size={14} strokeWidth={2} /> {label}
+                </span>
               ))}
             </div>
 
@@ -402,7 +314,7 @@ export default function StudioAgendaPage() {
       heroContent={<AgendaHero />}
       sectionTwoContent={<AgendaRemindersSection />}
       sectionThreeContent={<AgendaMoneySection />}
-      solutionContent={<AgendaSlotsSection />}
+      solutionContent={<></>}
       practicalContent={<></>}
       benefitsContent={<></>}
       finalCtaContent={<AgendaFinalSection />}

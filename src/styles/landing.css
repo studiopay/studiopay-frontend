@@ -6954,13 +6954,35 @@
   filter: blur(54px);
   pointer-events: none;
 }
+/* Reforço de glow bem na base do celular — fica logo atrás da faixa que
+   o mask-image do mockup-img dissolve, para o corte reto da imagem se
+   perder no ambiente em vez de "flutuar" sobre um fundo liso. */
+.core-preview-mockup-wrap::after {
+  content: '';
+  position: absolute;
+  left: 8%;
+  right: 8%;
+  bottom: 2%;
+  height: 34%;
+  z-index: 1;
+  background: radial-gradient(ellipse at 50% 100%, rgba(255,46,209,0.32) 0%, rgba(139,92,246,0.16) 45%, transparent 75%);
+  filter: blur(28px);
+  pointer-events: none;
+}
 .core-preview-mockup-img {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   width: 100%;
   height: auto;
   object-fit: contain;
   display: block;
+  /* Dissolve a base "quadrada" do mockup (a imagem é um recorte reto,
+     sem a borda inferior real do aparelho) num fade suave, revelando o
+     glow atrás em vez de terminar em uma linha reta. Topo e miolo da
+     imagem permanecem 100% nítidos — só o último trecho da altura
+     é afetado. */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, rgba(0,0,0,0.55) 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 82%, rgba(0,0,0,0.55) 92%, transparent 100%);
 }
 
 .core-preview-cta { margin-top: 18px; }

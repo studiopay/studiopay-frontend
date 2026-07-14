@@ -18,7 +18,7 @@ const modules = [
   {
     name: 'Studio Shop',
     role: 'Compre com inteligência',
-    text: 'Com Studio Pro você garante acesso a alguns dos melhores preços do Brasil!',
+    text: 'Com o Studio Pro, você garante acesso a produtos de tatuagem com alguns dos melhores preços do Brasil.',
     to: '/studio-shop',
     label: 'Ver Studio Shop',
     Icon: ShoppingBag,

@@ -1,163 +1,46 @@
-import { Fragment } from 'react'
-import { Link } from 'react-router-dom'
 import ModulePageLayout from '@/components/landing/ModulePageLayout'
 import Reveal from '@/components/landing/Reveal'
 import { modulePages } from '@/data/publicModules'
-import {
-  Search, Target, Image as ImageIcon, BarChart3, Users, MousePointerClick,
-  CalendarCheck2, Wallet, Percent, Check, ArrowRight, Sparkles, KeyRound,
-  Settings2, LineChart, ClipboardCheck, Calendar, MessageCircle, Banknote,
-  FileBarChart, Handshake,
-} from 'lucide-react'
+import { Check } from 'lucide-react'
 
 // ── Seção 1 — Hero Studio Ads ─────────────────────────────────
-
-const heroCards = [
-  { Icon: Search, title: 'Google Ads', text: 'Campanhas de busca para quem já está procurando um tatuador.' },
-  { Icon: Target, title: 'Meta Ads', text: 'Anúncios no Instagram e Facebook para gerar novos contatos.' },
-  { Icon: ImageIcon, title: 'Criativos', text: 'Peças e artes pensadas para o universo da tatuagem.' },
-  { Icon: BarChart3, title: 'Relatórios', text: 'Acompanhamento de performance das campanhas ativas.' },
-]
-
-const panelStats = [
-  { Icon: Users, label: 'Leads recebidos', value: '38' },
-  { Icon: MousePointerClick, label: 'Custo por contato', value: 'R$ 12,40' },
-  { Icon: CalendarCheck2, label: 'Agendamentos gerados', value: '9' },
-  { Icon: Wallet, label: 'Investimento em mídia', value: 'R$ 1.000,00' },
-  { Icon: Percent, label: 'Taxa de gestão Digital Mix', value: 'R$ 350,00' },
-]
-
-function CampaignPanel() {
-  return (
-    <div className="ads-panel" aria-hidden="true">
-      <div className="ads-panel-head">
-        <span className="ads-panel-status">
-          <span className="ads-panel-dot" /> Campanha ativa
-        </span>
-        <span className="ads-panel-managed">Gestão por Digital Mix</span>
-      </div>
-      <div className="ads-panel-stats">
-        {panelStats.map(({ Icon, label, value }) => (
-          <div key={label} className="ads-panel-stat">
-            <span className="ads-panel-stat-icon"><Icon size={16} strokeWidth={1.8} /></span>
-            <div>
-              <p className="ads-panel-stat-label">{label}</p>
-              <p className="ads-panel-stat-value">{value}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
-}
+// Hero centralizada e enxuta: headline + subheadline + 1 CTA + bloco
+// de identificação da agência parceira (Digital Mix). Sem painel
+// lateral, sem cards explicativos — essas informações vivem nas
+// seções seguintes da página.
 
 function AdsHero() {
   return (
     <section className="ads-hero">
       <div className="ads-hero-glow" />
+      <div className="ads-hero-glow-side ads-hero-glow-left" aria-hidden="true" />
+      <div className="ads-hero-glow-side ads-hero-glow-right" aria-hidden="true" />
       <div className="container">
-        <div className="ads-hero-inner">
-          <Reveal className="ads-hero-copy-area">
-            <div className="ads-hero-copy">
-              <span className="section-label">Studio Ads</span>
-              <span className="ads-hero-badge-sub">Marketing com Digital Mix</span>
-              <h1 className="ads-hero-title">
-                Mais <span className="landing-accent">clientes para sua agenda</span><br />
-                com tráfego pago profissional.
-              </h1>
-              <p className="ads-hero-sub">
-                O Studio Pay conecta seu estúdio à Digital Mix, uma operação parceira especializada em campanhas
-                para atrair clientes, divulgar horários disponíveis e acompanhar resultados com mais clareza.
-              </p>
+        <Reveal className="ads-hero-inner">
+          <h1 className="ads-hero-title">
+            Agenda vazia<br />
+            <span className="landing-accent">custa caro.</span>
+          </h1>
+          <p className="ads-hero-sub">
+            Atraia mais clientes para o seu estúdio com condições exclusivas nos planos de{' '}
+            <strong>gestão de tráfego pago</strong>.
+          </p>
 
-              <div className="ads-hero-actions">
-                <Link to="/cadastro" className="btn btn-primary btn-lg">
-                  Quero atrair mais clientes
-                </Link>
-                <a href="#trafego-planos" className="btn btn-ghost btn-lg">
-                  Ver planos de tráfego
-                </a>
-              </div>
+          <div className="ads-hero-actions">
+            <a href="#trafego-planos" className="btn btn-primary btn-lg">
+              Consultar planos
+            </a>
+          </div>
 
-              <p className="ads-hero-note">
-                A gestão das campanhas é realizada pela Digital Mix. O Studio Pay conecta o tatuador à solução,
-                organiza a jornada e facilita o acesso às condições para assinantes.
-              </p>
-            </div>
-          </Reveal>
-
-          <Reveal delay={100} className="ads-hero-visual-area">
-            <CampaignPanel />
-          </Reveal>
-
-          <Reveal delay={160} className="ads-hero-cards-area">
-            <div className="core-solution-grid ads-hero-cards">
-              {heroCards.map(({ Icon, title, text }, i) => (
-                <Reveal key={title} delay={i * 50}>
-                  <div className="core-solution-card">
-                    <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
-                    <h3 className="core-solution-title">{title}</h3>
-                    <p className="core-solution-text">{text}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-// ── Seção 2 — Como funciona ────────────────────────────────────
-
-const howSteps = [
-  { Icon: ClipboardCheck, title: 'Escolha o plano', text: 'Compare Básico, Profissional e Enterprise.' },
-  { Icon: KeyRound, title: 'Configure os acessos', text: 'Google Ads, Meta Business, páginas e dados do estúdio.' },
-  { Icon: Settings2, title: 'Digital Mix gerencia', text: 'A agência configura, acompanha e otimiza as campanhas.' },
-  { Icon: LineChart, title: 'Você acompanha', text: 'Relatórios mostram investimento, contatos, campanhas e evolução.' },
-]
-
-function AdsHowSection() {
-  return (
-    <section className="ads-how module-section">
-      <div className="ads-how-glow" />
-      <div className="container">
-        <Reveal>
-          <div className="section-header-center">
-            <span className="section-label">Como funciona</span>
-            <h2 className="section-title ads-how-title">
-              Você escolhe o plano. <span className="landing-accent">A Digital Mix cuida das campanhas.</span>
-            </h2>
-            <p className="section-sub ads-how-sub">
-              Dentro do Studio Pay, o tatuador entende as opções de tráfego, escolhe o melhor plano e segue para a
-              contratação com a equipe parceira.
+          <div className="ads-hero-partner">
+            <p className="ads-hero-partner-label">
+              <span className="ads-hero-partner-line" aria-hidden="true" />
+              AGÊNCIA PARCEIRA
+              <span className="ads-hero-partner-line" aria-hidden="true" />
             </p>
-          </div>
-        </Reveal>
-
-        <Reveal delay={100}>
-          <div className="ads-how-steps">
-            {howSteps.map(({ Icon, title, text }, i) => (
-              <div key={title} className="ads-how-step">
-                <span className="ads-how-step-marker">{i + 1}</span>
-                <span className="ads-how-step-icon"><Icon size={18} strokeWidth={1.8} /></span>
-                <div className="ads-how-step-body">
-                  <h3 className="ads-how-step-title">{title}</h3>
-                  <p className="ads-how-step-text">{text}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={200}>
-          <div className="core-pill core-pill-icon ads-how-pill">
-            <span className="core-pill-icon-mark" aria-hidden="true">
-              <Sparkles size={16} strokeWidth={2} />
-            </span>
-            <p>
-              Você tatua. <span className="text-pink">A Digital Mix atrai.</span> O Studio Pay conecta.
+            <p className="ads-hero-partner-brand">DIGITAL<span className="ads-hero-partner-brand-accent">MIX</span></p>
+            <p className="ads-hero-partner-note">
+              Gestão realizada pela Digital Mix. Serviço contratado separadamente.
             </p>
           </div>
         </Reveal>
@@ -166,124 +49,34 @@ function AdsHowSection() {
   )
 }
 
-// ── Seção 3 — Planos de tráfego (Digital Mix) ──────────────────
+// ── Seção 2 — O que é tráfego pago? ─────────────────────────────
+// Bloco institucional e explicativo, centralizado, sem cards, sem
+// ícones, sem botão — só texto e glow sutil, seguindo a referência.
 
-const trafficPlans = [
-  {
-    name: 'Básico',
-    tag: 'Comece com confiança',
-    highlighted: false,
-    premium: false,
-    description: 'Para estúdios iniciando em publicidade digital com investimento controlado.',
-    items: ['Google ou Meta', 'Relatório mensal', 'Suporte básico', 'Até R$ 1.000/mês em mídia'],
-    priceRows: [
-      { label: '1 mídia', value: 'R$ 350/mês' },
-      { label: 'Combo', value: 'R$ 450/mês' },
-    ],
-    note: '50% off na 1ª mensalidade',
-  },
-  {
-    name: 'Profissional',
-    tag: 'Recomendado',
-    highlighted: true,
-    premium: false,
-    description: 'Para estúdios que querem escalar campanhas com otimizações semanais e relatórios mais detalhados.',
-    items: ['Google + Meta opcional', 'Otimizações semanais', 'Relatórios detalhados', 'Suporte prioritário', 'Até R$ 5.000/mês em mídia'],
-    priceRows: [
-      { label: '1 mídia', value: 'R$ 590/mês' },
-      { label: 'Combo', value: 'R$ 690/mês' },
-    ],
-    note: null,
-  },
-  {
-    name: 'Enterprise',
-    tag: 'Sob consulta',
-    highlighted: false,
-    premium: true,
-    description: 'Para estúdios maiores ou redes que precisam de estratégia personalizada e acompanhamento dedicado.',
-    items: ['Estratégia 360º', 'Gestão completa', 'Relatórios executivos', 'Suporte dedicado', 'Investimento livre'],
-    priceRows: null,
-    note: 'Contrato mínimo de 12 meses',
-  },
-]
-
-function AdsPlansSection() {
+function AdsExplainSection() {
   return (
-    <section className="ads-plans module-section" id="trafego-planos">
+    <section className="ads-explain-section">
+      <div className="ads-explain-glow ads-explain-glow-left" aria-hidden="true" />
+      <div className="ads-explain-glow ads-explain-glow-right" aria-hidden="true" />
       <div className="container">
-        <Reveal>
-          <div className="section-header-center">
-            <span className="section-label">Planos Digital Mix</span>
-            <h2 className="section-title">
-              Escolha o nível de tráfego para <span className="landing-accent">o momento do seu estúdio.</span>
-            </h2>
-          </div>
-        </Reveal>
-
-        <Reveal delay={80}>
-          <div className="plans-grid ads-plans-grid">
-            {trafficPlans.map((p) => (
-              <div
-                key={p.name}
-                className={`plan-card${p.highlighted ? ' highlighted' : ''}${p.premium ? ' premium' : ''}`}
-              >
-                {p.tag && <div className="plan-tag">{p.tag}</div>}
-
-                <div className="plan-card-head">
-                  <h3 className="plan-name">{p.name}</h3>
-                </div>
-
-                {p.priceRows ? (
-                  <div className="ads-plan-price-rows">
-                    {p.priceRows.map((row, i) => (
-                      <Fragment key={row.label}>
-                        {i > 0 && <span className="ads-plan-price-or">ou</span>}
-                        <div className="ads-plan-price-row">
-                          <span className="ads-plan-price-label">{row.label}</span>
-                          <span className="ads-plan-price-value">{row.value}</span>
-                        </div>
-                      </Fragment>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="plan-price">
-                    <span className="plan-price-consult">Sob consulta</span>
-                  </div>
-                )}
-
-                <p className="plan-description">{p.description}</p>
-
-                <ul className="plan-features">
-                  {p.items.map((item) => (
-                    <li key={item}>
-                      <Check
-                        size={14}
-                        color={p.highlighted ? 'var(--pink)' : p.premium ? 'rgba(255,46,209,0.65)' : 'var(--green)'}
-                      />
-                      {item}
-                    </li>
-                  ))}
-                </ul>
-
-                {p.note && <p className="ads-plan-note">{p.note}</p>}
-
-                <Link
-                  to="/cadastro"
-                  className={`btn btn-block btn-lg${
-                    p.highlighted ? ' btn-primary' : p.premium ? ' btn-outline-premium' : ' btn-outline'
-                  }`}
-                >
-                  Falar com a Digital Mix
-                </Link>
-              </div>
-            ))}
-          </div>
-        </Reveal>
-
-        <Reveal delay={160}>
-          <p className="ads-plans-footer-note">
-            Valores referentes à taxa de gestão da Digital Mix. O investimento em mídia é separado e pago às
-            plataformas, como Google e Meta.
+        <Reveal className="ads-explain-inner">
+          <p className="ads-explain-label">
+            <span className="ads-explain-label-line" aria-hidden="true" />
+            ENTENDA O SERVIÇO
+            <span className="ads-explain-label-line" aria-hidden="true" />
+          </p>
+          <h2 className="ads-explain-title">O que é tráfego pago?</h2>
+          <p className="ads-explain-lead">
+            É a estratégia de anunciar seu estúdio em plataformas como Instagram, Facebook e Google para alcançar
+            pessoas com interesse em tatuagem.
+          </p>
+          <p className="ads-explain-body">
+            Na prática, são criadas campanhas segmentadas por região, perfil de público e objetivo. Com um
+            investimento em anúncios, seu estúdio passa a aparecer para as pessoas certas, enquanto a gestão
+            acompanha métricas como alcance, cliques e contatos gerados para otimizar os resultados.
+          </p>
+          <p className="ads-explain-footnote">
+            Mais visibilidade, mais contatos qualificados e mais chances de preencher a agenda.
           </p>
         </Reveal>
       </div>
@@ -291,147 +84,255 @@ function AdsPlansSection() {
   )
 }
 
-// ── Seção 4 — Investimento vs taxa de gestão ───────────────────
+// ── Seção 3 — Quem é a Digital Mix? ─────────────────────────────
+// Bloco institucional e textual, centralizado, sem cards, sem preços,
+// sem botões.
 
-const investExamples = [
-  { plan: 'Básico', management: 'R$ 350 gestão', media: 'até R$ 1.000 mídia', total: 'até R$ 1.350/mês' },
-  { plan: 'Profissional Combo', management: 'R$ 690 gestão', media: 'até R$ 5.000 mídia', total: 'até R$ 5.690/mês' },
+function AdsPartnerSection() {
+  return (
+    <section className="ads-partner-section">
+      <div className="ads-partner-glow ads-partner-glow--left" aria-hidden="true" />
+      <div className="ads-partner-glow ads-partner-glow--right" aria-hidden="true" />
+      <div className="container">
+        <Reveal className="ads-partner-inner">
+          <h2 className="ads-partner-title">Quem é a Digital Mix?</h2>
+          <p className="ads-partner-lead">
+            A Digital Mix é a agência parceira responsável por planejar, gerenciar e otimizar as campanhas de
+            tráfego pago dos estúdios conectados ao Studio Pay.
+          </p>
+          <p className="ads-partner-body">
+            Da configuração inicial ao acompanhamento dos resultados, sua equipe cuida da operação no Google e
+            nas redes sociais para que cada campanha alcance as pessoas certas.
+          </p>
+          <p className="ads-partner-closing">
+            Estratégia profissional para transformar investimento em novas oportunidades.
+          </p>
+        </Reveal>
+      </div>
+    </section>
+  )
+}
+
+// ── Seção 4 — Planos de gestão de tráfego ───────────────────────
+// Cards institucionais (sem preço, sem botão) — recebe o id âncora
+// usado pelo CTA "Consultar planos" da Seção 1.
+
+const plans = [
+  {
+    name: 'Básico',
+    tag: 'COMECE COM CONFIANÇA',
+    recommended: false,
+    benefits: [
+      'Configuração inicial de campanhas',
+      'Acesso à árvore de links (Google) OU variações criativas (Meta)',
+      'Monitoramento e relatórios mensais',
+      'Suporte técnico básico',
+    ],
+    footnote: [
+      'Com teto de investimento em mídia',
+      'Ideal para começar com controle',
+    ],
+  },
+  {
+    name: 'Profissional',
+    tag: 'ESCALE SEU NEGÓCIO',
+    recommended: true,
+    benefits: [
+      'Configuração Avançada de Campanhas',
+      'Acesso à Árvore de Links ou Criativos',
+      'Otimizações Semanais',
+      'Relatórios Detalhados de Performance',
+      'Suporte Técnico Prioritário',
+    ],
+    footnote: [
+      'Com maior teto de investimento em mídia',
+      'Para escalar com mais volume',
+    ],
+  },
+  {
+    name: 'Enterprise',
+    tag: 'SOLUÇÃO COMPLETA',
+    recommended: false,
+    benefits: [
+      'Estratégia Personalizada',
+      'Gestão Total',
+      'Criação de Conteúdo',
+      'Relatórios Executivos',
+      'Suporte Dedicado',
+      'Investimento Livre',
+    ],
+    footnote: [
+      'Investimento livre em mídia',
+      'Sem teto máximo para escalar',
+    ],
+  },
 ]
 
-function AdsInvestmentSection() {
+function AdsPlansSection() {
   return (
-    <section className="ads-invest module-section">
-      <div className="ads-invest-glow" />
+    <section className="ads-plans-section module-section" id="trafego-planos">
+      <div className="ads-plans-glow ads-plans-glow--left" aria-hidden="true" />
+      <div className="ads-plans-glow ads-plans-glow--right" aria-hidden="true" />
       <div className="container">
         <Reveal>
-          <div className="section-header-center">
-            <span className="section-label">Transparência</span>
-            <h2 className="section-title ads-invest-title">
-              Entenda a diferença entre <span className="landing-accent">taxa de gestão</span> e investimento em
-              mídia.
+          <div className="ads-plans-header">
+            <h2 className="ads-plans-title">
+              Escolha o <span className="landing-accent">plano ideal</span>
             </h2>
-            <p className="section-sub ads-invest-sub">
-              A taxa de gestão remunera o trabalho estratégico da Digital Mix. O investimento em mídia é o valor
-              usado nas plataformas para exibir os anúncios.
+            <p className="ads-plans-sub">
+              Soluções de Marketing Digital exclusivas para parceiros do ecossistema Studio Pay.
             </p>
           </div>
         </Reveal>
 
-        <Reveal delay={100}>
-          <div className="ads-invest-formula">
-            <div className="ads-invest-formula-item">
-              <span className="ads-invest-formula-icon"><Percent size={18} strokeWidth={1.8} /></span>
-              <p>Taxa de gestão</p>
-            </div>
-            <span className="ads-invest-formula-op">+</span>
-            <div className="ads-invest-formula-item">
-              <span className="ads-invest-formula-icon"><Wallet size={18} strokeWidth={1.8} /></span>
-              <p>Investimento em mídia</p>
-            </div>
-            <span className="ads-invest-formula-op">=</span>
-            <div className="ads-invest-formula-item ads-invest-formula-total">
-              <span className="ads-invest-formula-icon"><Banknote size={18} strokeWidth={1.8} /></span>
-              <p>Total mensal estimado</p>
-            </div>
-          </div>
-        </Reveal>
+        <Reveal delay={80}>
+          <div className="ads-plans-grid">
+            {plans.map((p) => (
+              <div key={p.name} className={`ads-plan-card${p.recommended ? ' recommended' : ''}`}>
+                {p.recommended && <span className="ads-plan-badge">RECOMENDADO</span>}
+                <h3 className="ads-plan-name">Plano {p.name}</h3>
+                <p className="ads-plan-tag">{p.tag}</p>
+                <span className="ads-plan-divider" aria-hidden="true" />
 
-        <Reveal delay={160}>
-          <div className="ads-invest-examples">
-            {investExamples.map((ex) => (
-              <div key={ex.plan} className="ads-invest-example">
-                <p className="ads-invest-example-plan">{ex.plan}</p>
-                <p className="ads-invest-example-calc">
-                  {ex.management} + {ex.media} = <span className="text-pink">{ex.total}</span>
-                </p>
+                <ul className="ads-plan-benefits">
+                  {p.benefits.map((b) => (
+                    <li key={b}>
+                      <Check size={15} strokeWidth={2.2} />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                <div className="ads-plan-footnote">
+                  <p>{p.footnote[0]}</p>
+                  <p>{p.footnote[1]}</p>
+                </div>
               </div>
             ))}
           </div>
         </Reveal>
+
+        <Reveal delay={160}>
+          <p className="ads-plans-closing">
+            Todo o processo é integrado ao ecossistema <span className="text-pink">Studio Pay</span>, garantindo
+            uma experiência fluida e centralizada para o parceiro.
+          </p>
+        </Reveal>
       </div>
     </section>
   )
 }
 
-// ── Seção 5 — Integração futura com o ecossistema ──────────────
+// ── Seção 5 — Valores dos planos ────────────────────────────────
+// Cards comerciais com preço (valores exclusivos para assinantes
+// Studio Pro), sem benefícios e sem botões — classes exclusivas.
 
-const ecosystemCards = [
-  { Icon: Calendar, title: 'Marketing + Agenda', text: 'Campanhas para ajudar a preencher horários livres.' },
-  { Icon: MessageCircle, title: 'Marketing + Elisson.IA', text: 'Leads das campanhas podem cair no atendimento automático.' },
-  { Icon: Wallet, title: 'Marketing + Financeiro', text: 'Taxa de gestão, investimento e retorno mais claros.' },
-  { Icon: FileBarChart, title: 'Marketing + Relatórios', text: 'Custo por lead, custo por agendamento e evolução das campanhas.' },
+const pricingPlans = [
+  {
+    name: 'Básico',
+    price: 'R$ 350/mês',
+    footnote: 'Taxa de gestão mensal',
+  },
+  {
+    name: 'Profissional',
+    price: 'R$ 590/mês',
+    footnote: 'Taxa de gestão mensal',
+  },
+  {
+    name: 'Enterprise',
+    price: null,
+    footnote: 'Taxa de gestão sob análise',
+  },
 ]
 
-function AdsEcosystemSection() {
+function AdsPricingSection() {
   return (
-    <section className="ads-ecosystem module-section">
+    <section className="ads-pricing-section module-section" id="valores-trafego">
+      <div className="ads-pricing-glow ads-pricing-glow--left" aria-hidden="true" />
+      <div className="ads-pricing-glow ads-pricing-glow--right" aria-hidden="true" />
       <div className="container">
         <Reveal>
-          <div className="section-header-center">
-            <span className="section-label">Ecossistema</span>
-            <h2 className="section-title ads-ecosystem-title">
-              Hoje a Digital Mix executa. <span className="landing-accent">O Studio Pay conecta</span> a jornada.
+          <div className="ads-pricing-header">
+            <p className="ads-pricing-label">
+              <span className="ads-pricing-label-line" aria-hidden="true" />
+              EM PARCERIA COM A DIGITAL MIX
+              <span className="ads-pricing-label-line" aria-hidden="true" />
+            </p>
+            <h2 className="ads-pricing-title">
+              Planos de gestão com condição exclusiva para assinantes Studio Pay.
             </h2>
-            <p className="section-sub ads-ecosystem-sub">
-              A parceria começa com redirecionamento para contratação e pode evoluir para relatórios, leads,
-              agenda e financeiro conectados dentro do ecossistema.
+            <p className="ads-pricing-sub">
+              Escolha a estrutura ideal para começar sua gestão de tráfego.
             </p>
           </div>
         </Reveal>
 
-        <Reveal delay={100}>
-          <div className="core-solution-grid ads-ecosystem-grid">
-            {ecosystemCards.map(({ Icon, title, text }, i) => (
-              <Reveal key={title} delay={i * 50}>
-                <div className="core-solution-card ads-ecosystem-card">
-                  <span className="core-solution-icon"><Icon size={20} strokeWidth={1.8} /></span>
-                  <h3 className="core-solution-title">{title}</h3>
-                  <p className="core-solution-text">{text}</p>
-                  <span className="ads-ecosystem-badge">Em evolução</span>
+        <Reveal delay={80}>
+          <div className="ads-pricing-grid">
+            {pricingPlans.map((p) => (
+              <div key={p.name} className="ads-pricing-card">
+                <h3 className="ads-pricing-name">Plano {p.name}</h3>
+                <p className="ads-pricing-tag">Valor para assinantes do plano Studio Pro</p>
+                <span className="ads-pricing-divider" aria-hidden="true" />
+
+                {p.price ? (
+                  <div className="ads-pricing-value">
+                    <p className="ads-pricing-from">A partir de</p>
+                    <p className="ads-pricing-price">
+                      {p.price.replace('/mês', '')}<span className="ads-pricing-period">/mês</span>
+                    </p>
+                    <p className="ads-pricing-plan-note">Com Studio Pro</p>
+                  </div>
+                ) : (
+                  <div className="ads-pricing-value">
+                    <p className="ads-pricing-consult">Sob consulta</p>
+                  </div>
+                )}
+
+                <div className="ads-pricing-footnote">
+                  <span className="ads-pricing-bullet" aria-hidden="true" />
+                  <p>{p.footnote}</p>
                 </div>
-              </Reveal>
+              </div>
             ))}
           </div>
         </Reveal>
+
+        <Reveal delay={160}>
+          <p className="ads-pricing-closing">
+            Valores exclusivos para assinantes Studio Pro.<br />
+            Investimento em mídia é contratado separadamente.
+          </p>
+        </Reveal>
       </div>
     </section>
   )
 }
 
-// ── Seção final — CTA de impacto ────────────────────────────────
+// ── Seção 6 — CTA final ──────────────────────────────────────────
+// Fechamento comercial limpo e centralizado: headline + subheadline +
+// frase de reforço + 1 botão. Sem cards, ícones, listas ou pills.
 
 function AdsFinalSection() {
   return (
-    <section className="ads-final module-section">
-      <div className="ads-final-glow" />
+    <section className="ads-final-section module-section">
+      <div className="ads-final-glow ads-final-glow--left" aria-hidden="true" />
+      <div className="ads-final-glow ads-final-glow--right" aria-hidden="true" />
       <div className="container">
-        <Reveal>
-          <div className="ads-final-panel">
-            <span className="section-label">Studio Pay x Digital Mix</span>
-            <h2 className="section-title ads-final-title">
-              Você cria. <span className="landing-accent">A Digital Mix atrai.</span> O Studio Pay conecta.
-            </h2>
-            <p className="section-sub ads-final-sub">
-              Leve seu estúdio para uma operação de marketing mais profissional, com planos pensados para quem vive
-              da tatuagem.
-            </p>
+        <Reveal className="ads-final-inner">
+          <h2 className="ads-final-title">Escolha o plano ideal para o seu estúdio.</h2>
+          <p className="ads-final-sub">
+            Decida qual solução de gestão de tráfego faz mais sentido para o momento do seu estúdio e avance com
+            estratégia
+          </p>
+          <p className="ads-final-reinforcement">
+            Estratégia, visibilidade e mais clientes para seu estúdio!
+          </p>
 
-            <div className="ads-final-actions">
-              <Link to="/cadastro" className="btn btn-primary btn-lg">
-                Quero falar com a Digital Mix <ArrowRight size={18} />
-              </Link>
-              <Link to="/planos" className="btn btn-ghost btn-lg">Ver planos</Link>
-            </div>
-
-            <div className="core-pill core-pill-icon ads-final-pill">
-              <span className="core-pill-icon-mark" aria-hidden="true">
-                <Handshake size={16} strokeWidth={2} />
-              </span>
-              <p>
-                Resultados dependem de investimento, região, oferta e execução —{' '}
-                <span className="text-pink">a Digital Mix acompanha cada campanha</span> de perto.
-              </p>
-            </div>
+          <div className="ads-final-actions">
+            <a href="#valores-trafego" className="btn btn-primary btn-lg">
+              Acessar planos
+            </a>
           </div>
         </Reveal>
       </div>
@@ -444,10 +345,10 @@ export default function StudioAdsPage() {
     <ModulePageLayout
       page={modulePages.ads}
       heroContent={<AdsHero />}
-      sectionTwoContent={<AdsHowSection />}
-      sectionThreeContent={<AdsPlansSection />}
-      solutionContent={<AdsInvestmentSection />}
-      practicalContent={<AdsEcosystemSection />}
+      sectionTwoContent={<AdsExplainSection />}
+      sectionThreeContent={<AdsPartnerSection />}
+      solutionContent={<AdsPlansSection />}
+      practicalContent={<AdsPricingSection />}
       benefitsContent={<></>}
       finalCtaContent={<AdsFinalSection />}
     />

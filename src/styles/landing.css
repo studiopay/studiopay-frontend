@@ -88,6 +88,7 @@
 }
 .nav-links { display: flex; align-items: center; justify-content: center; gap: 21px; flex: 1; min-width: 0; }
 .nav-mobile-menu { display: none; }
+.nav-mobile-overlay { display: none; }
 .nav-links a {
   font-size: 13.5px;
   font-weight: 500;
@@ -1951,6 +1952,16 @@
   .nav-links { display: none; }
   .nav-mobile-menu {
     display: none;
+  }
+  /* Overlay invisível atrás do menu mobile — captura toques fora do
+     painel para fechá-lo (o menu em si fica em .landing-nav, z-index
+     100, então continua acima e clicável normalmente). */
+  .nav-mobile-overlay {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    background: transparent;
   }
   .nav-mobile-menu.open {
     display: flex;

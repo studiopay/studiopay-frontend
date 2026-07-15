@@ -48,6 +48,7 @@ export default function Navbar() {
   }
 
   return (
+    <>
     <nav className="landing-nav">
       <div className="landing-nav-inner">
         <Link to="/" className="logo" onClick={closeMobileMenu}>
@@ -117,7 +118,10 @@ export default function Navbar() {
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
 
-        <div className={`nav-mobile-menu${open ? ' open' : ''}`}>
+        <div
+          className={`nav-mobile-menu${open ? ' open' : ''}`}
+          onClick={(e) => e.stopPropagation()}
+        >
           <Link to="/" className={linkClass('/')} onClick={closeMobileMenu}>Início</Link>
 
           <button
@@ -167,5 +171,13 @@ export default function Navbar() {
         </div>
       </div>
     </nav>
+    {open && (
+      <div
+        className="nav-mobile-overlay"
+        onClick={closeMobileMenu}
+        aria-hidden="true"
+      />
+    )}
+    </>
   )
 }

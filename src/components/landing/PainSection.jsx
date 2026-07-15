@@ -134,9 +134,6 @@ export default function PainSection() {
               <Link to="/studio-shop" className="btn btn-primary btn-lg">
                 Ver benefícios do Shop <ArrowRight size={18} />
               </Link>
-              <Link to="/studio-shop" className="shop-inline-link">
-                Como funciona para assinantes
-              </Link>
             </div>
           </div>
         </Reveal>

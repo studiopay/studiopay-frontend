@@ -825,16 +825,6 @@
   gap: 18px;
   flex-wrap: wrap;
 }
-.shop-inline-link {
-  color: var(--pink);
-  font-size: 14px;
-  font-weight: 700;
-  transition: color 0.15s;
-}
-.shop-inline-link:hover {
-  color: var(--text-primary);
-}
-
 .elison-preview-section {
   position: relative;
   overflow: hidden;
@@ -930,16 +920,6 @@
   gap: 18px;
   flex-wrap: wrap;
 }
-.elison-inline-link {
-  color: var(--pink);
-  font-size: 14px;
-  font-weight: 700;
-  transition: color 0.15s;
-}
-.elison-inline-link:hover {
-  color: var(--text-primary);
-}
-
 /* ─── Ecosystem Preview Section ─── */
 .ecosystem-section {
   position: relative;

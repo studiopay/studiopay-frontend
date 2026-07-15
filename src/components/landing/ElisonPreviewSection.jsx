@@ -109,9 +109,6 @@ export default function ElisonPreviewSection() {
                 <Link to="/elison-ia" className="btn btn-primary btn-lg">
                   Conhecer benefícios do Elisson.IA <ArrowRight size={18} />
                 </Link>
-                <Link to="/elison-ia" className="elison-inline-link">
-                  Ver como funciona
-                </Link>
               </div>
             </div>
           </Reveal>

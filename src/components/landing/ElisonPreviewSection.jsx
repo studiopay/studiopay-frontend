@@ -7,15 +7,15 @@ import Reveal from './Reveal'
 // substituem o mockup fake em HTML/CSS que existia antes. Ficam em
 // /public, então sobem junto com o deploy.
 const elisonSteps = [
-  { label: 'Confirmação', title: 'Confirmação automática', image: '/images/studio-pay/elisson-confirmacao.webp' },
-  { label: 'Lembrete', title: 'Lembrete inteligente', image: '/images/studio-pay/elisson-lembrete.webp' },
-  { label: 'Pós-atendimento', title: 'Pós-atendimento', image: '/images/studio-pay/elisson-pos-atendimento.webp' },
+  { label: 'Atendimento', title: 'Atendimento automático', image: '/images/studio-pay/home-elisson-atendimento.webp' },
+  { label: 'Vendas', title: 'Vendas e negociação', image: '/images/studio-pay/home-elisson-vendas.webp' },
+  { label: 'Pós-atendimento', title: 'Pós-atendimento', image: '/images/studio-pay/home-elisson-pos-atendimento.webp' },
 ]
 
 const elisonBlocks = [
   { title: 'ATENDIMENTO', text: 'Atende clientes pelo WhatsApp, apresenta seu portfólio e tira dúvidas automaticamente.' },
   { title: 'VENDAS', text: 'Passa orçamentos, responde objeções e conduz o cliente até o fechamento.' },
-  { title: 'GESTÃO', text: 'Organiza sua agenda, controla receitas e despesas e acompanha o pós-atendimento.' },
+  { title: 'PÓS-ATENDIMENTO', text: 'Acompanha o cliente após a sessão, tira dúvidas e reforça os cuidados definidos anteriormente.' },
 ]
 
 export default function ElisonPreviewSection() {

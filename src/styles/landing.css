@@ -1627,8 +1627,9 @@
    forçando um recorte, e com um drop-shadow escuro sutil para
    integrar o aparelho ao fundo da seção. */
 .elison-phone-shot {
-  width: min(100%, 374px);
-  min-height: 642px;
+  width: min(100%, 460px);
+  aspect-ratio: 1122 / 1402;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1637,7 +1638,6 @@
   display: block;
   width: 100%;
   height: 100%;
-  max-height: 642px;
   object-fit: contain;
   object-position: center;
   filter: drop-shadow(0 26px 60px rgba(0,0,0,0.5)) drop-shadow(0 0 36px rgba(255,46,209,0.07));
@@ -1645,7 +1645,6 @@
 .elison-phone-shot-fallback {
   width: 100%;
   height: 100%;
-  min-height: 642px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2195,29 +2194,21 @@
   .elison-preview-layout { gap: 32px; }
   .elison-preview-demo { gap: 16px; }
   /* aspect-ratio garante que a caixa SEMPRE tenha a mesma proporção da
-     imagem real (960x1639) — antes a caixa usava uma altura fixa
-     (460px) desencontrada da altura que a imagem realmente ocupava
-     (~563px, só limitada pelo max-height de desktop de 642px, que
-     continuava valendo no mobile), fazendo o mockup vazar por cima da
-     subheadline e por baixo cobrir a 1ª aba. Também reduz o mockup
-     para não dominar a tela (largura entre ~78-86vw, até 320px). */
+     imagem real (1122x1402), evitando faixas vazias em cima/embaixo do
+     mockup (letterboxing) e mantendo o celular como protagonista da
+     composição também no mobile. */
   .elison-phone-shot {
-    width: min(82vw, 320px);
-    aspect-ratio: 960 / 1639;
+    width: min(84vw, 340px);
+    aspect-ratio: 1122 / 1402;
     height: auto;
-    min-height: 0;
-    max-height: none;
   }
   .elison-phone-shot-img {
     height: 100%;
-    max-height: none;
   }
   .elison-phone-shot-fallback {
-    width: min(82vw, 320px);
-    aspect-ratio: 960 / 1639;
+    width: min(84vw, 340px);
+    aspect-ratio: 1122 / 1402;
     height: auto;
-    min-height: 0;
-    max-height: none;
     border-radius: 38px;
   }
   .elison-step-tabs { grid-template-columns: 1fr; max-width: 330px; }
